@@ -1,0 +1,30 @@
+
+.btn:hover {
+    // background-color: rgb(133, 94, 22);
+    background-color: var(--ma-brown-toggle);
+}
+
+.main-page {
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+}
+
+.table-border{
+    border: 1px groove black;
+    border-bottom: 0;
+    border-top: 0;
+    border-left: 0;
+}
+
+.table-container {
+    max-height: 65vh;
+}
+
+.pagination{
+    --bs-pagination-padding-x: 1rem;
+    --bs-pagination-color: black;
+    --bs-pagination-active-color: white;
+    --bs-pagination-hover-color: var(--ma-brown-toggle);
+    --bs-pagination-active-bg: var(--ma-brown);
+    --bs-pagination-bg: white;
+}

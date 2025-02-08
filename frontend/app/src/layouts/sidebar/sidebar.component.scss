@@ -1,0 +1,31 @@
+
+.ma-sidebar {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+
+.nav-item:hover {
+    background-color: var(--ma-brown-toggle);
+}
+.nav-item.active {
+    background-color: var(--ma-brown-toggle);
+}
+
+.menu{
+    cursor: pointer;
+}
+
+.navbar .navbar-brand{
+    font-weight: 700;
+}
+.navbar{
+    --bs-navbar-brand-color: white;
+    --bs-navbar-brand-hover-color: white;
+    --bs-navbar-brand-font-size: 1rem;
+    --bs-navbar-color: white;
+    --bs-navbar-hover-color: white;
+}
+
+.navbar-nav{
+    width: 100%;
+}

@@ -3,20 +3,28 @@ import { Routes } from '@angular/router';
 import { BlankComponent } from '../layouts/blank/blank.component'
 import { SidebarComponent } from '../layouts/sidebar/sidebar.component'
 
-import { LoginComponent } from '../pages/login/login.component'
+import { AdminLoginComponent } from '../pages/admin-login/admin-login.component'
+import { UserLoginComponent } from '../pages/user-login/user-login.component'
+import { NewUserComponent } from '../pages/new-user/new-user.component'
+import { NewHospitalComponent } from '../pages/new-hospital/new-hospital.component'
 import { HospitalListComponent } from '../pages/hospital-list/hospital-list.component'
 
 
-export const routes: Routes = [{
+export const routes: Routes = [
+  { path: '', redirectTo: 'login', pathMatch: 'full'},
+  {
     path: '',
     component: BlankComponent,
     children: [
-      { path: 'login', component: LoginComponent }
+      { path: 'login', component: UserLoginComponent},
+      { path: 'admin/login', component: AdminLoginComponent}
     ]
-}, {
+  }, {
     path: '',
     component: SidebarComponent,
     children: [
-      { path: 'hospital', component: HospitalListComponent }
+      { path: 'hospital', component: HospitalListComponent },
+      { path: 'hospital/new', component: NewHospitalComponent },
+      { path: 'user/new', component: NewUserComponent }
     ]
-}];
+  }];

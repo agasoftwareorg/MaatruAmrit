@@ -2,3 +2,31 @@
 
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
+
+$ma-brown: $orange-800;
+$ma-brown-toggle: $orange-600;
+$ma-gray: $gray-300;
+
+:root {
+    --ma-brown: #{$ma-brown};
+    --ma-brown-toggle: #{$ma-brown-toggle};
+    --ma-grey: #{$ma-gray};
+}
+
+.ma-bg-gray{
+    background-color: $ma-gray
+}
+
+.ma-bg-brown{
+    background-color: $ma-brown
+}
+
+.ma-text-brown{
+    color: $ma-brown
+}
+
+.ma-text-brown-toggle{
+    color: $ma-brown-toggle
+}

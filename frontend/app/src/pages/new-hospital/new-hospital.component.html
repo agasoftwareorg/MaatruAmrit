@@ -1,0 +1,63 @@
+<app-header title="New Hospital"></app-header>
+<div class="container-fluid">
+    <div class="card my-4">
+        <h5 class="card-header">Hospital Details</h5>
+        <div class="card-body">
+            <form>
+                <div class="form-group row py-3">
+                    <label for="HospitalName" class="col-2 col-form-label col-form-label">Hospital Name :</label>
+                    <div class="col-6">
+                        <input class="form-control form-control" id="HospitalName"
+                            placeholder="Hospital Name">
+                    </div>
+                </div>
+                <div class="form-group row py-3">
+                    <label for="HospitalAddress" class="col-2 col-form-label col-form-label">Address :</label>
+                    <div class="col-6">
+                        <input class="form-control form-control" id="HospitalAddress"
+                            placeholder="Address">
+                    </div>
+                </div>
+                <div class="form-group row py-3">
+                    <label for="Branch" class="col-2 col-form-label col-form-label">Branch :</label>
+                    <div class="col-6">
+                        <input class="form-control form-control" id="Branch"
+                            placeholder="Branch">
+                    </div>
+                </div>
+                <div class="form-group row py-3">
+                    <label for="Contact" class="col-2 col-form-label col-form-label">Contact :</label>
+                    <div class="col-6">
+                        <input class="form-control form-control" id="Contact"
+                            placeholder="Contact">
+                    </div>
+                </div>
+            </form>
+            <!-- <h5 class="card-title">Special title treatment</h5>
+          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+          <a href="#" class="btn btn-primary">Go somewhere</a> -->
+        </div>
+    </div>
+    <div class="card my-4">
+        <h5 class="card-header">Subscription Details</h5>
+        <div class="card-body">
+            <form>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" checked="checked" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                    <label class="form-check-label" for="inlineRadio1">1 Year Plan</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                    <label class="form-check-label" for="inlineRadio2">2 Year Plan</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+                    <label class="form-check-label" for="inlineRadio3">3 Year Plan</label>
+                  </div>
+            </form>
+        </div>
+    </div>
+    <div class="text-center">
+        <button class="btn ma-bg-brown text-light" routerLink="/hospital"><i class="bi bi-plus"></i>Add Hospital</button>
+    </div>
+</div>

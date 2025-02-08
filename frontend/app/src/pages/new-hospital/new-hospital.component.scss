@@ -1,0 +1,16 @@
+.card-header:first-child {
+    border-radius: 0;
+}
+
+.card{
+    --bs-card-border-radius: 0;
+}
+
+.card-header{
+    background-color: var(--ma-brown-toggle)
+    
+}
+
+.btn:hover {
+    background-color: var(--ma-brown-toggle);
+}

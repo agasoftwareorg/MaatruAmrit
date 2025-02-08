@@ -1,12 +1,67 @@
-<p>sidebar works!</p>
-<button type="button" class="btn btn-primary">Primary</button>
-<button type="button" class="btn btn-primary">Primary</button>
-<button type="button" class="btn btn-secondary">Secondary</button>
-<button type="button" class="btn btn-success">Success</button>
-<button type="button" class="btn btn-danger">Danger</button>
-<button type="button" class="btn btn-warning">Warning</button>
-<button type="button" class="btn btn-info">Info</button>
-<button type="button" class="btn btn-light">Light</button>
-<button type="button" class="btn btn-dark">Dark</button>
+<div class="container-fluid">
+    <div class="row vh-100">
+        <div class="col-2 ma-sidebar p-0 ma-bg-brown text-light">
+            <div class="text-center">
+                <!-- <div class="py-3">Maatru Amrit</div> -->
+                <nav class="navbar">
+                    <i class="bi bi-plus-circle-fill px-2"></i>
+                    <a class="navbar-brand" routerLink="hospital">Maatru Amrit</a>
+                </nav>
+                <hr>
+                <nav class="navbar">
+                    <ul class="navbar-nav">
+                        <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                            <a class="nav-link d-flex" routerLink="hospital">
+                                <i class="bi bi-hospital px-2"></i>
+                                <span>Hospital List</span>
+                            </a>
+                        </li>
+                        <hr class="my-1">
+                        <li class="nav-item" routerLinkActive="active">
+                            <a class="nav-link d-flex" routerLink="hospital/new">
+                                <i class="bi bi-shield-plus px-2"></i>
+                                <span>New Hospital</span>
+                            </a>
+                        </li>
+                        <hr class="my-1">
+                        <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                            <a class="nav-link d-flex" routerLink="user/new" >
+                                <i class="bi bi-person-plus px-2"></i>
+                                <span>Create Login</span>
+                            </a>
+                        </li>
+                        <hr class="my-1">
+                    </ul>
+                </nav>
+                <!-- <div class="py-2 menu active"><i class="bi bi-hospital"></i></div>
+                <hr class="my-1">
+                <div class="py-2 menu"><i class="bi bi-shield-plus"></i></div>
+                <hr class="my-1">
+                <div class="py-2 menu"><i class="bi bi-person-plus"></i>Create Login</div>
+                <hr class="my-1"> -->
+            </div>
 
-<router-outlet />
+            <!-- Empty Spacer (Pushes Logout to Bottom) -->
+            <div></div>
+
+            <!-- Logout Section at Bottom -->
+            <div class="text-center py-5">
+                <nav class="navbar">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link d-flex" routerLink="login">
+                                <i class="bi bi-box-arrow-right px-2"></i>
+                                <span>Logout</span>
+                            </a>
+                        </li>
+                        <hr class="my-1">
+                    </ul>
+                </nav>
+            </div>
+
+        </div>
+        <div class="col-10 p-0 ma-bg-gray">
+            <router-outlet />
+        </div>
+    </div>
+</div>
