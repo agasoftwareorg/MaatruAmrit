@@ -1,10 +1,17 @@
 from rest_framework import viewsets
+from rest_framework.pagination import PageNumberPagination
 from django_filters.rest_framework import DjangoFilterBackend
 
 from . import models
 from . import filters
 from . import serializers
 from . import permissions
+
+
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'page_size'
+    max_page_size = 1000
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -19,6 +26,7 @@ class HospitalViewSet(viewsets.ModelViewSet):
     queryset = models.Hospital.objects.all()
     serializer_class = serializers.HospitalSerializer
     permission_classes = [permissions.IsAdminView]
+    pagination_class = StandardResultsSetPagination
 
 
 class MotherViewSet(viewsets.ModelViewSet):

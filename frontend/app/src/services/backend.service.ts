@@ -1,5 +1,5 @@
 import { tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
@@ -11,35 +11,71 @@ export class BackendService {
 
   baseUrl: string = 'http://localhost:8000/api/'
   authUrl: string = `${this.baseUrl}`
-  hospitalUrl: string = `${this.baseUrl}/hospital`
+  hospitalUrl: string = `${this.baseUrl}hospital`
+  private isAuthenticated = new BehaviorSubject<boolean>(this.hasToken());
+
 
   constructor(private http: HttpClient) { }
+
+  private hasToken(): boolean {
+    return !!localStorage.getItem('token');
+  }
+
+  isLoggedIn(): Observable<boolean> {
+    return this.isAuthenticated.asObservable();
+  }
 
   login(credentials: { username: string | null | undefined, password: string | null | undefined }): Observable<any> {
     return this.http.post(`${this.authUrl}token`, credentials).pipe(
       tap((response: any) => {
         localStorage.setItem('token', response.access);
+        this.isAuthenticated.next(true);
       })
     );
   }
 
   logout(): void {
     localStorage.removeItem('token');
+    this.isAuthenticated.next(false);
   }
 
-  getHospitals(){
-    return this.http.get(this.hospitalUrl);
+  getHospitals(page: number, size: number){
+    return this.http.get(`${this.hospitalUrl}?page=${page}&page_size=${size}`, {
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem('token')}`
+      }
+    });
   }
 
   getHospitalById(hospitalId: string){
-    return this.http.get(`${this.hospitalUrl}/${hospitalId}`);
+    return this.http.get(`${this.hospitalUrl}/${hospitalId}`, {
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem('token')}`
+      }
+    });
   }
 
   addHospital(hospitalData: object){
-    return this.http.post(this.hospitalUrl, hospitalData);
+    return this.http.post(this.hospitalUrl, hospitalData, {
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem('token')}`
+      }
+    });
   }
 
   updateHospital(hospitalId: string, hospitalData: object){
-    return this.http.put(`${this.hospitalUrl}/${hospitalId}`, hospitalData);
+    return this.http.put(`${this.hospitalUrl}/${hospitalId}`, hospitalData, {
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+  }
+
+  deleteHospital(hospitalId: string){
+    return this.http.delete(`${this.hospitalUrl}/${hospitalId}`, {
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem('token')}`
+      }
+    });
   }
 }

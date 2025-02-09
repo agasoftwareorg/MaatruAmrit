@@ -1,6 +1,7 @@
 import { Component, Input, inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {FormGroup, FormControl, Validators, ReactiveFormsModule} from '@angular/forms';
+import { BackendService } from '../../services/backend.service';
 
 
 @Component({
@@ -14,6 +15,7 @@ export class HospitalDetailsComponent {
 
   @Input() type: string = 'NEW';
 
+  hospitalId: string = ''
   hospitalForm = new FormGroup({
       name: new FormControl('', [
         Validators.required,
@@ -36,22 +38,61 @@ export class HospitalDetailsComponent {
     private readonly route = inject(ActivatedRoute);
     private readonly router = inject(Router);
 
+    constructor(private backend: BackendService) {}
+
     ngOnInit() {
-      const hospitalId = this.route.snapshot.paramMap.get('id');
-      console.log(hospitalId);
-      if(this.type == "EDIT"){
-        this.hospitalForm.setValue({
-          'name': 'APOLLO',
-          'address': 'DDE',
-          'branch': 'CE',
-          'contact': '344',
-          'subscription': '1'
+      let hospitalId = this.route.snapshot.paramMap.get('id');
+      if(this.type == "EDIT" && hospitalId){
+        this.hospitalId = hospitalId
+        this.backend.getHospitalById(this.hospitalId).subscribe({
+          next: (data: any) => {
+            this.hospitalForm.setValue({
+              'name': data.name,
+              'address': 'DDE',
+              'branch': 'CE',
+              'contact': '344',
+              'subscription': '1'
+            })
+          },
+          error: (error) => {
+            alert(error.error?.detail);
+          }
         })
+        
       }
     }
 
     createHospital(){
-      console.log(this.hospitalForm.value);
-      this.router.navigate(['hospital'])
+      this.hospitalForm.setErrors(null);
+
+      if (this.hospitalForm.controls.name.invalid) {
+        this.hospitalForm.setErrors({
+          customError: 'Fill a valid name'
+        })
+      } else {
+        let api = undefined
+        if (this.type == "NEW"){
+          api = this.backend.addHospital({
+            name: this.hospitalForm.value?.name,
+            description: this.hospitalForm.value?.name
+          })
+        } else {
+          api = this.backend.updateHospital(this.hospitalId, {
+            name: this.hospitalForm.value?.name,
+            description: this.hospitalForm.value?.name
+          })
+        }
+        
+        api.subscribe({
+          next: () => {
+            this.router.navigate(['hospital'])
+          },
+          error: (error) => {
+            alert(error.error?.detail);
+          }
+        }
+        )
+      }
+      
     }
 }

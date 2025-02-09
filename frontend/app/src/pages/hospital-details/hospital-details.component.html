@@ -50,7 +50,7 @@
             </div>
         </div>
         <div class="text-center">
-            <button type="submit" class="btn ma-btn-brown">
+            <button type="submit" class="btn">
                     @if(type === "NEW"){
                         <i class="bi bi-plus"></i> Add
                     } @else {
@@ -58,6 +58,11 @@
                     }
                     Hospital
                 </button>
+                @if(hospitalForm.hasError('customError')){
+                    <div class="alert alert-danger" role="alert">
+                        {{hospitalForm.errors?.['customError']}}
+                    </div>
+                }
         </div>
     </form>
 

@@ -33,8 +33,6 @@ export class LoginComponent {
 
   login() {
     this.loginForm.setErrors(null);
-    console.log(this.loginForm);
-
     if (this.loginForm.controls.userName.invalid) {
       this.loginForm.setErrors({
         customError: 'Fill a valid username'

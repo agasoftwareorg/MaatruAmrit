@@ -42,18 +42,27 @@ $ma-brown-50: #704b1e;
     color: $ma-brown-50
 }
 
-.ma-btn-brown{
-    color: $ma-white;
-    background-color: $ma-brown;
-}
+// .ma-btn-brown{
+//     color: $ma-white;
+//     background-color: $ma-brown;
+// }
 
-.ma-btn-brown:hover{
-    color: $ma-white;
-    background-color: $ma-brown-50;
-}
+// .ma-btn-brown:hover, .btn:active{
+//     color: $ma-white;
+//     background-color: $ma-brown-50;
+// }
 
 .ma-table-header{
     --bs-table-bg: #{$ma-yellow};
+}
+
+.btn {
+    --bs-btn-color: #{$ma-white};
+    --bs-btn-active-color: #{$ma-white};
+    --bs-btn-hover-color: #{$ma-white};
+    --bs-btn-bg: #{$ma-brown};
+    --bs-btn-active-bg: #{$ma-brown};
+    --bs-btn-hover-bg: #{$ma-brown-50};
 }
 // .ma-text-brown{
 //     color: $ma-brown

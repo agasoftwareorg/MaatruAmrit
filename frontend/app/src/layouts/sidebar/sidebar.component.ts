@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import {RouterOutlet, RouterLink, RouterLinkActive} from '@angular/router';
+import { Component, inject } from '@angular/core';
+import {RouterOutlet, RouterLink, RouterLinkActive, Route, Router} from '@angular/router';
+import { BackendService } from '../../services/backend.service';
 
 
 @Component({
@@ -11,4 +12,12 @@ import {RouterOutlet, RouterLink, RouterLinkActive} from '@angular/router';
 })
 export class SidebarComponent {
 
+  private readonly router = inject(Router);
+
+  constructor(private backend: BackendService){}
+
+  logout(){
+    this.backend.logout()
+    this.router.navigate(["/login"])
+  }
 }
