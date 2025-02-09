@@ -5,28 +5,74 @@
 @import "bootstrap-icons/font/bootstrap-icons.css";
 
 
-$ma-brown: $orange-800;
-$ma-brown-toggle: $orange-600;
-$ma-gray: $gray-300;
+// $ma-brown: $orange-800;
+// $ma-brown-toggle: $orange-600;
+// $ma-gray: $gray-300;
+$ma-yellow: #dfb031;
+$ma-brown: #422400;
+$ma-white: white;
+$ma-black: black;
+$ma-gray: #ebebeb;
+$ma-brown-50: #704b1e;
 
 :root {
-    --ma-brown: #{$ma-brown};
-    --ma-brown-toggle: #{$ma-brown-toggle};
-    --ma-grey: #{$ma-gray};
+    --ma-yellow: #{$ma-yellow};
+    --ma-brown-50: #{$ma-brown-50};
+    // --ma-grey: #{$ma-gray};
 }
 
-.ma-bg-gray{
-    background-color: $ma-gray
-}
+// .ma-bg-gray{
+//     background-color: $ma-gray;
+//     color: rgb(0, 0, 0) 
+// }
 
 .ma-bg-brown{
     background-color: $ma-brown
 }
 
-.ma-text-brown{
-    color: $ma-brown
+.ma-text-white{
+    color: $ma-white
 }
 
-.ma-text-brown-toggle{
-    color: $ma-brown-toggle
+.ma-text-yellow{
+    color: $ma-yellow
+}
+
+.ma-text-brown-50{
+    color: $ma-brown-50
+}
+
+.ma-btn-brown{
+    color: $ma-white;
+    background-color: $ma-brown;
+}
+
+.ma-btn-brown:hover{
+    color: $ma-white;
+    background-color: $ma-brown-50;
+}
+
+.ma-table-header{
+    --bs-table-bg: #{$ma-yellow};
+}
+// .ma-text-brown{
+//     color: $ma-brown
+// }
+
+// .ma-text-brown-toggle{
+//     color: $ma-brown-toggle
+// }
+
+.form-check-input:checked {
+    background-color: var(--ma-brown-50);
+    border-color: var(--ma-brown-50);
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0.25rem 0.1rem var(--ma-yellow);
+    border-color: var(--ma-yellow);
+}
+
+.form-check-input:focus{
+    box-shadow: 0 0 0 0.1rem var(--ma-yellow);
 }

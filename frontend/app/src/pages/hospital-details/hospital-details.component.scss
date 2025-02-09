@@ -1,0 +1,12 @@
+.card-header:first-child {
+    border-radius: 0;
+}
+
+.card{
+    --bs-card-border-radius: 0;
+}
+
+.card-header{
+    background-color: var(--ma-yellow);
+    color: var(--ma-brown-50);
+}

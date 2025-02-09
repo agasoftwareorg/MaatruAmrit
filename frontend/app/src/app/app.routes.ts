@@ -7,6 +7,7 @@ import { AdminLoginComponent } from '../pages/admin-login/admin-login.component'
 import { UserLoginComponent } from '../pages/user-login/user-login.component'
 import { NewUserComponent } from '../pages/new-user/new-user.component'
 import { NewHospitalComponent } from '../pages/new-hospital/new-hospital.component'
+import { EditHospitalComponent } from '../pages/edit-hospital/edit-hospital.component'
 import { HospitalListComponent } from '../pages/hospital-list/hospital-list.component'
 
 
@@ -25,6 +26,7 @@ export const routes: Routes = [
     children: [
       { path: 'hospital', component: HospitalListComponent },
       { path: 'hospital/new', component: NewHospitalComponent },
+      { path: 'hospital/:id', component: EditHospitalComponent },
       { path: 'user/new', component: NewUserComponent }
     ]
   }];
