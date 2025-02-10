@@ -1,0 +1,14 @@
+services:
+  web:
+    build: frontend/.
+    ports:
+      - "4200:4200"
+  api:
+    build: backend/.
+    command: [
+      "sh", "-c", "python manage.py createsuperuser --username shameer --noinput --role ADMIN && python manage.py runserver 0.0.0.0:8000"
+    ]
+    environment:
+        - DJANGO_SUPERUSER_PASSWORD=kamal
+    ports:
+      - "8000:8000"
