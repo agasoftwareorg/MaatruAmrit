@@ -4,9 +4,18 @@ from django.utils.translation import gettext_lazy as _
 
 
 class Hospital(models.Model):
+    class Subscription(models.TextChoices):
+        PLAN_1_YEAR = "PLAN_1_YEAR", _("Plan_1_Year")
+        PLAN_2_YEAR = "PLAN_2_YEAR", _("Plan_2_Year")
+        PLAN_3_YEAR = "PLAN_3_YEAR", _("Plan_3_Year")
+        PLAN_FREE = "PLAN_FREE", _("Plan_Free")
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100, unique=True)
-    description = models.TextField()
+    branch = models.CharField(max_length=100)
+    contact = models.CharField(max_length=100)
+    address = models.TextField()
+    is_analyzer = models.BooleanField()
+    subscription = models.CharField(max_length=50, choices=Subscription)
 
     def __str__(self):
         return self.name

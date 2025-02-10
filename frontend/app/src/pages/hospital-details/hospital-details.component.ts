@@ -30,9 +30,12 @@ export class HospitalDetailsComponent {
       contact: new FormControl('', [
         Validators.required,
       ]),
-      subscription: new FormControl('2', [
+      subscription: new FormControl('PLAN_1_YEAR', [
         Validators.required
       ]),
+      isAnalyzer: new FormControl(false, [
+        Validators.required
+      ])
     })
 
     private readonly route = inject(ActivatedRoute);
@@ -47,11 +50,12 @@ export class HospitalDetailsComponent {
         this.backend.getHospitalById(this.hospitalId).subscribe({
           next: (data: any) => {
             this.hospitalForm.setValue({
-              'name': data.name,
-              'address': 'DDE',
-              'branch': 'CE',
-              'contact': '344',
-              'subscription': '1'
+              name: data.name,
+              address: data.address,
+              branch: data.branch,
+              contact: data.contact,
+              subscription: data.subscription,
+              isAnalyzer: data.is_analyzer
             })
           },
           error: (error) => {
@@ -67,20 +71,22 @@ export class HospitalDetailsComponent {
 
       if (this.hospitalForm.controls.name.invalid) {
         this.hospitalForm.setErrors({
-          customError: 'Fill a valid name'
+          customError: 'Fill all required values'
         })
       } else {
         let api = undefined
+        let payload = {
+          name: this.hospitalForm.value?.name,
+          address: this.hospitalForm.value?.address,
+          branch: this.hospitalForm.value?.branch,
+          contact: this.hospitalForm.value?.contact,
+          subscription: this.hospitalForm.value?.subscription,
+          is_analyzer: this.hospitalForm.value?.isAnalyzer,
+        }
         if (this.type == "NEW"){
-          api = this.backend.addHospital({
-            name: this.hospitalForm.value?.name,
-            description: this.hospitalForm.value?.name
-          })
+          api = this.backend.addHospital(payload)
         } else {
-          api = this.backend.updateHospital(this.hospitalId, {
-            name: this.hospitalForm.value?.name,
-            description: this.hospitalForm.value?.name
-          })
+          api = this.backend.updateHospital(this.hospitalId, payload)
         }
         
         api.subscribe({

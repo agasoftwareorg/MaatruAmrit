@@ -3,30 +3,38 @@
         <div class="card my-4">
             <h5 class="card-header">Hospital Details</h5>
             <div class="card-body">
-                <div class="form-group row py-3">
+                <div class="form-group row py-2">
                     <label for="HospitalName" class="col-2 col-form-label col-form-label">Hospital Name :</label>
                     <div class="col-6">
                         <input formControlName="name" class="form-control form-control" id="HospitalName" placeholder="Hospital Name">
                     </div>
                 </div>
-                <div class="form-group row py-3">
+                <div class="form-group row py-2">
                     <label for="HospitalAddress" class="col-2 col-form-label col-form-label">Address :</label>
                     <div class="col-6">
                         <input formControlName="address" class="form-control form-control" id="HospitalAddress" placeholder="Address">
                     </div>
                 </div>
-                <div class="form-group row py-3">
+                <div class="form-group row py-2">
                     <label for="Branch" class="col-2 col-form-label col-form-label">Branch :</label>
                     <div class="col-6">
                         <input formControlName="branch" class="form-control form-control" id="Branch" placeholder="Branch">
                     </div>
                 </div>
-                <div class="form-group row py-3">
+                <div class="form-group row py-2">
                     <label for="Contact" class="col-2 col-form-label col-form-label">Contact :</label>
                     <div class="col-6">
                         <input formControlName="contact" class="form-control form-control" id="Contact" placeholder="Contact">
                     </div>
                 </div>
+                <div class="form-group row py-2">
+                    <label for="flexCheckDefault" class="col-2 col-form-label col-form-label">Analyzer :</label>
+                    <div class="col-6">
+                        <input formControlName="isAnalyzer" class="form-check-input" type="checkbox" value="false" id="flexCheckDefault">
+                        <!-- <input formControlName="contact" class="form-control form-control" id="Contact" placeholder="Contact"> -->
+                    </div>
+                </div>
+                
             </div>
         </div>
         <div class="card my-4">
@@ -34,18 +42,23 @@
             <div class="card-body">
                     <div class="form-check form-check-inline">
                         <input formControlName="subscription"  class="form-check-input" type="radio" name="subscription"
-                            id="inlineRadio1" value="1">
+                            id="inlineRadio1" value="PLAN_1_YEAR">
                         <label class="form-check-label" for="inlineRadio1">1 Year Plan</label>
                     </div>
                     <div class="form-check form-check-inline">
                         <input formControlName="subscription"  class="form-check-input" type="radio" name="subscription" id="inlineRadio2"
-                            value="2">
+                            value="PLAN_2_YEAR">
                         <label class="form-check-label" for="inlineRadio2">2 Year Plan</label>
                     </div>
                     <div class="form-check form-check-inline">
                         <input formControlName="subscription"  class="form-check-input" type="radio" name="subscription" id="inlineRadio3"
-                            value="3">
+                            value="PLAN_3_YEAR">
                         <label class="form-check-label" for="inlineRadio3">3 Year Plan</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input formControlName="subscription"  class="form-check-input" type="radio" name="subscription" id="inlineRadio4"
+                            value="PLAN_FREE">
+                        <label class="form-check-label" for="inlineRadio4">Forever Free</label>
                     </div>
             </div>
         </div>
