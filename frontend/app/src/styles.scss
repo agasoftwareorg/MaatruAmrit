@@ -85,3 +85,34 @@ $ma-brown-50: #704b1e;
 .form-check-input:focus{
     box-shadow: 0 0 0 0.1rem var(--ma-yellow);
 }
+
+.card-header:first-child {
+    border-radius: 0;
+}
+
+.card{
+    --bs-card-border-radius: 0;
+}
+
+.card-header{
+    background-color: var(--ma-yellow);
+    color: var(--ma-brown-50);
+}
+
+
+.table-border{
+    border: 1px groove black;
+    border-bottom: 0;
+    border-top: 0;
+    border-left: 0;
+}
+
+.pagination{
+    --bs-pagination-padding-x: 1rem;
+    --bs-pagination-color: black;
+    --bs-pagination-active-color: white;
+    --bs-pagination-hover-color: var(--ma-brown-50);
+    --bs-pagination-active-bg: var(--ma-brown-50);
+    --bs-pagination-bg: white;
+    --bs-pagination-active-border-color: var(--ma-brown-50)
+}

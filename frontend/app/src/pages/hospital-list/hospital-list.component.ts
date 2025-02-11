@@ -25,13 +25,15 @@ export class HospitalListComponent {
     this.listHospitals()
   }
 
-  listHospitals() {
+  listHospitals(reset_page: boolean = true) {
     this.backend.getHospitals(this.page_number, this.page_size).subscribe({
       next: (data: any) => {
         this.hospitals = data?.results || [];
-        this.pages = []
-        for (let i = 1; i <= (this.hospitals.length / this.page_size) + 1; i++) {
-          this.pages.push(i)
+        if(reset_page){
+          this.pages = []
+          for (let i = 1; i <= (this.hospitals.length / this.page_size) + 1; i++) {
+            this.pages.push(i)
+          }
         }
       },
       error: (error) => {
@@ -56,21 +58,21 @@ export class HospitalListComponent {
   nextPage() {
     if (this.page_number < this.pages.length) {
       this.page_number += 1
-      this.listHospitals()
+      this.listHospitals(false)
     }
   }
 
   previousPage() {
     if (this.page_number > 1) {
       this.page_number -= 1
-      this.listHospitals()
+      this.listHospitals(false)
     }
   }
 
   changePage(page: number) {
     if (this.page_number != page) {
       this.page_number = page
-      this.listHospitals()
+      this.listHospitals(false)
     }
   }
 }

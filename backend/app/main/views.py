@@ -20,6 +20,7 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAdminView]
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['role', 'hospital']
+    pagination_class = StandardResultsSetPagination
 
 
 class HospitalViewSet(viewsets.ModelViewSet):

@@ -10,6 +10,7 @@ import { NewHospitalComponent } from '../pages/new-hospital/new-hospital.compone
 import { EditHospitalComponent } from '../pages/edit-hospital/edit-hospital.component'
 import { HospitalListComponent } from '../pages/hospital-list/hospital-list.component'
 import { authGuard, authGuardReverse } from '../services/auth.guard';
+import { UserListComponent } from '../pages/user-list/user-list.component';
 
 
 export const routes: Routes = [
@@ -28,6 +29,7 @@ export const routes: Routes = [
       { path: 'hospital', component: HospitalListComponent },
       { path: 'hospital/new', component: NewHospitalComponent },
       { path: 'hospital/:id', component: EditHospitalComponent },
+      { path: 'hospital/:id/users', component: UserListComponent },
       { path: 'user/new', component: NewUserComponent }
     ],
     canActivate: [authGuard]

@@ -12,6 +12,7 @@ export class BackendService {
   baseUrl: string = 'http://localhost:8000/api/'
   authUrl: string = `${this.baseUrl}`
   hospitalUrl: string = `${this.baseUrl}hospital`
+  userUrl: string = `${this.baseUrl}user`
   private isAuthenticated = new BehaviorSubject<boolean>(this.hasToken());
 
 
@@ -73,6 +74,46 @@ export class BackendService {
 
   deleteHospital(hospitalId: string){
     return this.http.delete(`${this.hospitalUrl}/${hospitalId}`, {
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+  }
+
+  getUsers(hospitalId: string | null, page: number=1, size: number=50){
+    return this.http.get(`${this.userUrl}?hospital=${hospitalId}&page=${page}&page_size=${size}`, {
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+  }
+
+  getUserById(userId: string){
+    return this.http.get(`${this.userUrl}/${userId}`, {
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+  }
+
+  addUser(data: object){
+    return this.http.post(this.userUrl, data, {
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+  }
+
+  updateUser(userId: string, data: object){
+    return this.http.put(`${this.userUrl}/${userId}`, data, {
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+  }
+
+  deleteUser(userId: string){
+    return this.http.delete(`${this.userUrl}/${userId}`, {
       headers: {
         "Authorization": `Bearer ${localStorage.getItem('token')}`
       }

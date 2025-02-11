@@ -1,0 +1,121 @@
+<app-header title="Users List"></app-header>
+<div class="container-fluid">
+    <div class="card">
+        <h5 class="card-header">Create Login</h5>
+        <div class="card-body">
+            <form [formGroup]="userForm">
+                <div class="form-group row py-1">
+                    <label for="name" class="col-2 col-form-label col-form-label">User Name :</label>
+                    <div class="col-6">
+                        <input formControlName="username" class="form-control form-control" id="name"
+                            placeholder="User Name">
+                    </div>
+                </div>
+                <div class="form-group row py-1">
+                    <label for="password" class="col-2 col-form-label col-form-label">Password :</label>
+                    <div class="col-6">
+                        <input formControlName="password" class="form-control form-control" id="password"
+                            placeholder="Password" type="password">
+                    </div>
+                </div>
+                <div class="form-group row py-1">
+                    <label for="Role" class="col-2 col-form-label col-form-label">Role :</label>
+                    <div class="col-6">
+                        <select class="form-select" name="Role" id="Role" formControlName="role">
+                            <option  value="HOSPITAL_ADMIN">Admin</option>
+                            <option value="HOSPITAL_USER">User</option>
+                        </select>
+                        <!-- <input formControlName="address" class="form-control form-control" id="HospitalAddress" placeholder="Address"> -->
+                    </div>
+                </div>
+                <div class="text-center py-1">
+                    <button type="submit" class="btn" (click)="createUser()">
+                        <i class="bi bi-plus"></i> 
+                        @if(userForm.value.userId){
+                            Update Login
+                        } @else {
+                            Add Login
+                        }
+                    </button>
+                    <button class="btn mx-2" (click)="resetUser()">
+                        <i class="bi bi-arrow-clockwise"></i> Reset
+                    </button>
+                    @if(userForm.hasError('customError')){
+                    <div class="alert alert-danger" role="alert">
+                        {{userForm.errors?.['customError']}}
+                    </div>
+                    }
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row px-3">
+        <div class="table-responsive table-container">
+            <table class="table table-sm table-hover">
+                <thead>
+                    <tr class="ma-table-header border border-secondary">
+                        <th scope="col">
+                            <p class="table-border">User ID</p>
+                        </th>
+                        <th scope="col">
+                            <p class="table-border">User Name</p>
+                        </th>
+                        <th scope="col">
+                            <p class="table-border">Role</p>
+                        </th>
+                        <th scope="col">
+                            <p class="">Action</p>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (user of users; track user?.id) {
+
+                    <tr>
+                        <td scope="row">
+                            <p class="table-border">{{user.id}}</p>
+                        </td>
+                        <td>
+                            <p class="table-border">{{user.username}}</p>
+                        </td>
+                        <td>
+                            <p class="table-border">
+                                @if(user.role === 'HOSPITAL_ADMIN') {
+                                Admin
+                                } @else {
+                                User
+                                }
+                            </p>
+                        </td>
+                        <td>
+                            <p class="d-flex">
+                                <a class="px-2" (click)="editUser(user)">
+                                    <i class="bi bi-pencil ma-text-brown-50"></i>
+                                </a>
+                                <a type="button" (click)="deleteUser(user.id)" class="px-2">
+                                    <i class="bi bi-trash ma-text-brown-50"></i>
+                                </a>
+                            </p>
+                        </td>
+                    </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row py-3">
+        <ul type="button" class="pagination justify-content-end">
+            <li [class.disabled]="page_number === 1" class="page-item" (click)="previousPage()">
+                <a class="page-link" tabindex="-1">Previous</a>
+            </li>
+            @for (page of pages;track page){
+            <li [class.active]="page_number === page" class="page-item" (click)="changePage(page)"><a
+                    class="page-link">{{page}}</a></li>
+            }
+            <li [class.disabled]="page_number === pages.length" class="page-item" (click)="nextPage()">
+                <a class="page-link">Next</a>
+            </li>
+        </ul>
+    </div>
+</div>

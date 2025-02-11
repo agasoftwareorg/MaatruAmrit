@@ -63,6 +63,9 @@
                                 <a type="button" (click)="deleteHospital(hospital.id)" class="p-2">
                                     <i class="bi bi-trash ma-text-brown-50"></i>
                                 </a>
+                                <a type="button" [routerLink]="[hospital.id, 'users']" class="p-2">
+                                    <i class="bi bi-people ma-text-brown-50"></i>
+                                </a>
                             </p>
                         </td>
                     </tr>
