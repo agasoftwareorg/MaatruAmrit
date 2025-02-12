@@ -30,6 +30,10 @@ $ma-brown-50: #704b1e;
     background-color: $ma-brown
 }
 
+.ma-bg-brown-50{
+    background-color: $ma-brown-50
+}
+
 .ma-text-white{
     color: $ma-white
 }
@@ -63,6 +67,9 @@ $ma-brown-50: #704b1e;
     --bs-btn-bg: #{$ma-brown};
     --bs-btn-active-bg: #{$ma-brown};
     --bs-btn-hover-bg: #{$ma-brown-50};
+    --bs-btn-disabled-bg: #{$ma-brown-50};
+    --bs-btn-disabled-color: #{$ma-black};
+
 }
 // .ma-text-brown{
 //     color: $ma-brown

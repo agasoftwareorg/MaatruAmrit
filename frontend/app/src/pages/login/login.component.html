@@ -9,7 +9,7 @@
             <div class="login-card w-100">
                 <h2 class="ma-text-yellow">Welcome.. {{type}}!</h2>
                 <br><br>
-                <form [formGroup]="loginForm" (ngSubmit)="login()">
+                <form  [formGroup]="loginForm" (ngSubmit)="login()">
                     <div class="mb-3 input-group">
                         <span class="input-group-text bg-white"><i class="bi bi-person"></i></span>
                         <input type="text" formControlName="userName" class="form-control" placeholder="User Name" required>
@@ -19,7 +19,7 @@
                         <input type="password" formControlName="password" class="form-control" placeholder="Password" required>
                     </div>
                     
-                    <button type="submit" class="my-4 w-100 btn">Log in</button>
+                    <button [disabled]="disableSubmit" type="submit" class="my-4 w-100 btn">Log in</button>
                     @if(loginForm.hasError('customError')){
                         <div class="alert alert-danger" role="alert">
                             {{loginForm.errors?.['customError']}}

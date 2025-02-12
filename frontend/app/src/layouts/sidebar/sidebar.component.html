@@ -2,17 +2,19 @@
     <div class="row vh-100">
         <div class="col-2 ma-sidebar p-0 ma-bg-brown text-light">
             <div class="text-center">
-                <nav class="navbar">
+                <nav class="navbar col px-2">
                     <a class="navbar-brand" routerLink="hospital">
                         <i class="bi bi-plus-circle-fill px-2"></i>Maatru Amrit</a>
                 </nav>
-                <hr>
-                <nav class="navbar">
-                    <ul class="navbar-nav">
+            </div>
+            <hr>
+            <nav class="navbar text-center">
+                <ul class="navbar-nav">
+                    @if(userRole === 'ADMIN'){
                         <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                             <a class="nav-link d-flex" routerLink="hospital">
                                 <i class="bi bi-hospital px-2"></i>
-                                <span>Hospital List</span>
+                                <div>Hospital List</div>
                             </a>
                         </li>
                         <hr class="my-1">
@@ -23,23 +25,33 @@
                             </a>
                         </li>
                         <hr class="my-1">
-                        <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                            <a class="nav-link d-flex" routerLink="user/new" >
-                                <i class="bi bi-person-plus px-2"></i>
-                                <span>Create Login</span>
+                    } @else {
+
+                        <li class="nav-item" routerLinkActive="active">
+                            <a class="nav-link d-flex" routerLink="/batch">
+                                <i class="bi bi-shield-plus px-2"></i>
+                                <span>Batch List</span>
                             </a>
                         </li>
                         <hr class="my-1">
-                    </ul>
-                </nav>
-                <!-- <div class="py-2 menu active"><i class="bi bi-hospital"></i></div>
-                <hr class="my-1">
-                <div class="py-2 menu"><i class="bi bi-shield-plus"></i></div>
-                <hr class="my-1">
-                <div class="py-2 menu"><i class="bi bi-person-plus"></i>Create Login</div>
-                <hr class="my-1"> -->
-            </div>
-
+                        <li class="nav-item" routerLinkActive="active">
+                            <a class="nav-link d-flex" routerLink="/mother">
+                                <i class="bi bi-shield-plus px-2"></i>
+                                <span>Mother List</span>
+                            </a>
+                        </li>
+                        <hr class="my-1">
+                        <li class="nav-item" routerLinkActive="active">
+                            <a class="nav-link d-flex" routerLink="/baby">
+                                <i class="bi bi-shield-plus px-2"></i>
+                                <span>Baby List</span>
+                            </a>
+                        </li>
+                        <hr class="my-1">
+                    }
+                </ul>
+            </nav>
+            
             <!-- Empty Spacer (Pushes Logout to Bottom) -->
             <div></div>
 
@@ -64,3 +76,4 @@
         </div>
     </div>
 </div>
+<app-toast aria-live="polite" aria-atomic="true"></app-toast>

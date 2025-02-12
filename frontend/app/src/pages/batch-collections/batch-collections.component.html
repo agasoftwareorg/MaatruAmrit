@@ -1,0 +1,127 @@
+<app-header title="Batch Collections"></app-header>
+<div class="container-fluid">
+    <div class="row px-3">
+        <div class="table-responsive table-container">
+            <table class="table table-sm table-hover">
+                <thead>
+                    <tr class="ma-table-header border border-secondary">
+                        <th scope="col">
+                            <p class="table-border">Collection ID</p>
+                        </th>
+                        <th scope="col">
+                            <p class="table-border">Mother ID</p>
+                        </th>
+                        <th scope="col">
+                            <p class="table-border">Quantity</p>
+                        </th>
+                        <th scope="col">
+                            <p class="">Action</p>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (collection of collections; track collection?.id) {
+
+                    <tr>
+                        <td scope="row">
+                            <p class="table-border">{{collection.id}}</p>
+                        </td>
+                        <td>
+                            <p class="table-border">{{collection.mother}}</p>
+                        </td>
+                        <td>
+                            <p class="table-border">{{collection.quantity}}</p>
+                        </td>
+                        <td>
+                            <p class="d-flex">
+                                <a type="button" (click)="deleteCollection(collection.id)" class="px-2">
+                                    <i class="bi bi-trash ma-text-brown-50"></i>
+                                </a>
+                            </p>
+                        </td>
+                    </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row py-3">
+        <ul type="button" class="pagination justify-content-end">
+            <li [class.disabled]="c_page_number === 1" class="page-item" (click)="previousCollectionPage()">
+                <a class="page-link" tabindex="-1">Previous</a>
+            </li>
+            @for (page of c_pages;track page){
+            <li [class.active]="c_page_number === page" class="page-item" (click)="changeCollectionPage(page)"><a
+                    class="page-link">{{page}}</a></li>
+            }
+            <li [class.disabled]="c_page_number === c_pages.length" class="page-item" (click)="nextCollectionPage()">
+                <a class="page-link">Next</a>
+            </li>
+        </ul>
+    </div>
+    <div class="row px-3">
+        <div class="table-responsive table-container">
+            <table class="table table-sm table-hover">
+                <thead>
+                    <tr class="ma-table-header border border-secondary">
+                        <th scope="col">
+                            <p class="table-border">Mother ID</p>
+                        </th>
+                        <th scope="col">
+                            <p class="table-border">Name</p>
+                        </th>
+                        <th scope="col">
+                            <p class="table-border">Milk Available</p>
+                        </th>
+                        <th scope="col">
+                            <p class="">Action</p>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (mother of mothers; track mother?.id) {
+
+                    <tr>
+                        <td scope="row">
+                            <p class="table-border">{{mother.id}}</p>
+                        </td>
+                        <td>
+                            <p class="table-border">{{mother.name}}</p>
+                        </td>
+                        <td>
+                            <p class="table-border">{{mother.available_quantity}}</p>
+                        </td>
+                        <td>
+                            <p class="d-flex">
+                                <input type="number" class="mx-2" [(ngModel)]="mother.input_quantity">
+                                <button type="submit" class="btn d-flex" (click)="createCollection(mother)">
+                                    <i class="bi bi-plus-circle px-2"></i>Add
+                                </button>
+                                <!-- <a type="button" (click)="deleteCollection('sh')" class="px-2">
+                                    <i class="bi bi-plus-circle-fill ma-text-brown-50"></i>
+                                </a> -->
+                            </p>
+                        </td>
+                    </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row py-3">
+        <ul type="button" class="pagination justify-content-end">
+            <li [class.disabled]="m_page_number === 1" class="page-item" (click)="previousMotherPage()">
+                <a class="page-link" tabindex="-1">Previous</a>
+            </li>
+            @for (page of c_pages;track page){
+            <li [class.active]="m_page_number === page" class="page-item" (click)="changeMotherPage(page)"><a
+                    class="page-link">{{page}}</a></li>
+            }
+            <li [class.disabled]="m_page_number === m_pages.length" class="page-item" (click)="nextMotherPage()">
+                <a class="page-link">Next</a>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,93 @@
+<app-header title="Baby List"></app-header>
+<div class="container-fluid main-page">
+    
+    <div class="row py-2 justify-content-end">
+        <!-- Search Input -->
+        <!-- <div class="col d-none">
+            <div class="input-group">
+                <input type="text" class="form-control border-start-0" placeholder="Search" aria-label="Search" />
+            </div>
+        </div> -->
+
+        <!-- Add New Button -->
+        <div class="col-3 d-flex justify-content-end">
+            <button class="btn" routerLink="new" >
+                 <i class="bi bi-plus-circle"></i>
+                Add New
+            </button>
+        </div>
+    </div>
+    <div class="row px-3">
+        <div class="table-responsive table-container">
+            <table class="table table-hover">
+                <thead>
+                    <tr class="ma-table-header border border-secondary">
+                        <th scope="col">
+                            <p class="p-1 m-1 table-border">Baby ID</p>
+                        </th>
+                        <th scope="col">
+                            <p class="p-1 m-1 table-border">Name</p>
+                        </th>
+                        <th scope="col">
+                            <p class="p-1 m-1 table-border">Mother Name</p>
+                        </th>
+                        <th scope="col">
+                            <p class="p-1 m-1 table-border">Weight</p>
+                        </th>
+                        <th scope="col">
+                            <p class="p-1 m-1">Action</p>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (baby of babies; track baby?.id) {
+
+                    <tr>
+                        <td scope="row">
+                            <p class="p-1 m-1 table-border">{{baby.id}}</p>
+                        </td>
+                        <td>
+                            <p class="p-1 m-1 table-border">{{baby.name}}</p>
+                        </td>
+                        <td>
+                            <p class="p-1 m-1 table-border">S</p>
+                        </td>
+                        <td>
+                            <p class="p-1 m-1 table-border">B</p>
+                        </td>
+                        <td>
+                            <p class="d-flex">
+                                <a [routerLink]="baby.id" class="p-2">
+                                    <i class="bi bi-pencil ma-text-brown-50"></i>
+                                </a>
+                                <a type="button" (click)="deleteBaby(baby.id)" class="p-2">
+                                    <i class="bi bi-trash ma-text-brown-50"></i>
+                                </a>
+                                <a type="button" [routerLink]="[baby.id, 'dispatches']" class="p-2">
+                                    <i class="bi bi-droplet ma-text-brown-50"></i>
+                                </a>
+                            </p>
+                        </td>
+                    </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row"></div>
+    <div class="row py-3">
+            <ul type="button" class="pagination justify-content-end">
+              <li [class.disabled]="page_number === 1" class="page-item" (click)="previousPage()">
+                <a class="page-link" tabindex="-1">Previous</a>
+              </li>
+              @for (page of pages;track page){
+                <li [class.active]="page_number === page" class="page-item" (click)="changePage(page)"><a class="page-link">{{page}}</a></li>
+              }
+              <li [class.disabled]="page_number === pages.length" class="page-item" (click)="nextPage()">
+                <a class="page-link">Next</a>
+              </li>
+            </ul>
+    </div>
+</div>
+

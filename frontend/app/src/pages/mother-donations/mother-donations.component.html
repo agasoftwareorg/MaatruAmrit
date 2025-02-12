@@ -1,0 +1,92 @@
+<app-header title="Donations"></app-header>
+<div class="container-fluid">
+    <div class="card">
+        <h5 class="card-header">New Donation</h5>
+        <div class="card-body">
+            <form [formGroup]="donationForm">
+                <div class="form-group row py-1">
+                    <label for="quantity" class="col-2 col-form-label col-form-label">Milk (ml) :</label>
+                    <div class="col-6">
+                        <input formControlName="quantity" class="form-control form-control" id="quantity"
+                            placeholder="Quantity of milk donated">
+                    </div>
+                </div>
+                <div class="text-center py-1">
+                    <button type="submit" class="btn" (click)="createDonation()">
+                        <i class="bi bi-plus"></i> 
+                        @if(donationForm.value.donationId){
+                            Update Donation
+                        } @else {
+                            Add Donation
+                        }
+                    </button>
+                    <button class="btn mx-2" (click)="resetDonation()">
+                        <i class="bi bi-arrow-clockwise"></i> Reset
+                    </button>
+                    @if(donationForm.hasError('customError')){
+                    <div class="alert alert-danger" role="alert">
+                        {{donationForm.errors?.['customError']}}
+                    </div>
+                    }
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row px-3">
+        <div class="table-responsive table-container">
+            <table class="table table-sm table-hover">
+                <thead>
+                    <tr class="ma-table-header border border-secondary">
+                        <th scope="col">
+                            <p class="table-border">Donation ID</p>
+                        </th>
+                        <th scope="col">
+                            <p class="table-border">Quantity</p>
+                        </th>
+                        <th scope="col">
+                            <p class="">Action</p>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (donation of donations; track donation?.id) {
+
+                    <tr>
+                        <td scope="row">
+                            <p class="table-border">{{donation.id}}</p>
+                        </td>
+                        <td>
+                            <p class="table-border">{{donation.quantity}}</p>
+                        </td>
+                        <td>
+                            <p class="d-flex">
+                                <a class="px-2" (click)="editDonation(donation)">
+                                    <i class="bi bi-pencil ma-text-brown-50"></i>
+                                </a>
+                                <a type="button" (click)="deleteDonation(donation.id)" class="px-2">
+                                    <i class="bi bi-trash ma-text-brown-50"></i>
+                                </a>
+                            </p>
+                        </td>
+                    </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row py-3">
+        <ul type="button" class="pagination justify-content-end">
+            <li [class.disabled]="page_number === 1" class="page-item" (click)="previousPage()">
+                <a class="page-link" tabindex="-1">Previous</a>
+            </li>
+            @for (page of pages;track page){
+            <li [class.active]="page_number === page" class="page-item" (click)="changePage(page)"><a
+                    class="page-link">{{page}}</a></li>
+            }
+            <li [class.disabled]="page_number === pages.length" class="page-item" (click)="nextPage()">
+                <a class="page-link">Next</a>
+            </li>
+        </ul>
+    </div>
+</div>

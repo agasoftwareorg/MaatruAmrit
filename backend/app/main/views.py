@@ -1,4 +1,6 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, mixins
+from rest_framework.decorators import action
+from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 from django_filters.rest_framework import DjangoFilterBackend
 
@@ -23,6 +25,17 @@ class UserViewSet(viewsets.ModelViewSet):
     pagination_class = StandardResultsSetPagination
 
 
+class CurrentUserViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+    serializer_class = serializers.UserSerializer
+    permission_classes = [permissions.IsAuthenticatedView]
+
+    @action(detail=False, methods=['get'], name="Current User")
+    def user(self, request):
+        user = request.user
+        serializer = self.get_serializer(user)
+        return Response(serializer.data)
+
+
 class HospitalViewSet(viewsets.ModelViewSet):
     queryset = models.Hospital.objects.all()
     serializer_class = serializers.HospitalSerializer
@@ -35,11 +48,13 @@ class MotherViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.MotherSerializer
     filter_backends = [filters.HospitalFilterBackend]
     permission_classes = [permissions.IsUserView]
+    pagination_class = StandardResultsSetPagination
 
 
 class DonationViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.DonationSerializer
     permission_classes = [permissions.IsUserView]
+    pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
         mother = self.kwargs['mother']
@@ -51,6 +66,7 @@ class ChildViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.ChildSerializer
     filter_backends = [filters.HospitalFilterBackend]
     permission_classes = [permissions.IsUserView]
+    pagination_class = StandardResultsSetPagination
 
 
 class BatchViewSet(viewsets.ModelViewSet):
@@ -58,11 +74,13 @@ class BatchViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.BatchSerializer
     filter_backends = [filters.HospitalFilterBackend]
     permission_classes = [permissions.IsUserView]
+    pagination_class = StandardResultsSetPagination
 
 
 class CollectionViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.CollectionSerializer
     permission_classes = [permissions.IsUserView]
+    pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
         batch = self.kwargs['batch']
@@ -72,7 +90,8 @@ class CollectionViewSet(viewsets.ModelViewSet):
 class DispatchViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.DispatchSerializer
     permission_classes = [permissions.IsUserView]
+    pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
-        batch = self.kwargs['batch']
-        return models.Dispatch.objects.filter(batch=batch)
+        child = self.kwargs['child']
+        return models.Dispatch.objects.filter(child=child)

@@ -3,6 +3,12 @@ from rest_framework.permissions import BasePermission
 from .logger import log
 
 
+class IsAuthenticatedView(BasePermission):
+
+    def has_permission(self, request, view):
+        return request.user.is_authenticated
+
+
 class IsAdminView(BasePermission):
 
     def has_permission(self, request, view):

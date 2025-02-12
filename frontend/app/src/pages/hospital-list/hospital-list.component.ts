@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 import { HeaderComponent } from '../../layouts/header/header.component';
 import { BackendService } from '../../services/backend.service';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { ToastService } from '../../services/toast.service';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class HospitalListComponent {
   hospitals: any = []
   pages: any = []
 
-  constructor(private backend: BackendService) { }
+  constructor(private backend: BackendService, private toast: ToastService) { }
 
   ngOnInit() {
     this.listHospitals()
@@ -37,7 +38,7 @@ export class HospitalListComponent {
         }
       },
       error: (error) => {
-        alert(error.error?.detail);
+        this.toast.showError(error.error);
       }
     }
     )
@@ -49,7 +50,7 @@ export class HospitalListComponent {
         this.listHospitals()
       },
       error: (error) => {
-        alert(error.error?.detail);
+        this.toast.showError(error.error);
       }
     }
     )

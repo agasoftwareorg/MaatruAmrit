@@ -1,0 +1,124 @@
+<app-header title="Baby Dispatches"></app-header>
+<div class="container-fluid">
+    <div class="row px-3">
+        <div class="table-responsive table-container">
+            <table class="table table-sm table-hover">
+                <thead>
+                    <tr class="ma-table-header border border-secondary">
+                        <th scope="col">
+                            <p class="table-border">Dispatch ID</p>
+                        </th>
+                        <th scope="col">
+                            <p class="table-border">Batch ID</p>
+                        </th>
+                        <th scope="col">
+                            <p class="table-border">Quantity</p>
+                        </th>
+                        <th scope="col">
+                            <p class="">Action</p>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (dispatch of dispatches; track dispatch?.id) {
+
+                    <tr>
+                        <td scope="row">
+                            <p class="table-border">{{dispatch.id}}</p>
+                        </td>
+                        <td>
+                            <p class="table-border">{{dispatch.batch}}</p>
+                        </td>
+                        <td>
+                            <p class="table-border">{{dispatch.quantity}}</p>
+                        </td>
+                        <td>
+                            <p class="d-flex">
+                                <a type="button" (click)="deleteDispatch(dispatch.id)" class="px-2">
+                                    <i class="bi bi-trash ma-text-brown-50"></i>
+                                </a>
+                            </p>
+                        </td>
+                    </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row py-3">
+        <ul type="button" class="pagination justify-content-end">
+            <li [class.disabled]="d_page_number === 1" class="page-item" (click)="previousDispatchPage()">
+                <a class="page-link" tabindex="-1">Previous</a>
+            </li>
+            @for (page of d_pages;track page){
+            <li [class.active]="d_page_number === page" class="page-item" (click)="changeDispatchPage(page)"><a
+                    class="page-link">{{page}}</a></li>
+            }
+            <li [class.disabled]="d_page_number === d_pages.length" class="page-item" (click)="nextDispatchPage()">
+                <a class="page-link">Next</a>
+            </li>
+        </ul>
+    </div>
+    <div class="row px-3">
+        <div class="table-responsive table-container">
+            <table class="table table-sm table-hover">
+                <thead>
+                    <tr class="ma-table-header border border-secondary">
+                        <th scope="col">
+                            <p class="table-border">Batch ID</p>
+                        </th>
+                        <th scope="col">
+                            <p class="table-border">Name</p>
+                        </th>
+                        <th scope="col">
+                            <p class="table-border">Milk Available</p>
+                        </th>
+                        <th scope="col">
+                            <p class="">Action</p>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (batch of batches; track batch?.id) {
+
+                    <tr>
+                        <td scope="row">
+                            <p class="table-border">{{batch.id}}</p>
+                        </td>
+                        <td>
+                            <p class="table-border">{{batch.name}}</p>
+                        </td>
+                        <td>
+                            <p class="table-border">{{batch.available_quantity}}</p>
+                        </td>
+                        <td>
+                            <p class="d-flex">
+                                <input type="number" class="mx-2" [(ngModel)]="batch.input_quantity">
+                                <button type="submit" class="btn d-flex" (click)="createDispatch(batch)">
+                                    <i class="bi bi-plus-circle px-2"></i>Add
+                                </button>
+                            </p>
+                        </td>
+                    </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row py-3">
+        <ul type="button" class="pagination justify-content-end">
+            <li [class.disabled]="b_page_number === 1" class="page-item" (click)="previousBatchPage()">
+                <a class="page-link" tabindex="-1">Previous</a>
+            </li>
+            @for (page of b_pages;track page){
+            <li [class.active]="b_page_number === page" class="page-item" (click)="changeBatchPage(page)"><a
+                    class="page-link">{{page}}</a></li>
+            }
+            <li [class.disabled]="b_page_number === b_pages.length" class="page-item" (click)="nextBatchPage()">
+                <a class="page-link">Next</a>
+            </li>
+        </ul>
+    </div>
+</div>
