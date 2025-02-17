@@ -1,36 +1,130 @@
 <div class="container-fluid">
     <form [formGroup]="motherForm" (ngSubmit)="createMother()">
         <div class="card my-4">
-            <h5 class="card-header">Mother Details</h5>
+            <h5 class="card-header">Mother Registration Form</h5>
+            <div class="card-body">
+                <div class="form-group row py-2">
+                    <label for="reg_num" class="col-2 col-form-label col-form-label">Registration Number :</label>
+                    <div class="col-4">
+                        <input formControlName="regNumber" class="form-control form-control" id="reg_num"
+                            placeholder="Registration Number">
+                    </div>
+                    <label for="reg_date" class="col-2 col-form-label col-form-label">Date :</label>
+                    <div class="col-4">
+                        <input formControlName="regDate" id="reg_date" class="form-control" type="date" />
+                    </div>
+                </div>
+            </div>
+            <h6 class="card-header">Mother Details</h6>
             <div class="card-body">
                 <div class="form-group row py-2">
                     <label for="name" class="col-2 col-form-label col-form-label">Name :</label>
                     <div class="col-6">
-                        <input formControlName="name" class="form-control form-control" id="name" placeholder="Mother Name">
+                        <input formControlName="name" class="form-control form-control" id="name"
+                            placeholder="Mother Name">
                     </div>
                 </div>
                 <div class="form-group row py-2">
                     <label for="age" class="col-2 col-form-label col-form-label">Age :</label>
+                    <div class="col-1">
+                        <input formControlName="age" class="form-control form-control" id="age">
+                    </div>
+                    <label for="weight" class="col-2 col-form-label col-form-label">Weight (kg):</label>
+                    <div class="col-1">
+                        <input formControlName="weight" class="form-control form-control" id="weight">
+                    </div>
+                    <label for="height" class="col-2 col-form-label col-form-label">Height (cm):</label>
+                    <div class="col-1">
+                        <input formControlName="height" class="form-control form-control" id="height">
+                    </div>
+                </div>
+                <div class="form-group row py-2">
+                    <label for="education" class="col-2 col-form-label col-form-label">Education :</label>
                     <div class="col-6">
-                        <input formControlName="age" class="form-control form-control" id="age" placeholder="Age">
+                        <input formControlName="education" class="form-control form-control" id="education"
+                            placeholder="Education">
+                    </div>
+                </div>
+            </div>
+            <h6 class="card-header">Delivery Details</h6>
+            <div class="card-body">
+                <div class="form-group row py-2">
+                    <label for="del_mode" class="col-2 col-form-label col-form-label">Mode of Delivery:</label>
+                    <div class="col-4">
+                        <input formControlName="deliveryMode" class="form-control form-control" id="del_mode"
+                            placeholder="Mode of Delivery">
+                    </div>
+                    <label for="del_date" class="col-2 col-form-label col-form-label">Delivery Date :</label>
+                    <div class="col-4">
+                        <input formControlName="deliveryDate" id="del_date" class="form-control" type="date" />
+                    </div>
+                </div>
+            </div>
+            <h6 class="card-header">Contact Details</h6>
+            <div class="card-body">
+                <div class="form-group row py-2">
+                    <label for="rel_name" class="col-2 col-form-label col-form-label">Relative Name:</label>
+                    <div class="col-4">
+                        <input formControlName="relativeName" class="form-control form-control" id="rel_name"
+                            placeholder="Name">
+                    </div>
+                    <label for="rel_type" class="col-2 col-form-label col-form-label">Type of Relation:</label>
+                    <div class="col-4">
+                        <input formControlName="relativeType" class="form-control form-control" id="rel_type"
+                            placeholder="Husband/Father/Mother">
+                    </div>
+                </div>
+                <div class="form-group row py-2">
+                    <label for="rel_contact" class="col-2 col-form-label col-form-label">Contact:</label>
+                    <div class="col-4">
+                        <input formControlName="relativeContact" class="form-control form-control" id="rel_contact"
+                            placeholder="Contact">
+                    </div>
+                    <label for="rel_email" class="col-2 col-form-label col-form-label">Email:</label>
+                    <div class="col-4">
+                        <input formControlName="relativeEmail" class="form-control form-control" id="rel_email"
+                            placeholder="Email ID">
+                    </div>
+                </div>
+                <div class="form-group row py-2">
+                    <label for="rel_addr" class="col-2 col-form-label col-form-label">Address:</label>
+                    <div class="col-6">
+                        <input formControlName="relativeAddress" class="form-control form-control" id="rel_addr"
+                            placeholder="Address">
+                    </div>
+                </div>
+            </div>
+            <h6 class="card-header">Medical Details</h6>
+            <div class="card-body">
+                <div class="form-group row py-2">
+                    <label for="med_issue" class="col-2 col-form-label col-form-label">Medical Issues (If Any):</label>
+                    <div class="col-8">
+                        <input formControlName="medicalIssues" class="form-control form-control" id="med_issue">
+                    </div>
+                </div>
+                <div class="form-group row py-2">
+                    <label for="surg_issue" class="col-2 col-form-label col-form-label">Surgical Issues (If
+                        Any):</label>
+                    <div class="col-8">
+                        <input formControlName="surgicalIssues" class="form-control form-control" id="surg_issue">
                     </div>
                 </div>
             </div>
         </div>
-        <div class="text-center">
+        <div class="text-center p-3">
             <button type="submit" class="btn">
-                    @if(type === "NEW"){
-                        <i class="bi bi-plus"></i> Add
-                    } @else {
-                        <i class="bi bi-pencil"></i> Update
-                    }
-                    Mother
-                </button>
-                @if(motherForm.hasError('customError')){
-                    <div class="alert alert-danger" role="alert">
-                        {{motherForm.errors?.['customError']}}
-                    </div>
+                @if(type === "NEW"){
+                <i class="bi bi-plus"></i> Add
+                } @else {
+                <i class="bi bi-pencil"></i> Update
                 }
+                Mother
+            </button>
+            @if(motherForm.hasError('customError')){
+            <div class="alert alert-danger" role="alert">
+                {{motherForm.errors?.['customError']}}
+            </div>
+            }
         </div>
     </form>
 

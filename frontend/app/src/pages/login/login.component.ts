@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BackendService } from '../../services/backend.service';
 import { ToastService } from '../../services/toast.service';
+import { finalize } from 'rxjs';
 
 
 @Component({
@@ -16,12 +17,14 @@ import { ToastService } from '../../services/toast.service';
 export class LoginComponent {
 
   @Input() type: string = 'User';
-  disableSubmit: boolean = false;
   loginForm = new FormGroup({
     userName: new FormControl('', [
       Validators.required,
     ]),
     password: new FormControl('', [
+      Validators.required,
+    ]),
+    disableSubmit: new FormControl(false, [
       Validators.required,
     ]),
   })
@@ -39,18 +42,22 @@ export class LoginComponent {
       password: 'Password'
     }
     if(!this.toast.validateForm(this.loginForm, display_mapper)){
+      this.loginForm.controls.disableSubmit.setValue(false);
       return
     }
 
-    this.disableSubmit = true;
+    this.loginForm.controls.disableSubmit.setValue(true);
     this.backend.login({
       username: this.loginForm.value?.userName,
       password: this.loginForm.value?.password
-    }).subscribe({
+    }).pipe(
+      finalize(() => {
+        this.loginForm.controls.disableSubmit.setValue(false);
+      })
+    ).subscribe({
       next: () => {
         this.backend.setCurrentUser().subscribe({
           next: (data) => {
-            this.disableSubmit = false;
             if (this.type == 'Admin') {
               if (data.role === 'ADMIN') {
                 this.router.navigate(['hospital'])
@@ -70,13 +77,11 @@ export class LoginComponent {
             }
           },
           error: (error) => {
-            this.disableSubmit = false;
             this.toast.showError(error.error);
           }
         })
       },
       error: (error) => {
-        this.disableSubmit = false;
         this.toast.showError(error.error);
       }
     }

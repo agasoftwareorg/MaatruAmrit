@@ -6,31 +6,87 @@
                 <div class="form-group row py-2">
                     <label for="name" class="col-2 col-form-label col-form-label">Name :</label>
                     <div class="col-6">
-                        <input formControlName="name" class="form-control form-control" id="name" placeholder="Baby Name">
+                        <input formControlName="name" class="form-control form-control" id="name" placeholder="Name">
                     </div>
                 </div>
                 <div class="form-group row py-2">
-                    <label for="age" class="col-2 col-form-label col-form-label">Age :</label>
+                    <label for="motherName" class="col-2 col-form-label col-form-label">Mother Name :</label>
                     <div class="col-6">
+                        <input formControlName="motherName" class="form-control form-control" id="motherName"
+                            placeholder="Mother Name">
+                    </div>
+                </div>
+                <div class="form-group row py-2">
+                    <label for="age" class="col-2 col-form-label col-form-label">Age (in months):</label>
+                    <div class="col-2">
                         <input formControlName="age" class="form-control form-control" id="age" placeholder="Age">
+                    </div>
+                    <label for="sex" class="col-2 col-form-label col-form-label">Sex :</label>
+                    <div class="col-2">
+                        <input formControlName="sex" class="form-control form-control" id="sex" placeholder="Male/Female">
+                    </div>
+                    <label for="ward" class="col-2 col-form-label col-form-label">Ward :</label>
+                    <div class="col-2">
+                        <input formControlName="age" class="form-control form-control" id="ward" placeholder="Ward">
+                    </div>
+                </div>
+                <div class="form-group row py-2">
+                    <label for="birthWeight" class="col-2 col-form-label col-form-label">Birth Weight (kg) :</label>
+                    <div class="col-4">
+                        <input formControlName="birthWeight" class="form-control form-control" id="birthWeight">
+                    </div>
+                    <label for="currentWeight" class="col-2 col-form-label col-form-label">Present Weight (kg) :</label>
+                    <div class="col-4">
+                        <input formControlName="currentWeight" class="form-control form-control" id="currentWeight">
+                    </div>
+                </div>
+                <div class="form-group row py-2">
+                    <label for="diagnose" class="col-2 col-form-label col-form-label">Diagnose :</label>
+                    <div class="col-6">
+                        <input formControlName="diagnose" class="form-control form-control" id="diagnose"
+                            placeholder="Diagnose, If Any">
+                    </div>
+                </div>
+            </div>
+            <h6 class="card-header">Doctor Details</h6>
+            <div class="card-body">
+                <div class="form-group row py-2">
+                    <label for="doc_name" class="col-2 col-form-label col-form-label">Name :</label>
+                    <div class="col-6">
+                        <input formControlName="doctorName" class="form-control form-control" id="doc_name"
+                            placeholder="Name">
+                    </div>
+                </div>
+                <div class="form-group row py-2">
+                    <label for="doc_contact" class="col-2 col-form-label col-form-label">Contact :</label>
+                    <div class="col-6">
+                        <input formControlName="doctorContact" class="form-control form-control" id="doc_contact"
+                            placeholder="Contact">
+                    </div>
+                </div>
+                <div class="form-group row py-2">
+                    <label for="doctorDesignation" class="col-2 col-form-label col-form-label">Designation :</label>
+                    <div class="col-6">
+                        <input formControlName="doctorDesignation" class="form-control form-control"
+                            id="doctorDesignation" placeholder="Designation">
                     </div>
                 </div>
             </div>
         </div>
-        <div class="text-center">
+        <div class="text-center p-3">
             <button type="submit" class="btn">
-                    @if(type === "NEW"){
-                        <i class="bi bi-plus"></i> Add
-                    } @else {
-                        <i class="bi bi-pencil"></i> Update
-                    }
-                    Baby
-                </button>
-                @if(babyForm.hasError('customError')){
-                    <div class="alert alert-danger" role="alert">
-                        {{babyForm.errors?.['customError']}}
-                    </div>
+                @if(type === "NEW"){
+                <i class="bi bi-plus"></i> Add
+                } @else {
+                <i class="bi bi-pencil"></i> Update
                 }
+                Baby
+            </button>
+            @if(babyForm.hasError('customError')){
+            <div class="alert alert-danger" role="alert">
+                {{babyForm.errors?.['customError']}}
+            </div>
+            }
         </div>
     </form>
 

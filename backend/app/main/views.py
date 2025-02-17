@@ -1,6 +1,7 @@
 from rest_framework import viewsets, mixins
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework import filters as dfilter
 from rest_framework.pagination import PageNumberPagination
 from django_filters.rest_framework import DjangoFilterBackend
 
@@ -72,9 +73,10 @@ class ChildViewSet(viewsets.ModelViewSet):
 class BatchViewSet(viewsets.ModelViewSet):
     queryset = models.Batch.objects.prefetch_related("collections").prefetch_related("dispatches").all()
     serializer_class = serializers.BatchSerializer
-    filter_backends = [filters.HospitalFilterBackend]
+    filter_backends = [filters.HospitalFilterBackend, dfilter.OrderingFilter]
     permission_classes = [permissions.IsUserView]
     pagination_class = StandardResultsSetPagination
+    ordering_fields = ['id']
 
 
 class CollectionViewSet(viewsets.ModelViewSet):

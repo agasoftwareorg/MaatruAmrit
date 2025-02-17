@@ -16,13 +16,35 @@ export class BabyDetailsComponent {
 
   babyId: string = ''
   babyForm = new FormGroup({
-    name: new FormControl('', [
+    name: new FormControl(null, [
       Validators.required,
-      Validators.minLength(3),
     ]),
-    age: new FormControl('', [
+    motherName: new FormControl(null, [
       Validators.required,
-    ])
+    ]),
+    age: new FormControl(null, [
+      Validators.required,
+    ]),
+    sex: new FormControl(null, [
+      Validators.required,
+    ]),
+    ward: new FormControl(null, [
+    ]),
+    birthWeight: new FormControl(null, [
+      Validators.required,
+    ]),
+    currentWeight: new FormControl(null, [
+      Validators.required,
+    ]),
+    diagnose: new FormControl(null, [
+    ]),
+    doctorName: new FormControl(null, [
+      Validators.required,
+    ]),
+    doctorContact: new FormControl(null, [
+    ]),
+    doctorDesignation: new FormControl(null, [
+    ]),
   })
 
   private readonly route = inject(ActivatedRoute);
@@ -38,7 +60,16 @@ export class BabyDetailsComponent {
         next: (data: any) => {
           this.babyForm.setValue({
             name: data.name,
-            age: data.age
+            motherName: data.mother_name,
+            sex: data.sex,
+            ward: data.ward,
+            age: data.age,
+            birthWeight: data.birth_weight,
+            currentWeight: data.current_weight,
+            diagnose: data.diagnose,
+            doctorName: data.doctor_name,
+            doctorContact: data.doctor_contact,
+            doctorDesignation: data.doctor_designation,
           })
         },
         error: (error) => {
@@ -53,8 +84,17 @@ export class BabyDetailsComponent {
     this.babyForm.setErrors(null);
 
     let display_mapper: any = {
-      name: 'Baby name',
-      age: 'Age'
+      name: 'Name',
+      age: 'Age',
+      motherName: 'Mother name',
+      sex: 'Sex',
+      ward: 'Ward',
+      birthWeight: 'Birth Weight',
+      currentWeight: 'Current Weight',
+      diagnose: 'Diagnose',
+      doctorName: 'Doctor Name',
+      doctorContact: 'Doctor Contact',
+      doctorDesignation: 'Doctor Designation',
     }
     if (!this.toast.validateForm(this.babyForm, display_mapper)) {
       return
@@ -62,8 +102,17 @@ export class BabyDetailsComponent {
 
     let api = undefined
     let payload = {
-      name: this.babyForm.value?.name,
-      age: this.babyForm.value?.age,
+      name: this.babyForm.value.name,
+      age: this.babyForm.value.age,
+      mother_name: this.babyForm.value.motherName,
+      sex: this.babyForm.value.sex,
+      ward: this.babyForm.value.ward,
+      birth_weight: this.babyForm.value.birthWeight,
+      current_weight: this.babyForm.value.currentWeight,
+      diagnose: this.babyForm.value.diagnose,
+      doctor_name: this.babyForm.value.doctorName,
+      doctor_contact: this.babyForm.value.doctorContact,
+      doctor_designation: this.babyForm.value.doctorDesignation,
     }
     if (this.type == "NEW") {
       api = this.backend.addBaby(payload)

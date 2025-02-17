@@ -20,6 +20,8 @@ import { EditBabyComponent } from '../pages/edit-baby/edit-baby.component';
 import { MotherDonationsComponent } from '../pages/mother-donations/mother-donations.component';
 import { BatchCollectionsComponent } from '../pages/batch-collections/batch-collections.component';
 import { BabyDispatchesComponent } from '../pages/baby-dispatches/baby-dispatches.component';
+import { EditBatchComponent } from '../pages/edit-batch/edit-batch.component';
+import { NewBatchComponent } from '../pages/new-batch/new-batch.component';
 
 
 export const routes: Routes = [
@@ -40,6 +42,8 @@ export const routes: Routes = [
       { path: 'hospital/:id', component: EditHospitalComponent },
       { path: 'hospital/:id/users', component: UserListComponent },
       { path: 'batch', component: BatchListComponent },
+      { path: 'batch/new', component: NewBatchComponent },
+      { path: 'batch/:id', component: EditBatchComponent },
       { path: 'batch/:id/collections', component: BatchCollectionsComponent },
       { path: 'mother', component: MotherListComponent },
       { path: 'mother/new', component: NewMotherComponent },

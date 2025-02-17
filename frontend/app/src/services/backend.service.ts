@@ -233,6 +233,14 @@ export class BackendService {
     });
   }
 
+  getLatestBatch(){
+    return this.http.get(`${this.batchUrl}?page=1&page_size=1&ordering=-id`, {
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+  }
+
   getBatchById(id: string){
     return this.http.get(`${this.batchUrl}/${id}`, {
       headers: {

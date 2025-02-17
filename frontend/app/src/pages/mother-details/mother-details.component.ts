@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { Component, inject, Input } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,13 +18,50 @@ export class MotherDetailsComponent {
 
   motherId: string = ''
   motherForm = new FormGroup({
+    regNumber: new FormControl('', [
+      Validators.required,
+    ]),
+    regDate: new FormControl(moment().format('YYYY-MM-DD'), [
+      Validators.required,
+    ]),
     name: new FormControl('', [
       Validators.required,
       Validators.minLength(3),
     ]),
     age: new FormControl('', [
       Validators.required,
-    ])
+    ]),
+    height: new FormControl('', [
+      Validators.required,
+    ]),
+    weight: new FormControl('', [
+      Validators.required,
+    ]),
+    education: new FormControl(null, [
+    ]),
+    deliveryDate: new FormControl('', [
+      Validators.required,
+    ]),
+    deliveryMode: new FormControl('', [
+      Validators.required,
+    ]),
+    relativeName: new FormControl('', [
+      Validators.required,
+    ]),
+    relativeType: new FormControl('', [
+      Validators.required,
+    ]),
+    relativeContact: new FormControl('', [
+      Validators.required,
+    ]),
+    relativeEmail: new FormControl(null, [
+    ]),
+    relativeAddress: new FormControl(null, [
+    ]),
+    medicalIssues: new FormControl(null, [
+    ]),
+    surgicalIssues: new FormControl(null, [
+    ]),
   })
 
   private readonly route = inject(ActivatedRoute);
@@ -39,7 +77,21 @@ export class MotherDetailsComponent {
         next: (data: any) => {
           this.motherForm.setValue({
             name: data.name,
-            age: data.age
+            age: data.age,
+            height: data.height,
+            weight: data.weight,
+            education: data.education,
+            regNumber: data.reg_number,
+            regDate: data.reg_date,
+            deliveryMode: data.delivery_mode,
+            deliveryDate: data.delivery_date,
+            relativeName: data.relative_name,
+            relativeAddress: data.relative_address,
+            relativeContact: data.relative_contact,
+            relativeEmail: data.relative_email,
+            relativeType: data.relative_type,
+            surgicalIssues: data.surgical_issues,
+            medicalIssues: data.medical_issues,
           })
         },
         error: (error) => {
@@ -55,7 +107,21 @@ export class MotherDetailsComponent {
 
     let display_mapper: any = {
       name: 'Mother name',
-      age: 'Age'
+      age: 'Age',
+      height: 'Height',
+      weight: 'Weight',
+      education: 'Education',
+      regNumber: 'Registration Number',
+      regDate: 'Registration Date',
+      deliveryMode: 'Delivery Mode',
+      deliveryDate: 'Delivery Date',
+      relativeName: 'Relative Name',
+      relativeAddress: 'Relative Address',
+      relativeContact: 'Relative Contact',
+      relativeEmail: 'Relative Email',
+      relativeType: 'Relative Type',
+      surgicalIssues:  'Surgical Issues',
+      medicalIssues: 'Medical Issues',
     }
     if (!this.toast.validateForm(this.motherForm, display_mapper)) {
       return
@@ -64,6 +130,20 @@ export class MotherDetailsComponent {
     let payload = {
       name: this.motherForm.value?.name,
       age: this.motherForm.value?.age,
+      height: this.motherForm.value?.height,
+      weight: this.motherForm.value?.weight,
+      education: this.motherForm.value?.education,
+      reg_number: this.motherForm.value?.regNumber,
+      reg_date: this.motherForm.value?.regDate,
+      delivery_mode: this.motherForm.value?.deliveryMode,
+      delivery_date: this.motherForm.value?.deliveryDate,
+      relative_name: this.motherForm.value?.relativeName,
+      relative_address: this.motherForm.value?.relativeAddress,
+      relative_contact: this.motherForm.value?.relativeContact,
+      relative_email: this.motherForm.value?.relativeEmail,
+      relative_type: this.motherForm.value?.relativeType,
+      surgical_issues: this.motherForm.value?.surgicalIssues,
+      medical_issues: this.motherForm.value?.medicalIssues
     }
     if (this.type == "NEW") {
       api = this.backend.addMother(payload)

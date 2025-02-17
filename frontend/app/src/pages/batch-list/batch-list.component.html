@@ -12,7 +12,7 @@
 
         <!-- Add New Button -->
         <div class="col-3 d-flex justify-content-end">
-            <button class="btn" (click)="createBatch()" >
+            <button class="btn" routerLink="new" >
                  <i class="bi bi-plus-circle"></i>
                 Add New
             </button>
@@ -33,7 +33,7 @@
                             <p class="p-1 m-1 table-border">Milk Available</p>
                         </th>
                         <th scope="col">
-                            <p class="p-1 m-1 table-border">Result</p>
+                            <p class="p-1 m-1 table-border">Protein</p>
                         </th>
                         <th scope="col">
                             <p class="p-1 m-1">Action</p>
@@ -54,19 +54,19 @@
                             <p class="p-1 m-1 table-border">{{batch.available_quantity}}</p>
                         </td>
                         <td>
-                            <p class="p-1 m-1 table-border">B</p>
+                            <p class="p-1 m-1 table-border">{{batch.protein || '-'}}</p>
                         </td>
                         <td>
                             <p class="d-flex">
-                                <a [routerLink]="[batch.id, 'collections']" class="p-2">
+                                <a [routerLink]="[batch.id]" class="p-2">
                                     <i class="bi bi-pencil ma-text-brown-50"></i>
                                 </a>
                                 <a type="button" (click)="deleteBatch(batch.id)" class="p-2">
                                     <i class="bi bi-trash ma-text-brown-50"></i>
                                 </a>
-                                <!-- <a type="button" [routerLink]="[batch.id, 'collections']" class="p-2">
+                                <a type="button" [routerLink]="[batch.id, 'collections']" class="p-2">
                                     <i class="bi bi-droplet ma-text-brown-50"></i>
-                                </a> -->
+                                </a>
                             </p>
                         </td>
                     </tr>

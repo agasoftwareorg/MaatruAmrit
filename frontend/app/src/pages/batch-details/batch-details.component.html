@@ -1,0 +1,86 @@
+<div class="container-fluid">
+    <form [formGroup]="batchForm" (ngSubmit)="createBatch()">
+        <div class="card my-4">
+            <h5 class="card-header">Batch Details</h5>
+            <div class="card-body">
+                <div class="form-group row py-2">
+                    <label for="name" class="col-2 col-form-label col-form-label">Batch Number :</label>
+                    <div class="col-4">
+                        <input formControlName="name" class="form-control form-control" id="name"
+                            placeholder="Batch Number">
+                    </div>
+                </div>
+            </div>
+            <h6 class="card-header">Batch Results</h6>
+            <div class="card-body">
+                <div class="form-group row py-2">
+                    <label for="fat" class="col-2 col-form-label col-form-label">Fat (%) :</label>
+                    <div class="col-2">
+                        <input type="number" formControlName="fat" class="form-control form-control" id="fat"
+                            placeholder="Fat %">
+                    </div>
+                    <label for="protein" class="col-2 col-form-label col-form-label">Protein (%) :</label>
+                    <div class="col-2">
+                        <input type="number" formControlName="protein" class="form-control form-control" id="protein"
+                            placeholder="Protein %">
+                    </div>
+                    <label for="snf" class="col-2 col-form-label col-form-label">SNF (%) :</label>
+                    <div class="col-2">
+                        <input type="number" formControlName="snf" class="form-control form-control" id="snf"
+                            placeholder="SNF %">
+                    </div>
+                </div>
+                <div class="form-group row py-2">
+                    <label for="lactose" class="col-2 col-form-label col-form-label">Lactose (%) :</label>
+                    <div class="col-2">
+                        <input type="number" formControlName="lactose" class="form-control form-control" id="lactose"
+                            placeholder="Lactose %">
+                    </div>
+                    <label for="den" class="col-2 col-form-label col-form-label">Den :</label>
+                    <div class="col-2">
+                        <input type="number" formControlName="den" class="form-control form-control" id="den"
+                            placeholder="Den">
+                    </div>
+                    <label for="sol" class="col-2 col-form-label col-form-label">Sol (%) :</label>
+                    <div class="col-2">
+                        <input type="number" formControlName="sol" class="form-control form-control" id="sol"
+                            placeholder="Sol %">
+                    </div>
+                </div>
+                <div class="form-group row py-2">
+                    <label for="temp" class="col-2 col-form-label col-form-label">Temp (C) :</label>
+                    <div class="col-2">
+                        <input type="number" formControlName="temp" class="form-control form-control" id="temp"
+                            placeholder="Temperature in Celcius">
+                    </div>
+                    <label for="fp" class="col-2 col-form-label col-form-label">FP (C) :</label>
+                    <div class="col-2">
+                        <input type="number" formControlName="fp" class="form-control form-control" id="fp"
+                            placeholder="FP">
+                    </div>
+                    <label for="calories" class="col-2 col-form-label col-form-label">Calories :</label>
+                    <div class="col-2">
+                        <input type="number" formControlName="calories" class="form-control form-control" id="calories"
+                            placeholder="Calories">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center p-3">
+            <button type="submit" class="btn">
+                @if(type === "NEW"){
+                <i class="bi bi-plus"></i> Add
+                } @else {
+                <i class="bi bi-pencil"></i> Update
+                }
+                Batch
+            </button>
+            @if(batchForm.hasError('customError')){
+            <div class="alert alert-danger" role="alert">
+                {{batchForm.errors?.['customError']}}
+            </div>
+            }
+        </div>
+    </form>
+
+</div>
