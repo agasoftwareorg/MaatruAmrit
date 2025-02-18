@@ -3,8 +3,10 @@
         <div class="col-2 ma-sidebar p-0 ma-bg-brown text-light">
             <div class="text-center">
                 <nav class="navbar col px-2">
-                    <a class="navbar-brand" routerLink="hospital">
-                        <i class="bi bi-plus-circle-fill px-2"></i>Maatru Amrit</a>
+                    <a class="navbar-brand menu" (click)="home()">
+                        <img src="icons/mage_hospital-shield.png" class="img-fluid px-1" alt="Home Page">
+                        <!-- <i class="bi bi-plus-circle-fill px-2"></i> -->
+                        Maatru Amrit</a>
                 </nav>
             </div>
             <hr>
@@ -13,14 +15,16 @@
                     @if(userRole === 'ADMIN'){
                         <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                             <a class="nav-link d-flex" routerLink="hospital">
-                                <i class="bi bi-hospital px-2"></i>
+                                <img src="icons/ri_hospital-line.png" class="img-fluid px-2" alt="Hospital List">
+                                <!-- <i class="bi bi-hospital px-2"></i> -->
                                 <div>Hospital List</div>
                             </a>
                         </li>
                         <hr class="my-1">
                         <li class="nav-item" routerLinkActive="active">
                             <a class="nav-link d-flex" routerLink="hospital/new">
-                                <i class="bi bi-shield-plus px-2"></i>
+                                <img src="icons/lsicon_hospital-outline.png" class="img-fluid px-2" alt="Add Hospital">
+                                <!-- <i class="bi bi-shield-plus px-2"></i> -->
                                 <span>New Hospital</span>
                             </a>
                         </li>
@@ -61,7 +65,8 @@
                     <ul class="navbar-nav">
                         <li class="nav-item" type="button">
                             <a class="nav-link d-flex" (click)="logout()">
-                                <i class="bi bi-box-arrow-right px-2"></i>
+                                <!-- <i class="bi bi-box-arrow-right px-2"></i> -->
+                                <img src="icons/heroicons-outline_logout.png" class="img-fluid px-2" alt="Add Hospital">
                                 <span>Logout</span>
                             </a>
                         </li>

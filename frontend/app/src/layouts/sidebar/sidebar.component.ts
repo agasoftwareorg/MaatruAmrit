@@ -32,6 +32,18 @@ export class SidebarComponent {
 
   logout(){
     this.backend.logout()
-    this.router.navigate(["/login"])
+    if(this.userRole === 'ADMIN'){
+      this.router.navigate(["/admin/login"])
+    } else {
+      this.router.navigate(["/login"])
+    }
+  }
+
+  home(){
+    if(this.userRole === 'ADMIN'){
+      this.router.navigate(["/hospital"])
+    } else {
+      this.router.navigate(["/batch"])
+    }
   }
 }

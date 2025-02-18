@@ -18,6 +18,7 @@ $ma-brown-50: #704b1e;
 :root {
     --ma-yellow: #{$ma-yellow};
     --ma-brown-50: #{$ma-brown-50};
+    --bs-body-font-family: "Albert Sans", serif;
     // --ma-grey: #{$ma-gray};
 }
 
@@ -26,23 +27,23 @@ $ma-brown-50: #704b1e;
 //     color: rgb(0, 0, 0) 
 // }
 
-.ma-bg-brown{
+.ma-bg-brown {
     background-color: $ma-brown
 }
 
-.ma-bg-brown-50{
+.ma-bg-brown-50 {
     background-color: $ma-brown-50
 }
 
-.ma-text-white{
+.ma-text-white {
     color: $ma-white
 }
 
-.ma-text-yellow{
+.ma-text-yellow {
     color: $ma-yellow
 }
 
-.ma-text-brown-50{
+.ma-text-brown-50 {
     color: $ma-brown-50
 }
 
@@ -56,7 +57,7 @@ $ma-brown-50: #704b1e;
 //     background-color: $ma-brown-50;
 // }
 
-.ma-table-header{
+.ma-table-header {
     --bs-table-bg: #{$ma-yellow};
 }
 
@@ -71,6 +72,7 @@ $ma-brown-50: #704b1e;
     --bs-btn-disabled-color: #{$ma-black};
 
 }
+
 // .ma-text-brown{
 //     color: $ma-brown
 // }
@@ -89,7 +91,7 @@ $ma-brown-50: #704b1e;
     border-color: var(--ma-yellow);
 }
 
-.form-check-input:focus{
+.form-check-input:focus {
     box-shadow: 0 0 0 0.1rem var(--ma-yellow);
 }
 
@@ -97,24 +99,24 @@ $ma-brown-50: #704b1e;
     border-radius: 0;
 }
 
-.card{
+.card {
     --bs-card-border-radius: 0;
 }
 
-.card-header{
+.card-header {
     background-color: var(--ma-yellow);
     color: var(--ma-brown-50);
 }
 
 
-.table-border{
+.table-border {
     border: 1px groove black;
     border-bottom: 0;
     border-top: 0;
     border-left: 0;
 }
 
-.pagination{
+.pagination {
     --bs-pagination-padding-x: 1rem;
     --bs-pagination-color: black;
     --bs-pagination-active-color: white;
