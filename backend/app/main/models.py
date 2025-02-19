@@ -98,9 +98,14 @@ class Mother(models.Model):
 class Donation(models.Model):
     mother = models.ForeignKey(Mother, on_delete=models.CASCADE, related_name='donations')
     quantity = models.IntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
 
 
 class Batch(models.Model):
+    class PasteurizationResult(models.TextChoices):
+        POSITIVE = "POSITIVE", _("Positive")
+        NEGATIVE = "NEGATIVE", _("Negative")
+        NO_RESULT = "NO_RESULT", _("No_Result")
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     fat = models.IntegerField(null=True)
@@ -112,6 +117,9 @@ class Batch(models.Model):
     temp = models.IntegerField(null=True)
     fp = models.IntegerField(null=True)
     calories = models.IntegerField(null=True)
+    pasteurization = models.CharField(
+        max_length=50, default=PasteurizationResult.NO_RESULT.value, choices=PasteurizationResult
+    )
     hospital = models.ForeignKey(Hospital, on_delete=models.CASCADE, related_name='batches')
     created_at = models.DateTimeField(auto_now_add=True)
 

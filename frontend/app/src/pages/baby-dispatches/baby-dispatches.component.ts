@@ -103,7 +103,7 @@ export class BabyDispatchesComponent {
   }
 
   listBatches(reset_page: boolean = true) {
-    this.backend.getBatches(this.b_page_number, this.b_page_size).subscribe({
+    this.backend.getPureBatches(this.b_page_number, this.b_page_size).subscribe({
       next: (data: any) => {
         this.batches = data?.results || [];
         if (reset_page) {

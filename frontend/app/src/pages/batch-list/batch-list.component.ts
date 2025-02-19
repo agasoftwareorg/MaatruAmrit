@@ -4,11 +4,13 @@ import { BackendService } from '../../services/backend.service';
 import { RouterLink } from '@angular/router';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastService } from '../../services/toast.service';
+import { CommonModule } from '@angular/common';
+import { ReplacePipe } from '../../services/replace.pipe';
 
 @Component({
   selector: 'app-batch-list',
   standalone: true,
-  imports: [RouterLink, HeaderComponent, NgbPaginationModule],
+  imports: [RouterLink, HeaderComponent, NgbPaginationModule, CommonModule, ReplacePipe],
   templateUrl: './batch-list.component.html',
   styleUrl: './batch-list.component.scss'
 })

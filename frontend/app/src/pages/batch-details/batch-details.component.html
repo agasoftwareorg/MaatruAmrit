@@ -11,7 +11,7 @@
                     </div>
                 </div>
             </div>
-            <h6 class="card-header">Batch Results</h6>
+            <h6 class="card-header">Analyzer Results</h6>
             <div class="card-body">
                 <div class="form-group row py-2">
                     <label for="fat" class="col-2 col-form-label col-form-label">Fat (%) :</label>
@@ -62,6 +62,20 @@
                     <div class="col-2">
                         <input type="number" formControlName="calories" class="form-control form-control" id="calories"
                             placeholder="Calories">
+                    </div>
+                </div>
+            </div>
+            <h6 class="card-header">Pasteurization Results</h6>
+            <div class="card-body">
+                <div class="form-group row py-2">
+                    <label for="pasteurization" class="col-2 col-form-label col-form-label">Result :</label>
+                    <div class="col-2">
+                        <select class="form-select" name="pasteurization" id="pasteurization"
+                            formControlName="pasteurization">
+                            <option value="NO_RESULT">No Result</option>
+                            <option value="POSITIVE">Positive</option>
+                            <option value="NEGATIVE">Negative</option>
+                        </select>
                     </div>
                 </div>
             </div>

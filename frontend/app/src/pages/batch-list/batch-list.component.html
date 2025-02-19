@@ -24,16 +24,16 @@
                 <thead>
                     <tr class="ma-table-header border border-secondary">
                         <th scope="col">
-                            <p class="p-1 m-1 table-border">Batch ID</p>
-                        </th>
-                        <th scope="col">
-                            <p class="p-1 m-1 table-border">Name</p>
+                            <p class="p-1 m-1 table-border">Batch Number</p>
                         </th>
                         <th scope="col">
                             <p class="p-1 m-1 table-border">Milk Available</p>
                         </th>
                         <th scope="col">
-                            <p class="p-1 m-1 table-border">Protein</p>
+                            <p class="p-1 m-1 table-border">Pasteurization Result</p>
+                        </th>
+                        <th scope="col">
+                            <p class="p-1 m-1 table-border">Protein (%)</p>
                         </th>
                         <th scope="col">
                             <p class="p-1 m-1">Action</p>
@@ -44,9 +44,6 @@
                     @for (batch of batches; track batch?.id) {
 
                     <tr>
-                        <td scope="row">
-                            <p class="p-1 m-1 table-border">{{batch.id}}</p>
-                        </td>
                         <td>
                             <p class="p-1 m-1 table-border">{{batch.name}}</p>
                         </td>
@@ -54,7 +51,10 @@
                             <p class="p-1 m-1 table-border">{{batch.available_quantity}}</p>
                         </td>
                         <td>
-                            <p class="p-1 m-1 table-border">{{batch.protein || '-'}}</p>
+                            <p class="p-1 m-1 table-border">{{batch.pasteurization | replace : '_' : ' ' | titlecase}}</p>
+                        </td>
+                        <td>
+                            <p class="p-1 m-1 table-border">{{batch.protein}}</p>
                         </td>
                         <td>
                             <p class="d-flex">

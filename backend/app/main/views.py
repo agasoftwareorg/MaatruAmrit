@@ -73,9 +73,10 @@ class ChildViewSet(viewsets.ModelViewSet):
 class BatchViewSet(viewsets.ModelViewSet):
     queryset = models.Batch.objects.prefetch_related("collections").prefetch_related("dispatches").all()
     serializer_class = serializers.BatchSerializer
-    filter_backends = [filters.HospitalFilterBackend, dfilter.OrderingFilter]
+    filter_backends = [filters.HospitalFilterBackend, dfilter.OrderingFilter, DjangoFilterBackend]
     permission_classes = [permissions.IsUserView]
     pagination_class = StandardResultsSetPagination
+    filterset_fields = ['pasteurization']
     ordering_fields = ['id']
 
 

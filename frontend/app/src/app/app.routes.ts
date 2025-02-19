@@ -25,6 +25,7 @@ import { NewBatchComponent } from '../pages/new-batch/new-batch.component';
 
 
 export const routes: Routes = [
+  { path: '', redirectTo: 'login', pathMatch: 'full'},
   {
     path: '',
     component: BlankComponent,
@@ -32,7 +33,7 @@ export const routes: Routes = [
       { path: 'login', component: UserLoginComponent},
       { path: 'admin/login', component: AdminLoginComponent}
     ],
-    canActivate: [authGuardReverse]
+    canActivate: [authGuardReverse],
   }, {
     path: '',
     component: SidebarComponent,

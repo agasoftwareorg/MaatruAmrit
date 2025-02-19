@@ -40,6 +40,9 @@ export class BatchDetailsComponent {
     ]),
     calories: new FormControl(null, [
     ]),
+    pasteurization: new FormControl('NO_RESULT', [
+      Validators.required
+    ]),
     disableSubmit: new FormControl(false, [
       Validators.required,
     ]),
@@ -74,6 +77,7 @@ export class BatchDetailsComponent {
             temp: data.temp,
             fp: data.fp,
             calories: data.calories,
+            pasteurization: data.pasteurization,
             disableSubmit: false
           })
           this.batchForm.controls.name.disable();
@@ -109,7 +113,8 @@ export class BatchDetailsComponent {
       contact: 'Contact',
       isAnalyzer: 'Analyzer',
       subscription: 'Subscription',
-      subscriptionEnd: 'Subscription End'
+      subscriptionEnd: 'Subscription End',
+      pasteurization: 'Pasteurization Result'
     }
     if (!this.toast.validateForm(this.batchForm, display_mapper)) {
       this.batchForm.controls.disableSubmit.setValue(false);
@@ -128,6 +133,7 @@ export class BatchDetailsComponent {
       temp: this.batchForm.value.temp,
       fp: this.batchForm.value.fp,
       calories: this.batchForm.value.calories,
+      pasteurization: this.batchForm.value.pasteurization,
       disableSubmit: false
     }
     if (this.type == "NEW") {

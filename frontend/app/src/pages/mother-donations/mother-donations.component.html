@@ -32,13 +32,16 @@
             </form>
         </div>
     </div>
-    <div class="row px-3">
+    <div class="row py-3">
         <div class="table-responsive table-container">
             <table class="table table-sm table-hover">
                 <thead>
                     <tr class="ma-table-header border border-secondary">
                         <th scope="col">
                             <p class="table-border">Donation ID</p>
+                        </th>
+                        <th scope="col">
+                            <p class="table-border">Donated On</p>
                         </th>
                         <th scope="col">
                             <p class="table-border">Quantity</p>
@@ -54,6 +57,9 @@
                     <tr>
                         <td scope="row">
                             <p class="table-border">{{donation.id}}</p>
+                        </td>
+                        <td>
+                            <p class="table-border">{{donation.created_at | date:'longDate'}}</p>
                         </td>
                         <td>
                             <p class="table-border">{{donation.quantity}}</p>
