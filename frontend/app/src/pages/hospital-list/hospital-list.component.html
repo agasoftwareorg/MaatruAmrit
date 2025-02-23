@@ -10,7 +10,7 @@
         </div> -->
 
         <!-- Add New Button -->
-        <div class="col-3 d-flex justify-content-end">
+        <div class="col-3 d-flex justify-content-end mx-3">
             <button class="btn" routerLink="new" >
                  <i class="bi bi-plus-circle"></i>
                 Add New
@@ -40,30 +40,35 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @if(hospitals.length == 0){
+                        <tr id="noDataRow">
+                            <td colspan="100%" class="text-center text-muted fw-bold p-3">No Data Found</td>
+                        </tr>
+                    }
                     @for (hospital of hospitals; track hospital?.id) {
 
                     <tr>
                         <td scope="row">
-                            <p class="p-1 m-1 table-border">{{hospital.name}}</p>
+                            <p class="p-1 m-1 table-border">{{hospital.name | nill}}</p>
                         </td>
                         <td>
-                            <p class="p-1 m-1 table-border">{{hospital.address}}</p>
+                            <p class="p-1 m-1 table-border">{{hospital.address | nill}}</p>
                         </td>
                         <td>
-                            <p class="p-1 m-1 table-border">{{hospital.branch}}</p>
+                            <p class="p-1 m-1 table-border">{{hospital.branch | nill}}</p>
                         </td>
                         <td>
-                            <p class="p-1 m-1 table-border">{{hospital.contact}}</p>
+                            <p class="p-1 m-1 table-border">{{hospital.contact | nill}}</p>
                         </td>
                         <td>
                             <p class="d-flex">
-                                <a [routerLink]="hospital.id" class="p-2">
+                                <a [routerLink]="hospital.id" class="p-2"  title="Edit Hospital">
                                     <i class="bi bi-pencil ma-text-brown-50"></i>
                                 </a>
-                                <a type="button" (click)="deleteHospital(hospital.id)" class="p-2">
+                                <a type="button"  title="Delete Hospital" (click)="deleteHospital(hospital.id)" class="p-2">
                                     <i class="bi bi-trash ma-text-brown-50"></i>
                                 </a>
-                                <a type="button" [routerLink]="[hospital.id, 'users']" class="p-2">
+                                <a type="button"  title="Manage Users" [routerLink]="[hospital.id, 'users']" class="p-2">
                                     <i class="bi bi-people ma-text-brown-50"></i>
                                 </a>
                             </p>

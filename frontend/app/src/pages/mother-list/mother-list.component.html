@@ -10,7 +10,7 @@
         </div> -->
 
         <!-- Add New Button -->
-        <div class="col-3 d-flex justify-content-end">
+        <div class="col-3 d-flex justify-content-end mx-3">
             <button class="btn" routerLink="new" >
                  <i class="bi bi-plus-circle"></i>
                 Add New
@@ -23,13 +23,13 @@
                 <thead>
                     <tr class="ma-table-header border border-secondary">
                         <th scope="col">
-                            <p class="p-1 m-1 table-border">Mother ID</p>
+                            <p class="p-1 m-1 table-border">Registration Number</p>
                         </th>
                         <th scope="col">
                             <p class="p-1 m-1 table-border">Name</p>
                         </th>
                         <th scope="col">
-                            <p class="p-1 m-1 table-border">Registration Number</p>
+                            <p class="p-1 m-1 table-border">Age</p>
                         </th>
                         <th scope="col">
                             <p class="p-1 m-1 table-border">Milk Available (ml)</p>
@@ -40,31 +40,39 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @if(mothers.length == 0){
+                        <tr id="noDataRow">
+                            <td colspan="100%" class="text-center text-muted fw-bold p-3">No Data Found</td>
+                        </tr>
+                    }
                     @for (mother of mothers; track mother?.id) {
 
                     <tr>
                         <td scope="row">
-                            <p class="p-1 m-1 table-border">{{mother.id}}</p>
+                            <p class="p-1 m-1 table-border">{{mother.reg_number}}</p>
                         </td>
                         <td>
                             <p class="p-1 m-1 table-border">{{mother.name}}</p>
                         </td>
                         <td>
-                            <p class="p-1 m-1 table-border">{{mother.reg_number}}</p>
+                            <p class="p-1 m-1 table-border">{{mother.age}}</p>
                         </td>
                         <td>
                             <p class="p-1 m-1 table-border">{{mother.available_quantity}}</p>
                         </td>
                         <td>
                             <p class="d-flex">
-                                <a [routerLink]="mother.id" class="p-2">
+                                <a [routerLink]="mother.id" class="p-2" title="Edit Mother">
                                     <i class="bi bi-pencil ma-text-brown-50"></i>
                                 </a>
-                                <a type="button" (click)="deleteMother(mother.id)" class="p-2">
+                                <a type="button" title="Delete Mother" (click)="deleteMother(mother.id)" class="p-2">
                                     <i class="bi bi-trash ma-text-brown-50"></i>
                                 </a>
-                                <a type="button" [routerLink]="[mother.id, 'donations']" class="p-2">
+                                <a type="button" title="Add Donation" [routerLink]="[mother.id, 'donations']" class="p-2">
                                     <i class="bi bi-droplet ma-text-brown-50"></i>
+                                </a>
+                                <a type="button" title="Print Sticker" (click)="printBarcode(mother.reg_number)" class="p-2">
+                                    <i class="bi bi-printer ma-text-brown-50"></i>
                                 </a>
                             </p>
                         </td>

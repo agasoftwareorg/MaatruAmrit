@@ -1,14 +1,16 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { BackendService } from '../../services/backend.service';
 import { HeaderComponent } from '../../layouts/header/header.component';
 import { FormsModule } from '@angular/forms';
 import { ToastService } from '../../services/toast.service';
+import moment from 'moment';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-baby-dispatches',
   standalone: true,
-  imports: [HeaderComponent, FormsModule],
+  imports: [HeaderComponent, FormsModule, CommonModule, RouterLink],
   templateUrl: './baby-dispatches.component.html',
   styleUrl: './baby-dispatches.component.scss'
 })
@@ -54,10 +56,12 @@ export class BabyDispatchesComponent {
     this.backend.addDispatch(this.babyId, {
       quantity: batch.input_quantity,
       batch: batch.id,
+      dispatched_at: moment(batch?.dispatched_at, 'YYYY-MM-DD HH:mm').utc(),
       child: this.babyId
     }).subscribe({
       next: () => {
-        batch.input_quantity = '';
+        batch.input_quantity = null;
+        batch.dispatched_at = moment().format('YYYY-MM-DD HH:mm');
         this.listDispatches();
         this.listBatches();
       },
@@ -106,6 +110,9 @@ export class BabyDispatchesComponent {
     this.backend.getPureBatches(this.b_page_number, this.b_page_size).subscribe({
       next: (data: any) => {
         this.batches = data?.results || [];
+        this.batches.forEach((batch: any) => {
+          batch.dispatched_at = moment().format('YYYY-MM-DD HH:mm');
+        });
         if (reset_page) {
           this.b_pages = []
           for (let i = 1; i <= (this.batches.length / this.b_page_size) + 1; i++) {

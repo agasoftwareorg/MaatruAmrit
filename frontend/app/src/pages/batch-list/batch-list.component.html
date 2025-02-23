@@ -11,7 +11,7 @@
         </div> -->
 
         <!-- Add New Button -->
-        <div class="col-3 d-flex justify-content-end">
+        <div class="col-3 d-flex justify-content-end mx-3">
             <button class="btn" routerLink="new" >
                  <i class="bi bi-plus-circle"></i>
                 Add New
@@ -41,6 +41,11 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @if(batches.length == 0){
+                        <tr id="noDataRow">
+                            <td colspan="100%" class="text-center text-muted fw-bold p-3">No Data Found</td>
+                        </tr>
+                    }
                     @for (batch of batches; track batch?.id) {
 
                     <tr>
@@ -54,18 +59,21 @@
                             <p class="p-1 m-1 table-border">{{batch.pasteurization | replace : '_' : ' ' | titlecase}}</p>
                         </td>
                         <td>
-                            <p class="p-1 m-1 table-border">{{batch.protein}}</p>
+                            <p class="p-1 m-1 table-border">{{batch.protein | nill}}</p>
                         </td>
                         <td>
                             <p class="d-flex">
-                                <a [routerLink]="[batch.id]" class="p-2">
+                                <a title="Edit Batch" [routerLink]="[batch.id]" class="p-2">
                                     <i class="bi bi-pencil ma-text-brown-50"></i>
                                 </a>
-                                <a type="button" (click)="deleteBatch(batch.id)" class="p-2">
+                                <a title="Delete Batch" type="button" (click)="deleteBatch(batch.id)" class="p-2">
                                     <i class="bi bi-trash ma-text-brown-50"></i>
                                 </a>
-                                <a type="button" [routerLink]="[batch.id, 'collections']" class="p-2">
-                                    <i class="bi bi-droplet ma-text-brown-50"></i>
+                                <a title="Collect Milk" type="button" [routerLink]="[batch.id, 'collections']" class="p-2">
+                                    <i class="bi bi-moisture ma-text-brown-50"></i>
+                                </a>
+                                <a title="Print Sticker" type="button" (click)="printBarcode(batch.name)" class="p-2">
+                                    <i class="bi bi-printer ma-text-brown-50"></i>
                                 </a>
                             </p>
                         </td>

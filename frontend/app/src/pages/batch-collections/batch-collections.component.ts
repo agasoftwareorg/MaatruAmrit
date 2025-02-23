@@ -1,14 +1,16 @@
 import { Component } from '@angular/core';
 import { HeaderComponent } from '../../layouts/header/header.component';
 import { BackendService } from '../../services/backend.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ToastService } from '../../services/toast.service';
+import moment from 'moment';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-batch-collections',
   standalone: true,
-  imports: [HeaderComponent, FormsModule],
+  imports: [HeaderComponent, FormsModule, CommonModule, RouterLink],
   templateUrl: './batch-collections.component.html',
   styleUrl: './batch-collections.component.scss'
 })
@@ -55,10 +57,12 @@ export class BatchCollectionsComponent {
     this.backend.addCollection(this.batchId, {
       quantity: mother.input_quantity,
       mother: mother.id,
+      collected_at: moment(mother?.collected_at, 'YYYY-MM-DD HH:mm').utc(),
       batch: this.batchId
     }).subscribe({
       next: () => {
-        mother.input_quantity = '';
+        mother.input_quantity = null;
+        mother.collected_at = moment().format('YYYY-MM-DD HH:mm');
         this.listCollections();
         this.listMothers();
       },
@@ -107,6 +111,9 @@ export class BatchCollectionsComponent {
     this.backend.getMothers(this.m_page_number, this.m_page_size).subscribe({
       next: (data: any) => {
         this.mothers = data?.results || [];
+        this.mothers.forEach((mother: any) => {
+          mother.collected_at = moment().format('YYYY-MM-DD HH:mm');
+        });
         if (reset_page) {
           this.m_pages = []
           for (let i = 1; i <= (this.mothers.length / this.m_page_size) + 1; i++) {

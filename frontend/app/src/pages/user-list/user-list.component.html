@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <div class="text-center py-1">
-                    <button type="submit" class="btn" (click)="createUser()">
+                    <button type="submit" class="btn" (click)="createUser()" [disabled]="userForm.value.disableSubmit">
                         <i class="bi bi-plus"></i> 
                         @if(userForm.value.userId){
                             Update Login
@@ -40,16 +40,11 @@
                     <button class="btn mx-2" (click)="resetUser()">
                         <i class="bi bi-arrow-clockwise"></i> Reset
                     </button>
-                    @if(userForm.hasError('customError')){
-                    <div class="alert alert-danger" role="alert">
-                        {{userForm.errors?.['customError']}}
-                    </div>
-                    }
                 </div>
             </form>
         </div>
     </div>
-    <div class="row px-3">
+    <div class="row py-2">
         <div class="table-responsive table-container">
             <table class="table table-sm table-hover">
                 <thead>
@@ -69,6 +64,11 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @if(users.length == 0){
+                        <tr id="noDataRow">
+                            <td colspan="100%" class="text-center text-muted fw-bold p-3">No Data Found</td>
+                        </tr>
+                    }
                     @for (user of users; track user?.id) {
 
                     <tr>
@@ -104,8 +104,9 @@
             </table>
         </div>
     </div>
-    <div class="row py-3">
-        <ul type="button" class="pagination justify-content-end">
+    <div class="d-flex  justify-content-between align-items-center">
+        <button type="button" routerLink="/hospital" class="btn mx-2">Back</button>
+        <ul type="button" class="pagination m-0">
             <li [class.disabled]="page_number === 1" class="page-item" (click)="previousPage()">
                 <a class="page-link" tabindex="-1">Previous</a>
             </li>

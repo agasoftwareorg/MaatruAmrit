@@ -9,10 +9,13 @@
                             <p class="table-border">Collection ID</p>
                         </th>
                         <th scope="col">
-                            <p class="table-border">Mother ID</p>
+                            <p class="table-border">Mother Registration Number</p>
                         </th>
                         <th scope="col">
-                            <p class="table-border">Quantity</p>
+                            <p class="table-border">Collected At</p>
+                        </th>
+                        <th scope="col">
+                            <p class="table-border">Collected (ml)</p>
                         </th>
                         <th scope="col">
                             <p class="">Action</p>
@@ -20,6 +23,11 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @if(collections.length == 0){
+                    <tr id="noDataRow">
+                        <td colspan="100%" class="text-center text-muted fw-bold p-3">No Data Found</td>
+                    </tr>
+                    }
                     @for (collection of collections; track collection?.id) {
 
                     <tr>
@@ -27,7 +35,10 @@
                             <p class="table-border">{{collection.id}}</p>
                         </td>
                         <td>
-                            <p class="table-border">{{collection.mother}}</p>
+                            <p class="table-border">{{collection.mother_reg_number}}</p>
+                        </td>
+                        <td>
+                            <p class="table-border">{{collection.collected_at  | date:'medium'}}</p>
                         </td>
                         <td>
                             <p class="table-border">{{collection.quantity}}</p>
@@ -66,13 +77,10 @@
                 <thead>
                     <tr class="ma-table-header border border-secondary">
                         <th scope="col">
-                            <p class="table-border">Mother ID</p>
-                        </th>
-                        <th scope="col">
-                            <p class="table-border">Name</p>
-                        </th>
-                        <th scope="col">
                             <p class="table-border">Registration Number</p>
+                        </th>
+                        <th scope="col">
+                            <p class="table-border">Mother Name</p>
                         </th>
                         <th scope="col">
                             <p class="table-border">Milk Available</p>
@@ -83,31 +91,42 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @if(mothers.length == 0){
+                    <tr id="noDataRow">
+                        <td colspan="100%" class="text-center text-muted fw-bold p-3">No Data Found</td>
+                    </tr>
+                    }
                     @for (mother of mothers; track mother?.id) {
 
                     <tr>
                         <td scope="row">
-                            <p class="table-border">{{mother.id}}</p>
+                            <p class="table-border">{{mother.reg_number}}</p>
                         </td>
                         <td>
                             <p class="table-border">{{mother.name}}</p>
                         </td>
                         <td>
-                            <p class="table-border">{{mother.reg_number}}</p>
-                        </td>
-                        <td>
                             <p class="table-border">{{mother.available_quantity}}</p>
                         </td>
                         <td>
-                            <p class="d-flex">
-                                <input type="number" class="mx-2" [(ngModel)]="mother.input_quantity">
-                                <button type="submit" class="btn d-flex" (click)="createCollection(mother)">
-                                    <i class="bi bi-plus-circle px-2"></i>Add
-                                </button>
-                                <!-- <a type="button" (click)="deleteCollection('sh')" class="px-2">
+                            <div class="row">
+                                <div class="col-4">
+                                    <input type="number" placeholder="Quantity (ml)" class="mx-2 form-control"
+                                        [(ngModel)]="mother.input_quantity">
+                                </div>
+                                <div class="col-4">
+                                    <input [(ngModel)]="mother.collected_at" type="datetime-local"
+                                        class="form-control form-control" id="donatedAt">
+                                </div>
+                                <div class="col-4">
+                                    <button type="submit" class="btn d-flex" (click)="createCollection(mother)">
+                                        <i class="bi bi-plus-circle px-2"></i>Add
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- <a type="button" (click)="deleteCollection('sh')" class="px-2">
                                     <i class="bi bi-plus-circle-fill ma-text-brown-50"></i>
                                 </a> -->
-                            </p>
                         </td>
                     </tr>
                     }
@@ -116,8 +135,9 @@
             </table>
         </div>
     </div>
-    <div class="row py-3">
-        <ul type="button" class="pagination justify-content-end">
+    <div class="d-flex  justify-content-between align-items-center">
+        <button type="button" routerLink="/batch" class="btn mx-2">Back</button>
+        <ul type="button" class="pagination m-0">
             <li [class.disabled]="m_page_number === 1" class="page-item" (click)="previousMotherPage()">
                 <a class="page-link" tabindex="-1">Previous</a>
             </li>

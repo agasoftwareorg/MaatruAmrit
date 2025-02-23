@@ -4,6 +4,7 @@ import { BackendService } from '../../services/backend.service';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterLink } from '@angular/router';
 import { ToastService } from '../../services/toast.service';
+import { BarcodeService } from '../../services/barcode.service';
 
 @Component({
   selector: 'app-mother-list',
@@ -18,7 +19,7 @@ export class MotherListComponent {
   mothers: any = []
   pages: any = []
 
-  constructor(private backend: BackendService, private toast: ToastService) { }
+  constructor(private backend: BackendService, private toast: ToastService, private barcode: BarcodeService) { }
 
   ngOnInit() {
     this.listMothers()
@@ -43,7 +44,7 @@ export class MotherListComponent {
   }
 
   deleteMother(id: string) {
-    this.backend.deleteHospital(id).subscribe({
+    this.backend.deleteMother(id).subscribe({
       next: () => {
         this.listMothers()
       },
@@ -73,5 +74,9 @@ export class MotherListComponent {
       this.page_number = page
       this.listMothers(false)
     }
+  }
+
+  printBarcode(reg_number: string) {
+    this.barcode.printBarcode(reg_number)
   }
 }

@@ -6,12 +6,18 @@
             <form [formGroup]="donationForm">
                 <div class="form-group row py-1">
                     <label for="quantity" class="col-2 col-form-label col-form-label">Milk (ml) :</label>
-                    <div class="col-6">
+                    <div class="col-3">
                         <input formControlName="quantity" class="form-control form-control" id="quantity"
                             placeholder="Quantity of milk donated">
                     </div>
                 </div>
-                <div class="text-center py-1">
+                <div class="form-group row py-1">
+                    <label for="donatedAt" class="col-2 col-form-label col-form-label">Donated At :</label>
+                    <div class="col-3">
+                        <input type="datetime-local" formControlName="donatedAt" class="form-control form-control" id="donatedAt">
+                    </div>
+                </div>
+                <div class="text-left py-1">
                     <button type="submit" class="btn" (click)="createDonation()">
                         <i class="bi bi-plus"></i> 
                         @if(donationForm.value.donationId){
@@ -52,6 +58,11 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @if(donations.length == 0){
+                        <tr id="noDataRow">
+                            <td colspan="100%" class="text-center text-muted fw-bold p-3">No Data Found</td>
+                        </tr>
+                    }
                     @for (donation of donations; track donation?.id) {
 
                     <tr>
@@ -59,7 +70,7 @@
                             <p class="table-border">{{donation.id}}</p>
                         </td>
                         <td>
-                            <p class="table-border">{{donation.created_at | date:'longDate'}}</p>
+                            <p class="table-border">{{donation.donated_at | date:'medium'}}</p>
                         </td>
                         <td>
                             <p class="table-border">{{donation.quantity}}</p>
@@ -81,8 +92,9 @@
             </table>
         </div>
     </div>
-    <div class="row py-3">
-        <ul type="button" class="pagination justify-content-end">
+    <div class="d-flex  justify-content-between align-items-center">
+        <button type="button" routerLink="/mother" class="btn mx-2">Back</button>
+        <ul type="button" class="pagination m-0">
             <li [class.disabled]="page_number === 1" class="page-item" (click)="previousPage()">
                 <a class="page-link" tabindex="-1">Previous</a>
             </li>

@@ -76,6 +76,8 @@ class ChildSerializer(serializers.ModelSerializer):
 
 
 class CollectionSerializer(serializers.ModelSerializer):
+    mother_reg_number = serializers.CharField(source='mother.reg_number', read_only=True)
+
     class Meta:
         model = models.Collection
         fields = '__all__'
@@ -135,6 +137,8 @@ class BatchSerializer(serializers.ModelSerializer):
     #     return instance
 
 class DispatchSerializer(serializers.ModelSerializer):
+    batch_number = serializers.CharField(source='batch.name', read_only=True)
+
     class Meta:
         model = models.Dispatch
         fields = '__all__'

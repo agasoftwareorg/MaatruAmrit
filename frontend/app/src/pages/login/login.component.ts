@@ -68,7 +68,8 @@ export class LoginComponent {
               }
             } else {
               if (data.role !== 'ADMIN') {
-                this.router.navigate(['batch'])
+                this.router.navigate(['mother'])
+                this.backend.setCurrentHospital().subscribe()
               } else {
                 this.backend.logout();
                 this.toast.show('Please use the Admin page to login')

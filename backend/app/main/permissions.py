@@ -18,4 +18,8 @@ class IsAdminView(BasePermission):
 class IsUserView(BasePermission):
 
     def has_permission(self, request, view):
-        return request.user.is_authenticated and not request.user.is_admin()
+        if not request.user.is_authenticated or request.user.is_admin():
+            return False
+        if request.user.role == 'HOSPITAL_USER':
+            return request.method in ["GET", "OPTIONS", "POST"]
+        return True

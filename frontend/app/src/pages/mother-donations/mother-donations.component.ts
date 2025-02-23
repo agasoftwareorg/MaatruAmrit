@@ -1,15 +1,16 @@
 import { Component, inject } from '@angular/core';
 import { HeaderComponent } from '../../layouts/header/header.component';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { BackendService } from '../../services/backend.service';
 import { ToastService } from '../../services/toast.service';
 import { CommonModule } from '@angular/common';
+import moment from 'moment';
 
 @Component({
   selector: 'app-mother-donations',
   standalone: true,
-  imports: [HeaderComponent, ReactiveFormsModule, CommonModule],
+  imports: [HeaderComponent, ReactiveFormsModule, CommonModule, RouterLink],
   templateUrl: './mother-donations.component.html',
   styleUrl: './mother-donations.component.scss'
 })
@@ -20,7 +21,10 @@ export class MotherDonationsComponent {
   donations: any = []
   motherId: string = '';
   donationForm = new FormGroup({
-    quantity: new FormControl('', [
+    quantity: new FormControl(null, [
+      Validators.required,
+    ]),
+    donatedAt: new FormControl(moment().format('YYYY-MM-DD HH:mm'), [
       Validators.required,
     ]),
     donationId: new FormControl(null),
@@ -39,13 +43,15 @@ export class MotherDonationsComponent {
 
     let display_mapper: any = {
       quantity: 'Quantity',
+      donatedAt: 'Donated At'
     }
     if (!this.toast.validateForm(this.donationForm, display_mapper)) {
       return
     }
     let api = undefined
     let payload = {
-      quantity: this.donationForm.value?.quantity,
+      quantity: this.donationForm.value.quantity,
+      donated_at: moment(this.donationForm.value.donatedAt, 'YYYY-MM-DD HH:mm').utc(),
       mother: this.motherId
     }
     if (!this.donationForm.value.donationId) {
@@ -57,7 +63,8 @@ export class MotherDonationsComponent {
     api.subscribe({
       next: () => {
         this.donationForm.reset({
-          donationId: null
+          donationId: null,
+          donatedAt: moment().format('YYYY-MM-DD HH:mm')
         })
         this.listDonations()
       },
@@ -122,15 +129,18 @@ export class MotherDonationsComponent {
   }
 
   editDonation(donation: any) {
+    let donatedAt = moment(donation.donated_at, 'YYYY-MM-DDTHH:mm:ssZ')
     this.donationForm.setValue({
       quantity: donation.quantity,
-      donationId: donation.id
+      donationId: donation.id,
+      donatedAt: donatedAt.format('YYYY-MM-DD HH:mm'),
     })
   }
 
   resetDonation() {
     this.donationForm.reset({
-      donationId: null
+      donationId: null,
+      donatedAt: moment().format('YYYY-MM-DD HH:mm')
     })
   }
 }

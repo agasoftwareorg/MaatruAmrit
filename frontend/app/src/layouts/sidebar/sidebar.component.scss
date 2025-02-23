@@ -1,8 +1,8 @@
 
-.ma-sidebar {
-    display: grid;
-    grid-template-rows: auto auto auto 1fr auto;
-}
+// .ma-sidebar {
+//     display: grid;
+//     grid-template-rows: auto auto auto 1fr auto;
+// }
 
 .nav-item:hover {
     background-color: var(--ma-brown-50);
@@ -15,7 +15,7 @@
     cursor: pointer;
 }
 
-.navbar .navbar-brand{
+.home{
     font-weight: 700;
 }
 .navbar{

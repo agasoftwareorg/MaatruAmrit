@@ -20,6 +20,8 @@ export class BackendService {
   private isAuthenticated = new BehaviorSubject<boolean>(this.hasToken());
   currentUserName: string = '';
   currentUserRole: string = '';
+  currentHospitalName: string = '';
+  currentHospitalHasAnalyzer: boolean = false;
 
 
   constructor(private http: HttpClient) { }
@@ -46,6 +48,15 @@ export class BackendService {
       tap((data: any) => {
         this.currentUserName = data.username;
         this.currentUserRole = data.role;
+      })
+    );
+  }
+
+  setCurrentHospital(){
+    return this.getCurrentHospital().pipe(
+      tap((data: any) => {
+        this.currentHospitalName = data.name;
+        this.currentHospitalHasAnalyzer = data.is_analyzer;
       })
     );
   }
@@ -99,6 +110,14 @@ export class BackendService {
 
   getCurrentUser(){
     return this.http.get(`${this.currentUrl}/user`, {
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+  }
+
+  getCurrentHospital(){
+    return this.http.get(`${this.currentUrl}/hospital`, {
       headers: {
         "Authorization": `Bearer ${localStorage.getItem('token')}`
       }
@@ -161,7 +180,36 @@ export class BackendService {
     });
   }
 
+  getLatestMotherID(){
+    return this.http.get(`${this.motherUrl}/id`, {
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+  }
+  convertToFormData(payload: any): FormData {
+    const formData = new FormData();
+    
+    Object.keys(payload).forEach((key) => {
+      if (payload[key] instanceof File) {
+        // If the value is a file, append it directly
+        formData.append(key, payload[key]);
+      } else if (Array.isArray(payload[key])) {
+        // If the value is an array, append each element individually
+        payload[key].forEach((item, index) => {
+          formData.append(`${key}[${index}]`, item);
+        });
+      } else {
+        // Otherwise, convert to string and append
+        formData.append(key, payload[key]?.toString() || "");
+      }
+    });
+  
+    return formData;
+  }
+
   addMother(data: object){
+    data = this.convertToFormData(data)
     return this.http.post(this.motherUrl, data, {
       headers: {
         "Authorization": `Bearer ${localStorage.getItem('token')}`
@@ -170,6 +218,7 @@ export class BackendService {
   }
 
   updateMother(id: string, data: object){
+    data = this.convertToFormData(data)
     return this.http.put(`${this.motherUrl}/${id}`, data, {
       headers: {
         "Authorization": `Bearer ${localStorage.getItem('token')}`
@@ -195,6 +244,14 @@ export class BackendService {
 
   getBabyById(id: string){
     return this.http.get(`${this.babyUrl}/${id}`, {
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+  }
+
+  getLatestBabyID(){
+    return this.http.get(`${this.babyUrl}/id`, {
       headers: {
         "Authorization": `Bearer ${localStorage.getItem('token')}`
       }
@@ -242,7 +299,7 @@ export class BackendService {
   }
 
   getLatestBatch(){
-    return this.http.get(`${this.batchUrl}?page=1&page_size=1&ordering=-id`, {
+    return this.http.get(`${this.batchUrl}/id`, {
       headers: {
         "Authorization": `Bearer ${localStorage.getItem('token')}`
       }
@@ -258,6 +315,7 @@ export class BackendService {
   }
 
   addBatch(data: object){
+    data = this.convertToFormData(data)
     return this.http.post(this.batchUrl, data, {
       headers: {
         "Authorization": `Bearer ${localStorage.getItem('token')}`
@@ -266,6 +324,7 @@ export class BackendService {
   }
 
   updateBatch(id: string, data: object){
+    data = this.convertToFormData(data)
     return this.http.put(`${this.batchUrl}/${id}`, data, {
       headers: {
         "Authorization": `Bearer ${localStorage.getItem('token')}`

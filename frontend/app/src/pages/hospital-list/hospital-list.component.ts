@@ -4,12 +4,13 @@ import { HeaderComponent } from '../../layouts/header/header.component';
 import { BackendService } from '../../services/backend.service';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastService } from '../../services/toast.service';
+import { NillPipe } from '../../services/nill.pipe';
 
 
 @Component({
   selector: 'app-hospital-list',
   standalone: true,
-  imports: [RouterLink, HeaderComponent, NgbPaginationModule],
+  imports: [RouterLink, HeaderComponent, NgbPaginationModule, NillPipe],
   templateUrl: './hospital-list.component.html',
   styleUrl: './hospital-list.component.scss'
 })

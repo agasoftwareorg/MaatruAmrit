@@ -25,6 +25,9 @@ export class SidebarComponent {
       this.backend.setCurrentUser().subscribe({
         next: () => {
           this.userRole = this.backend.currentUserRole
+          if(!this.backend.currentHospitalName && this.userRole !== 'ADMIN'){
+            this.backend.setCurrentHospital().subscribe()
+          }
         }
       })
     }
@@ -43,7 +46,7 @@ export class SidebarComponent {
     if(this.userRole === 'ADMIN'){
       this.router.navigate(["/hospital"])
     } else {
-      this.router.navigate(["/batch"])
+      this.router.navigate(["/mother"])
     }
   }
 }

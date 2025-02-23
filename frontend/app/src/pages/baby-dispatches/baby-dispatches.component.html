@@ -1,4 +1,4 @@
-<app-header title="Baby Dispatches"></app-header>
+<app-header title="Recipient Dispatches"></app-header>
 <div class="container-fluid">
     <div class="row px-3">
         <div class="table-responsive table-container">
@@ -9,10 +9,13 @@
                             <p class="table-border">Dispatch ID</p>
                         </th>
                         <th scope="col">
-                            <p class="table-border">Batch ID</p>
+                            <p class="table-border">Batch Number</p>
                         </th>
                         <th scope="col">
-                            <p class="table-border">Quantity</p>
+                            <p class="table-border">Dispatched At</p>
+                        </th>
+                        <th scope="col">
+                            <p class="table-border">Dispatched (ml)</p>
                         </th>
                         <th scope="col">
                             <p class="">Action</p>
@@ -20,6 +23,11 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @if(dispatches.length == 0){
+                        <tr id="noDataRow">
+                            <td colspan="100%" class="text-center text-muted fw-bold p-3">No Data Found</td>
+                        </tr>
+                    }
                     @for (dispatch of dispatches; track dispatch?.id) {
 
                     <tr>
@@ -27,7 +35,10 @@
                             <p class="table-border">{{dispatch.id}}</p>
                         </td>
                         <td>
-                            <p class="table-border">{{dispatch.batch}}</p>
+                            <p class="table-border">{{dispatch.batch_number}}</p>
+                        </td>
+                        <td>
+                            <p class="table-border">{{dispatch.dispatched_at  | date:'medium'}}</p>
                         </td>
                         <td>
                             <p class="table-border">{{dispatch.quantity}}</p>
@@ -66,19 +77,10 @@
                 <thead>
                     <tr class="ma-table-header border border-secondary">
                         <th scope="col">
-                            <p class="table-border">Batch ID</p>
-                        </th>
-                        <th scope="col">
                             <p class="table-border">Batch Number</p>
                         </th>
                         <th scope="col">
                             <p class="table-border">Milk Available</p>
-                        </th>
-                        <th scope="col">
-                            <p class="table-border">Protein (%)</p>
-                        </th>
-                        <th scope="col">
-                            <p class="table-border">Fat (%)</p>
                         </th>
                         <th scope="col">
                             <p class="">Dispatch (ml)</p>
@@ -86,12 +88,14 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @if(batches.length == 0){
+                        <tr id="noDataRow">
+                            <td colspan="100%" class="text-center text-muted fw-bold p-3">No Data Found</td>
+                        </tr>
+                    }
                     @for (batch of batches; track batch?.id) {
 
                     <tr>
-                        <td scope="row">
-                            <p class="table-border">{{batch.id}}</p>
-                        </td>
                         <td>
                             <p class="table-border">{{batch.name}}</p>
                         </td>
@@ -99,18 +103,21 @@
                             <p class="table-border">{{batch.available_quantity}}</p>
                         </td>
                         <td>
-                            <p class="table-border">{{batch.protein || '-'}}</p>
-                        </td>
-                        <td>
-                            <p class="table-border">{{batch.fat || '-'}}</p>
-                        </td>
-                        <td>
-                            <p class="d-flex">
-                                <input type="number" class="mx-2" [(ngModel)]="batch.input_quantity">
-                                <button type="submit" class="btn d-flex" (click)="createDispatch(batch)">
-                                    <i class="bi bi-plus-circle px-2"></i>Add
-                                </button>
-                            </p>
+                            <div class="row">
+                                <div class="col-4">
+                                    <input type="number" placeholder="Quantity (ml)" class="mx-2 form-control"
+                                        [(ngModel)]="batch.input_quantity">
+                                </div>
+                                <div class="col-4">
+                                    <input [(ngModel)]="batch.dispatched_at" type="datetime-local"
+                                        class="form-control form-control" id="donatedAt">
+                                </div>
+                                <div class="col-4">
+                                    <button type="submit" class="btn d-flex" (click)="createDispatch(batch)">
+                                        <i class="bi bi-plus-circle px-2"></i>Add
+                                    </button>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                     }
@@ -119,8 +126,9 @@
             </table>
         </div>
     </div>
-    <div class="row py-3">
-        <ul type="button" class="pagination justify-content-end">
+    <div class="d-flex  justify-content-between align-items-center">
+        <button type="button" routerLink="/recipient" class="btn mx-2">Back</button>
+        <ul type="button" class="pagination m-0">
             <li [class.disabled]="b_page_number === 1" class="page-item" (click)="previousBatchPage()">
                 <a class="page-link" tabindex="-1">Previous</a>
             </li>

@@ -6,11 +6,13 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastService } from '../../services/toast.service';
 import { CommonModule } from '@angular/common';
 import { ReplacePipe } from '../../services/replace.pipe';
+import { NillPipe } from '../../services/nill.pipe';
+import { BarcodeService } from '../../services/barcode.service';
 
 @Component({
   selector: 'app-batch-list',
   standalone: true,
-  imports: [RouterLink, HeaderComponent, NgbPaginationModule, CommonModule, ReplacePipe],
+  imports: [RouterLink, HeaderComponent, NgbPaginationModule, CommonModule, ReplacePipe, NillPipe],
   templateUrl: './batch-list.component.html',
   styleUrl: './batch-list.component.scss'
 })
@@ -20,7 +22,7 @@ export class BatchListComponent {
   batches: any = []
   pages: any = []
 
-  constructor(private backend: BackendService, private toast: ToastService) { }
+  constructor(private backend: BackendService, private toast: ToastService, private barcode: BarcodeService) { }
 
   ngOnInit() {
     this.listBatches()
@@ -89,5 +91,9 @@ export class BatchListComponent {
       this.page_number = page
       this.listBatches(false)
     }
+  }
+
+  printBarcode(reg_number: string) {
+    this.barcode.printBarcode(reg_number)
   }
 }

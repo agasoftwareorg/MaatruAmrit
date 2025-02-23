@@ -1,5 +1,6 @@
 .idea
 db.sqlite3
+backend/app/static/*
 package-lock.json
 *.pyc
 

@@ -4,11 +4,13 @@ import { BackendService } from '../../services/backend.service';
 import { RouterLink } from '@angular/router';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastService } from '../../services/toast.service';
+import { NillPipe } from '../../services/nill.pipe';
+import { BarcodeService } from '../../services/barcode.service';
 
 @Component({
   selector: 'app-baby-list',
   standalone: true,
-  imports: [RouterLink, HeaderComponent, NgbPaginationModule],
+  imports: [RouterLink, HeaderComponent, NgbPaginationModule, NillPipe],
   templateUrl: './baby-list.component.html',
   styleUrl: './baby-list.component.scss'
 })
@@ -18,7 +20,7 @@ export class BabyListComponent {
   babies: any = []
   pages: any = []
 
-  constructor(private backend: BackendService, private toast: ToastService) { }
+  constructor(private backend: BackendService, private toast: ToastService, private barcode: BarcodeService) { }
 
   ngOnInit() {
     this.listBabies()
@@ -73,5 +75,9 @@ export class BabyListComponent {
       this.page_number = page
       this.listBabies(false)
     }
+  }
+
+  printBarcode(reg_number: string) {
+    this.barcode.printBarcode(reg_number)
   }
 }

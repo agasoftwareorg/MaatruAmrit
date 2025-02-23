@@ -1,15 +1,16 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, ElementRef, inject, Input, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { BackendService } from '../../services/backend.service';
 import { ToastService } from '../../services/toast.service';
 import { finalize } from 'rxjs';
 import moment from 'moment';
+import { FilenamePipe } from '../../services/filename.pipe';
 
 @Component({
   selector: 'app-batch-details',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, FilenamePipe, RouterLink],
   templateUrl: './batch-details.component.html',
   styleUrl: './batch-details.component.scss'
 })
@@ -17,7 +18,11 @@ export class BatchDetailsComponent {
 
   @Input() type: string = 'NEW';
 
+  hasAnalyzer: boolean = false
   batchId: string = ''
+  @ViewChild('analyzerReportFile') analyzerReportFile!: ElementRef;
+  @ViewChild('pasteurizationReportFile') pasteurizationReportFile!: ElementRef;
+
   batchForm = new FormGroup({
     name: new FormControl('', [
       Validators.required,
@@ -46,6 +51,8 @@ export class BatchDetailsComponent {
     disableSubmit: new FormControl(false, [
       Validators.required,
     ]),
+    analyzerReportPath: new FormControl(null),
+    pasteurizationReportPath: new FormControl(null),
   })
 
 
@@ -61,6 +68,16 @@ export class BatchDetailsComponent {
   }
 
   ngOnInit() {
+    if(!this.backend.currentHospitalName){
+      this.backend.setCurrentHospital().subscribe({
+        next: () => {
+          this.hasAnalyzer = this.backend.currentHospitalHasAnalyzer
+        }
+      })
+    } else {
+      this.hasAnalyzer = this.backend.currentHospitalHasAnalyzer
+    }
+
     let batchId = this.route.snapshot.paramMap.get('id');
     if (this.type == "EDIT" && batchId) {
       this.batchId = batchId
@@ -78,9 +95,11 @@ export class BatchDetailsComponent {
             fp: data.fp,
             calories: data.calories,
             pasteurization: data.pasteurization,
-            disableSubmit: false
+            disableSubmit: false,
+            analyzerReportPath: data.analyzer_report,
+            pasteurizationReportPath: data.pasteurization_report
           })
-          this.batchForm.controls.name.disable();
+          // this.batchForm.controls.name.disable();
         },
         error: (error) => {
           this.toast.showError(error.error);
@@ -89,11 +108,7 @@ export class BatchDetailsComponent {
     } else {
       this.backend.getLatestBatch().subscribe({
         next: (data: any) => {
-          if(data.results.length) {
-            this.batchForm.controls.name.setValue(moment().format('YYYYMMDDhhmm') + this.pad(data.results[0].id + 1))
-          } else {
-            this.batchForm.controls.name.setValue(moment().format('YYYYMMDDhhmm') + this.pad(1))
-          }
+          this.batchForm.controls.name.setValue('B' +moment().format('YYYYMMDDhhmm') + this.pad(data.id))
         },
         error: (error) => {
           this.toast.showError(error.error);
@@ -103,11 +118,33 @@ export class BatchDetailsComponent {
   }
 
 
+  clearAnalyzerFile(){
+    if(this.analyzerReportFile){
+      this.analyzerReportFile.nativeElement.value = null
+    }
+    this.batchForm.patchValue({
+      analyzerReportPath: null
+    });
+  }
+
+  downloadFile(link: any){
+    window.open(link, "_blank");
+  }
+
+  clearPasteurizationFile(){
+    if(this.pasteurizationReportFile){
+      this.pasteurizationReportFile.nativeElement.value = null
+    }
+    this.batchForm.patchValue({
+      pasteurizationReportPath: null
+    });
+  }
+
   createBatch() {
     this.batchForm.controls.disableSubmit.setValue(true);
     this.batchForm.setErrors(null);
     let display_mapper: any = {
-      name: 'Hospital name',
+      name: 'Batch name',
       address: 'Address',
       branch: 'Branch',
       contact: 'Contact',
@@ -122,8 +159,8 @@ export class BatchDetailsComponent {
     }
 
     let api = undefined
-    let payload = {
-      name: this.batchForm.controls.name.value,
+    let payload: any = {
+      name: this.batchForm.value.name,
       fat: this.batchForm.value.fat,
       protein: this.batchForm.value.protein,
       snf: this.batchForm.value.snf,
@@ -136,6 +173,18 @@ export class BatchDetailsComponent {
       pasteurization: this.batchForm.value.pasteurization,
       disableSubmit: false
     }
+    if (this.analyzerReportFile && this.analyzerReportFile.nativeElement.files && this.analyzerReportFile.nativeElement.files.length > 0) {
+      payload.analyzer_report = this.analyzerReportFile.nativeElement.files[0]
+    } else if (!this.batchForm.value.analyzerReportPath){
+      payload.analyzer_report = null
+    }
+
+    if (this.pasteurizationReportFile && this.pasteurizationReportFile.nativeElement.files && this.pasteurizationReportFile.nativeElement.files.length > 0) {
+      payload.pasteurization_report = this.pasteurizationReportFile.nativeElement.files[0]
+    } else if (!this.batchForm.value.pasteurizationReportPath){
+      payload.pasteurization_report = null
+    }
+
     if (this.type == "NEW") {
       api = this.backend.addBatch(payload)
     } else {

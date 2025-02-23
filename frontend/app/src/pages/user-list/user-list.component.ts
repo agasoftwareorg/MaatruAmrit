@@ -2,13 +2,14 @@ import { Component, inject } from '@angular/core';
 import { HeaderComponent } from '../../layouts/header/header.component';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BackendService } from '../../services/backend.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ToastService } from '../../services/toast.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-user-list',
   standalone: true,
-  imports: [HeaderComponent, ReactiveFormsModule],
+  imports: [HeaderComponent, ReactiveFormsModule, RouterLink],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.scss'
 })
@@ -32,6 +33,9 @@ export class UserListComponent {
       Validators.required,
     ]),
     userId: new FormControl(null),
+    disableSubmit: new FormControl(false, [
+      Validators.required,
+    ]),
   })
 
   private readonly route = inject(ActivatedRoute);
@@ -43,6 +47,7 @@ export class UserListComponent {
   }
 
   createUser() {
+    this.userForm.controls.disableSubmit.setValue(true);
     this.userForm.setErrors(null);
 
     let display_mapper: any = {
@@ -51,6 +56,7 @@ export class UserListComponent {
       role: 'Role',
     }
     if (!this.toast.validateForm(this.userForm, display_mapper)) {
+      this.userForm.controls.disableSubmit.setValue(false);
       return
     }
 
@@ -67,7 +73,11 @@ export class UserListComponent {
       api = this.backend.updateUser(this.userForm.value.userId || '', payload)
     }
 
-    api.subscribe({
+    api.pipe(
+      finalize(() => {
+        this.userForm.controls.disableSubmit.setValue(false);
+      })
+    ).subscribe({
       next: () => {
         this.userForm.reset({
           role: 'HOSPITAL_ADMIN',
@@ -140,7 +150,8 @@ export class UserListComponent {
       username: user.username,
       password: '',
       role: user.role,
-      userId: user.id
+      userId: user.id,
+      disableSubmit: false
     })
   }
 

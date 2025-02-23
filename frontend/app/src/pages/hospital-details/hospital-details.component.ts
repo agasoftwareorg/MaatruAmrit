@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { Component, Input, inject } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { BackendService } from '../../services/backend.service';
 import { ToastService } from '../../services/toast.service';
@@ -10,7 +10,7 @@ import { finalize, Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-hospital-details',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './hospital-details.component.html',
   styleUrl: './hospital-details.component.scss'
 })
@@ -22,17 +22,10 @@ export class HospitalDetailsComponent {
   hospitalForm = new FormGroup({
     name: new FormControl('', [
       Validators.required,
-      Validators.minLength(3),
     ]),
-    address: new FormControl('', [
-      Validators.required,
-    ]),
-    branch: new FormControl('', [
-      Validators.required,
-    ]),
-    contact: new FormControl('', [
-      Validators.required,
-    ]),
+    address: new FormControl(null),
+    branch: new FormControl(null),
+    contact: new FormControl(null),
     subscription: new FormControl('PLAN_1_YEAR', [
       Validators.required
     ]),
