@@ -24,9 +24,9 @@
                 </thead>
                 <tbody>
                     @if(dispatches.length == 0){
-                        <tr id="noDataRow">
-                            <td colspan="100%" class="text-center text-muted fw-bold p-3">No Data Found</td>
-                        </tr>
+                    <tr id="noDataRow">
+                        <td colspan="100%" class="text-center text-muted fw-bold p-3">No Data Found</td>
+                    </tr>
                     }
                     @for (dispatch of dispatches; track dispatch?.id) {
 
@@ -38,17 +38,21 @@
                             <p class="table-border">{{dispatch.batch_number}}</p>
                         </td>
                         <td>
-                            <p class="table-border">{{dispatch.dispatched_at  | date:'medium'}}</p>
+                            <p class="table-border">{{dispatch.dispatched_at | date:'medium'}}</p>
                         </td>
                         <td>
                             <p class="table-border">{{dispatch.quantity}}</p>
                         </td>
                         <td>
+                            @if(isHospitalAdmin$ | async){
                             <p class="d-flex">
                                 <a type="button" (click)="deleteDispatch(dispatch.id)" class="px-2">
                                     <i class="bi bi-trash ma-text-brown-50"></i>
                                 </a>
                             </p>
+                            } @else {
+                            -
+                            }
                         </td>
                     </tr>
                     }
@@ -89,9 +93,9 @@
                 </thead>
                 <tbody>
                     @if(batches.length == 0){
-                        <tr id="noDataRow">
-                            <td colspan="100%" class="text-center text-muted fw-bold p-3">No Data Found</td>
-                        </tr>
+                    <tr id="noDataRow">
+                        <td colspan="100%" class="text-center text-muted fw-bold p-3">No Data Found</td>
+                    </tr>
                     }
                     @for (batch of batches; track batch?.id) {
 

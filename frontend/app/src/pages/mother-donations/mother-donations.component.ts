@@ -4,17 +4,20 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { BackendService } from '../../services/backend.service';
 import { ToastService } from '../../services/toast.service';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import moment from 'moment';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-mother-donations',
   standalone: true,
-  imports: [HeaderComponent, ReactiveFormsModule, CommonModule, RouterLink],
+  imports: [HeaderComponent, ReactiveFormsModule, CommonModule, RouterLink, AsyncPipe],
   templateUrl: './mother-donations.component.html',
   styleUrl: './mother-donations.component.scss'
 })
 export class MotherDonationsComponent {
+
+  isHospitalAdmin$!: Observable<boolean>;
   page_number = 1
   page_size = 5
   pages: any = []
@@ -35,7 +38,8 @@ export class MotherDonationsComponent {
 
   ngOnInit() {
     this.motherId = this.route.snapshot.paramMap.get('id') || '';
-    this.listDonations()
+    this.listDonations();
+    this.isHospitalAdmin$ = this.backend.isHospitalAdmin();
   }
 
   createDonation() {

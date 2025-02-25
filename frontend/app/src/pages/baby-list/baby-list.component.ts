@@ -6,15 +6,18 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastService } from '../../services/toast.service';
 import { NillPipe } from '../../services/nill.pipe';
 import { BarcodeService } from '../../services/barcode.service';
+import { Observable } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-baby-list',
   standalone: true,
-  imports: [RouterLink, HeaderComponent, NgbPaginationModule, NillPipe],
+  imports: [RouterLink, HeaderComponent, NgbPaginationModule, NillPipe, AsyncPipe],
   templateUrl: './baby-list.component.html',
   styleUrl: './baby-list.component.scss'
 })
 export class BabyListComponent {
+  isHospitalAdmin$!: Observable<boolean>;
   page_number = 1
   page_size = 10
   babies: any = []
@@ -23,7 +26,8 @@ export class BabyListComponent {
   constructor(private backend: BackendService, private toast: ToastService, private barcode: BarcodeService) { }
 
   ngOnInit() {
-    this.listBabies()
+    this.isHospitalAdmin$ = this.backend.isHospitalAdmin();
+    this.listBabies();
   }
 
   listBabies(reset_page: boolean = true) {

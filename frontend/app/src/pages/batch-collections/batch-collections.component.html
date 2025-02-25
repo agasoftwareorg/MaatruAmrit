@@ -38,17 +38,21 @@
                             <p class="table-border">{{collection.mother_reg_number}}</p>
                         </td>
                         <td>
-                            <p class="table-border">{{collection.collected_at  | date:'medium'}}</p>
+                            <p class="table-border">{{collection.collected_at | date:'medium'}}</p>
                         </td>
                         <td>
                             <p class="table-border">{{collection.quantity}}</p>
                         </td>
                         <td>
+                            @if(isHospitalAdmin$ | async){
                             <p class="d-flex">
                                 <a type="button" (click)="deleteCollection(collection.id)" class="px-2">
                                     <i class="bi bi-trash ma-text-brown-50"></i>
                                 </a>
                             </p>
+                            } @else {
+                            -
+                            }
                         </td>
                     </tr>
                     }

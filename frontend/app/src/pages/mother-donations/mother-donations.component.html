@@ -14,25 +14,23 @@
                 <div class="form-group row py-1">
                     <label for="donatedAt" class="col-2 col-form-label col-form-label">Donated At :</label>
                     <div class="col-3">
-                        <input type="datetime-local" formControlName="donatedAt" class="form-control form-control" id="donatedAt">
+                        <input type="datetime-local" formControlName="donatedAt" class="form-control form-control"
+                            id="donatedAt">
                     </div>
                 </div>
                 <div class="text-left py-1">
                     <button type="submit" class="btn" (click)="createDonation()">
-                        <i class="bi bi-plus"></i> 
+                        <i class="bi bi-plus"></i>
                         @if(donationForm.value.donationId){
-                            Update Donation
+                        Update Donation
                         } @else {
-                            Add Donation
+                        Add Donation
                         }
                     </button>
+                    @if(isHospitalAdmin$ | async){
                     <button class="btn mx-2" (click)="resetDonation()">
                         <i class="bi bi-arrow-clockwise"></i> Reset
                     </button>
-                    @if(donationForm.hasError('customError')){
-                    <div class="alert alert-danger" role="alert">
-                        {{donationForm.errors?.['customError']}}
-                    </div>
                     }
                 </div>
             </form>
@@ -59,9 +57,9 @@
                 </thead>
                 <tbody>
                     @if(donations.length == 0){
-                        <tr id="noDataRow">
-                            <td colspan="100%" class="text-center text-muted fw-bold p-3">No Data Found</td>
-                        </tr>
+                    <tr id="noDataRow">
+                        <td colspan="100%" class="text-center text-muted fw-bold p-3">No Data Found</td>
+                    </tr>
                     }
                     @for (donation of donations; track donation?.id) {
 
@@ -76,6 +74,7 @@
                             <p class="table-border">{{donation.quantity}}</p>
                         </td>
                         <td>
+                            @if(isHospitalAdmin$ | async){
                             <p class="d-flex">
                                 <a class="px-2" (click)="editDonation(donation)">
                                     <i class="bi bi-pencil ma-text-brown-50"></i>
@@ -84,10 +83,12 @@
                                     <i class="bi bi-trash ma-text-brown-50"></i>
                                 </a>
                             </p>
+                            } @else {
+                            -
+                            }
                         </td>
                     </tr>
                     }
-
                 </tbody>
             </table>
         </div>

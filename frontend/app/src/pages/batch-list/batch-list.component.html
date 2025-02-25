@@ -1,7 +1,7 @@
 <app-header title="Batch List"></app-header>
 
 <div class="container-fluid main-page">
-    
+
     <div class="row py-2 justify-content-end">
         <!-- Search Input -->
         <!-- <div class="col d-none">
@@ -12,8 +12,8 @@
 
         <!-- Add New Button -->
         <div class="col-3 d-flex justify-content-end mx-3">
-            <button class="btn" routerLink="new" >
-                 <i class="bi bi-plus-circle"></i>
+            <button class="btn" routerLink="new">
+                <i class="bi bi-plus-circle"></i>
                 Add New
             </button>
         </div>
@@ -42,9 +42,9 @@
                 </thead>
                 <tbody>
                     @if(batches.length == 0){
-                        <tr id="noDataRow">
-                            <td colspan="100%" class="text-center text-muted fw-bold p-3">No Data Found</td>
-                        </tr>
+                    <tr id="noDataRow">
+                        <td colspan="100%" class="text-center text-muted fw-bold p-3">No Data Found</td>
+                    </tr>
                     }
                     @for (batch of batches; track batch?.id) {
 
@@ -56,20 +56,27 @@
                             <p class="p-1 m-1 table-border">{{batch.available_quantity}}</p>
                         </td>
                         <td>
-                            <p class="p-1 m-1 table-border">{{batch.pasteurization | replace : '_' : ' ' | titlecase}}</p>
+                            <p class="p-1 m-1 table-border">{{batch.pasteurization | replace : '_' : ' ' | titlecase}}
+                            </p>
                         </td>
                         <td>
                             <p class="p-1 m-1 table-border">{{batch.protein | nill}}</p>
                         </td>
                         <td>
                             <p class="d-flex">
+                                <a [routerLink]="[batch.id, 'view']" class="p-2" title="View Info">
+                                    <i class="bi bi-eye ma-text-brown-50"></i>
+                                </a>
+                                @if(isHospitalAdmin$ | async){
                                 <a title="Edit Batch" [routerLink]="[batch.id]" class="p-2">
                                     <i class="bi bi-pencil ma-text-brown-50"></i>
                                 </a>
                                 <a title="Delete Batch" type="button" (click)="deleteBatch(batch.id)" class="p-2">
                                     <i class="bi bi-trash ma-text-brown-50"></i>
                                 </a>
-                                <a title="Collect Milk" type="button" [routerLink]="[batch.id, 'collections']" class="p-2">
+                                }
+                                <a title="Collect Milk" type="button" [routerLink]="[batch.id, 'collections']"
+                                    class="p-2">
                                     <i class="bi bi-moisture ma-text-brown-50"></i>
                                 </a>
                                 <a title="Print Sticker" type="button" (click)="printBarcode(batch.name)" class="p-2">
@@ -86,18 +93,17 @@
     </div>
     <div class="row"></div>
     <div class="row py-3">
-            <ul type="button" class="pagination justify-content-end">
-              <li [class.disabled]="page_number === 1" class="page-item" (click)="previousPage()">
+        <ul type="button" class="pagination justify-content-end">
+            <li [class.disabled]="page_number === 1" class="page-item" (click)="previousPage()">
                 <a class="page-link" tabindex="-1">Previous</a>
-              </li>
-              @for (page of pages;track page){
-                <li [class.active]="page_number === page" class="page-item" (click)="changePage(page)"><a class="page-link">{{page}}</a></li>
-              }
-              <li [class.disabled]="page_number === pages.length" class="page-item" (click)="nextPage()">
+            </li>
+            @for (page of pages;track page){
+            <li [class.active]="page_number === page" class="page-item" (click)="changePage(page)"><a
+                    class="page-link">{{page}}</a></li>
+            }
+            <li [class.disabled]="page_number === pages.length" class="page-item" (click)="nextPage()">
                 <a class="page-link">Next</a>
-              </li>
-            </ul>
+            </li>
+        </ul>
     </div>
 </div>
-
-

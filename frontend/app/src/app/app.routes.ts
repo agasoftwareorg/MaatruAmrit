@@ -22,6 +22,9 @@ import { BatchCollectionsComponent } from '../pages/batch-collections/batch-coll
 import { BabyDispatchesComponent } from '../pages/baby-dispatches/baby-dispatches.component';
 import { EditBatchComponent } from '../pages/edit-batch/edit-batch.component';
 import { NewBatchComponent } from '../pages/new-batch/new-batch.component';
+import { ViewBatchComponent } from '../pages/view-batch/view-batch.component';
+import { ViewMotherComponent } from '../pages/view-mother/view-mother.component';
+import { ViewBabyComponent } from '../pages/view-baby/view-baby.component';
 
 
 export const routes: Routes = [
@@ -45,14 +48,17 @@ export const routes: Routes = [
       { path: 'batch', component: BatchListComponent },
       { path: 'batch/new', component: NewBatchComponent },
       { path: 'batch/:id', component: EditBatchComponent },
+      { path: 'batch/:id/view', component: ViewBatchComponent },
       { path: 'batch/:id/collections', component: BatchCollectionsComponent },
       { path: 'mother', component: MotherListComponent },
       { path: 'mother/new', component: NewMotherComponent },
       { path: 'mother/:id', component: EditMotherComponent },
+      { path: 'mother/:id/view', component: ViewMotherComponent },
       { path: 'mother/:id/donations', component: MotherDonationsComponent },
       { path: 'recipient', component: BabyListComponent },
       { path: 'recipient/new', component: NewBabyComponent },
       { path: 'recipient/:id', component: EditBabyComponent },
+      { path: 'recipient/:id/view', component: ViewBabyComponent },
       { path: 'recipient/:id/dispatches', component: BabyDispatchesComponent },
     ],
     canActivate: [authGuard]

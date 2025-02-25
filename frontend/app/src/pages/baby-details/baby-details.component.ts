@@ -55,7 +55,7 @@ export class BabyDetailsComponent {
 
   ngOnInit() {
     let babyId = this.route.snapshot.paramMap.get('id');
-    if (this.type == "EDIT" && babyId) {
+    if (this.type !== "NEW" && babyId) {
       this.babyId = babyId
       this.backend.getBabyById(this.babyId).subscribe({
         next: (data: any) => {
@@ -74,7 +74,10 @@ export class BabyDetailsComponent {
             doctorName: data.doctor_name,
             doctorContact: data.doctor_contact,
             doctorDesignation: data.doctor_designation,
-          })
+          });
+          if (this.type === "VIEW") {
+            this.babyForm.disable();
+          }
         },
         error: (error) => {
           this.toast.showError(error.error);

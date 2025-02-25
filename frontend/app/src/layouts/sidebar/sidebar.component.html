@@ -5,14 +5,49 @@
                 <img src="icons/mage_hospital-shield.png" class="img-fluid px-2" alt="Home Page">
                 <h5 class="home m-0">Maatru Amrit</h5>
             </nav>
-            <hr>
-            <nav class="navbar text-center">
+            <hr class="my-1">
+            <!-- <nav> -->
+            @if(userRole === 'ADMIN'){
+            <nav class="nav-item menu nav-link d-flex align-items-center p-2" routerLink="/hospital"
+                routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <img src="icons/ri_hospital-line.png" class="img-fluid px-2" alt="Hospital List">
+                <h6 class="m-0">Hospital List</h6>
+            </nav>
+            <hr class="my-1">
+            <nav class="nav-item menu nav-link d-flex align-items-center p-2" routerLink="hospital/new"
+                routerLinkActive="active">
+                <img src="icons/lsicon_hospital-outline.png" class="img-fluid px-2" alt="Add Hospital">
+                <h6 class="m-0">New Hospital</h6>
+            </nav>
+            <hr class="my-1">
+            }@else {
+            <nav class="nav-item menu nav-link d-flex align-items-center p-2" routerLink="/mother"
+                routerLinkActive="active">
+                <img src="icons/icon-park-outline_women.png" class="img-fluid px-2" alt="Mother List">
+                <h6 class="m-0">Mother List</h6>
+            </nav>
+            <hr class="my-1">
+            <nav class="nav-item menu nav-link d-flex align-items-center p-2" routerLink="/batch"
+                routerLinkActive="active">
+                <img src="icons/ri_hospital-line.png" class="img-fluid px-2" alt="Batch List">
+                <h6 class="m-0">Batch List</h6>
+            </nav>
+            <hr class="my-1">
+            <nav class="nav-item menu nav-link d-flex align-items-center p-2" routerLink="/recipient"
+                routerLinkActive="active">
+                <img src="icons/hugeicons_baby-02.png" class="img-fluid px-2" alt="Recipient List">
+                <h6 class="m-0">Recipient List</h6>
+            </nav>
+            <hr class="my-1">
+            }
+
+            <!-- </nav> -->
+            <!-- <nav class="navbar text-center">
                 <ul class="navbar-nav">
                     @if(userRole === 'ADMIN'){
                     <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                         <a class="nav-link d-flex" routerLink="hospital">
                             <img src="icons/ri_hospital-line.png" class="img-fluid px-2" alt="Hospital List">
-                            <!-- <i class="bi bi-hospital px-2"></i> -->
                             <div>Hospital List</div>
                         </a>
                     </li>
@@ -20,7 +55,6 @@
                     <li class="nav-item" routerLinkActive="active">
                         <a class="nav-link d-flex" routerLink="hospital/new">
                             <img src="icons/lsicon_hospital-outline.png" class="img-fluid px-2" alt="Add Hospital">
-                            <!-- <i class="bi bi-shield-plus px-2"></i> -->
                             <span>New Hospital</span>
                         </a>
                     </li>
@@ -28,7 +62,6 @@
                     } @else {
                     <li class="nav-item" routerLinkActive="active">
                         <a class="nav-link d-flex" routerLink="/mother">
-                            <!-- <i class="bi bi-shield-plus px-2"></i> -->
                             <img src="icons/icon-park-outline_women.png" class="img-fluid px-2" alt="Mother List">
                             <span>Mother List</span>
                         </a>
@@ -36,7 +69,6 @@
                     <hr class="my-1">
                     <li class="nav-item" routerLinkActive="active">
                         <a class="nav-link d-flex" routerLink="/batch">
-                            <!-- <i class="bi bi-shield-plus px-2"></i> -->
                             <img src="icons/ri_hospital-line.png" class="img-fluid px-2" alt="Batch List">
                             <span>Batch List</span>
                         </a>
@@ -44,7 +76,6 @@
                     <hr class="my-1">
                     <li class="nav-item" routerLinkActive="active">
                         <a class="nav-link d-flex" routerLink="/recipient">
-                            <!-- <i class="bi bi-shield-plus px-2"></i> -->
                             <img src="icons/hugeicons_baby-02.png" class="img-fluid px-2" alt="Recipient List">
                             <span>Recipient List</span>
                         </a>
@@ -52,7 +83,7 @@
                     <hr class="my-1">
                     }
                 </ul>
-            </nav>
+            </nav> -->
 
             <!-- Logout Section at Bottom -->
             <div type="button" class="mt-auto nav-item d-flex py-2" (click)="logout()">

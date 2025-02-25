@@ -76,7 +76,7 @@ export class MotherDetailsComponent {
 
   ngOnInit() {
     let motherId = this.route.snapshot.paramMap.get('id');
-    if (this.type == "EDIT" && motherId) {
+    if (this.type !== "NEW" && motherId) {
       this.motherId = motherId
       this.backend.getMotherById(this.motherId).subscribe({
         next: (data: any) => {
@@ -101,6 +101,9 @@ export class MotherDetailsComponent {
             medicalIssues: data.medical_issues,
             screeningReportPath: data.screening_report
           })
+          if (this.type === "VIEW") {
+            this.motherForm.disable();
+          }
         },
         error: (error) => {
           this.toast.showError(error.error);

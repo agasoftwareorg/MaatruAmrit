@@ -1,5 +1,5 @@
-import { tap } from 'rxjs/operators';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { concatMap, map, switchMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
@@ -18,10 +18,10 @@ export class BackendService {
   private userUrl: string = `${this.baseUrl}user`
   private currentUrl: string = `${this.baseUrl}current`
   private isAuthenticated = new BehaviorSubject<boolean>(this.hasToken());
-  currentUserName: string = '';
-  currentUserRole: string = '';
-  currentHospitalName: string = '';
-  currentHospitalHasAnalyzer: boolean = false;
+  private userName = new BehaviorSubject<string>('');
+  private userRole = new BehaviorSubject<string>('');
+  private hospitalName = new BehaviorSubject<string>('');
+  private hospitalHasAnalyzer = new BehaviorSubject<boolean>(false);
 
 
   constructor(private http: HttpClient) { }
@@ -34,20 +34,57 @@ export class BackendService {
     return this.isAuthenticated.asObservable();
   }
 
+  getUserName(): Observable<string> {
+    return this.userName.asObservable();
+  }
+
+  getUserRole(): Observable<string> {
+    return this.userRole.asObservable();
+  }
+
+  isAdmin(): Observable<boolean> {
+    return this.getUserRole().pipe(
+      map(userRole => userRole === 'ADMIN')
+    )
+  }
+
+  isHospitalAdmin(): Observable<boolean> {
+    return this.getUserRole().pipe(
+      map(userRole => userRole === 'HOSPITAL_ADMIN')
+    )
+  }
+
+  isHospitalUser(): Observable<boolean> {
+    return this.getUserRole().pipe(
+      map(userRole => userRole === 'HOSPITAL_USER')
+    )
+  }
+
+  getHospitalName(): Observable<string> {
+    return this.hospitalName.asObservable();
+  }
+
+  hasAnalyzer(): Observable<boolean> {
+    return this.hospitalHasAnalyzer.asObservable();
+  }
+
+
   login(credentials: { username: string | null | undefined, password: string | null | undefined }): Observable<any> {
     return this.http.post(`${this.authUrl}token`, credentials).pipe(
       tap((response: any) => {
         localStorage.setItem('token', response.access);
         this.isAuthenticated.next(true);
-      })
+      }),
+      concatMap(() => this.setCurrentHospital()),
+      concatMap(() => this.setCurrentUser()),
     );
   }
 
   setCurrentUser(){
     return this.getCurrentUser().pipe(
       tap((data: any) => {
-        this.currentUserName = data.username;
-        this.currentUserRole = data.role;
+        this.userName.next(data.username);
+        this.userRole.next(data.role);
       })
     );
   }
@@ -55,8 +92,8 @@ export class BackendService {
   setCurrentHospital(){
     return this.getCurrentHospital().pipe(
       tap((data: any) => {
-        this.currentHospitalName = data.name;
-        this.currentHospitalHasAnalyzer = data.is_analyzer;
+        this.hospitalHasAnalyzer.next(data.is_analyzer)
+        this.hospitalName.next(data.name)
       })
     );
   }
@@ -64,8 +101,9 @@ export class BackendService {
   logout(): void {
     localStorage.removeItem('token');
     this.isAuthenticated.next(false);
-    this.currentUserName = '';
-    this.currentUserRole = '';
+    // this.userName.next('');
+    // this.userRole.next('');
+    // this.hospitalHasAnalyzer.next(false);
   }
 
   getHospitals(page: number, size: number){

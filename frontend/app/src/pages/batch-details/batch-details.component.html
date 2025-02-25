@@ -11,7 +11,7 @@
                     </div>
                 </div>
             </div>
-            @if(hasAnalyzer){
+            @if(hasAnalyzer$ | async){
             <h6 class="card-header">Analyzer Results</h6>
             <div class="card-body">
                 <div class="form-group row py-2">
@@ -26,7 +26,7 @@
                         <input type="number" formControlName="protein" class="form-control form-control" id="protein"
                             placeholder="Protein %">
                     </div>
-                    
+
                 </div>
                 <div class="form-group row py-2">
                     <label for="snf" class="col-2 col-form-label col-form-label">SNF (%) :</label>
@@ -42,7 +42,7 @@
                     </div>
                 </div>
                 <div class="form-group row py-2">
-                    
+
                     <label for="den" class="col-2 col-form-label col-form-label">Den :</label>
                     <div class="col-2">
                         <input type="number" formControlName="den" class="form-control form-control" id="den"
@@ -69,7 +69,7 @@
                     </div>
                 </div>
                 <div class="form-group row py-2">
-                    
+
                     <label for="calories" class="col-2 col-form-label col-form-label">Calories :</label>
                     <div class="col-2">
                         <input type="number" formControlName="calories" class="form-control form-control" id="calories"
@@ -78,7 +78,7 @@
                 </div>
                 <div class="form-group row py-2">
                     <label for="analyzerReportFormFile" class="col-2 col-form-label">Analyzer Report: </label>
-                    @if(!batchForm.value.analyzerReportPath){
+                    @if(!batchForm.value.analyzerReportPath && type !== "VIEW"){
                     <div class="col-4">
                         <input class="form-control" type="file" id="analyzerReportFormFile" #analyzerReportFile>
                     </div>
@@ -89,7 +89,9 @@
                         <button type="button" (click)="downloadFile(batchForm.value.analyzerReportPath)"
                             class="btn mx-2">Download</button>
                         }
+                        @if(type !== "VIEW"){
                         <button type="button" (click)="clearAnalyzerFile()" class="btn">Clear</button>
+                        }
                     </div>
                 </div>
             </div>
@@ -108,10 +110,12 @@
                     </div>
                 </div>
                 <div class="form-group row py-2">
-                    <label for="pasteurizationReportFormFile" class="col-2 col-form-label">Pasteurization Report: </label>
-                    @if(!batchForm.value.pasteurizationReportPath){
+                    <label for="pasteurizationReportFormFile" class="col-2 col-form-label">Pasteurization Report:
+                    </label>
+                    @if(!batchForm.value.pasteurizationReportPath && type !== "VIEW"){
                     <div class="col-4">
-                        <input class="form-control" type="file" id="pasteurizationReportFormFile" #pasteurizationReportFile>
+                        <input class="form-control" type="file" id="pasteurizationReportFormFile"
+                            #pasteurizationReportFile>
                     </div>
                     }
                     <div class="col">
@@ -120,20 +124,19 @@
                         <button type="button" (click)="downloadFile(batchForm.value.pasteurizationReportPath)"
                             class="btn mx-2">Download</button>
                         }
+                        @if(type !== "VIEW"){
                         <button type="button" (click)="clearPasteurizationFile()" class="btn">Clear</button>
+                        }
                     </div>
                 </div>
             </div>
         </div>
         <div class="d-flex justify-content-left my-4">
-            <button type="submit" class="btn">
-                @if(type === "NEW"){
-                <i class="bi bi-plus"></i> Add
-                } @else {
-                <i class="bi bi-pencil"></i> Update
-                }
-                Batch
-            </button>
+            @if(type === "NEW"){
+            <button type="submit" class="btn"><i class="bi bi-plus"></i>Add Batch</button>
+            } @if(type === "EDIT") {
+            <button type="submit" class="btn"><i class="bi bi-pencil"></i> Update Batch</button>
+            }
             <button type="button" routerLink="/batch" class="btn mx-2">Back</button>
         </div>
     </form>

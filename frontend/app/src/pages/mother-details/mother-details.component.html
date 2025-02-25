@@ -116,7 +116,7 @@
                 </div>
                 <div class="form-group row py-2">
                     <label for="formFile" class="col-2 col-form-label">Screening Report: </label>
-                    @if(!motherForm.value.screeningReportPath){
+                    @if(!motherForm.value.screeningReportPath && type !== "VIEW"){
                     <div class="col-4">
                         <input class="form-control" type="file" id="formFile" #screeningFile>
                         <!-- (change)="onScreeningFileSelected($event)"  -->
@@ -128,20 +128,19 @@
                         <button type="button" (click)="downloadFile(motherForm.value.screeningReportPath)"
                             class="btn mx-2">Download</button>
                         }
+                        @if(type !== "VIEW"){
                         <button type="button" (click)="clearScreeningFile()" class="btn">Clear</button>
+                        }
                     </div>
                 </div>
             </div>
         </div>
         <div class="d-flex justify-content-left my-4">
-            <button type="submit" class="btn">
-                @if(type === "NEW"){
-                <i class="bi bi-plus"></i> Add
-                } @else {
-                <i class="bi bi-pencil"></i> Update
-                }
-                Mother
-            </button>
+            @if(type === "NEW"){
+            <button type="submit" class="btn"><i class="bi bi-plus"></i>Add Mother</button>
+            } @if(type === "EDIT") {
+            <button type="submit" class="btn"><i class="bi bi-pencil"></i> Update Mother</button>
+            }
             <button type="button" routerLink="/mother" class="btn mx-2">Back</button>
         </div>
     </form>

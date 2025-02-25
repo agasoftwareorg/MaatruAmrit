@@ -4,19 +4,22 @@ import { BackendService } from '../../services/backend.service';
 import { RouterLink } from '@angular/router';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastService } from '../../services/toast.service';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { ReplacePipe } from '../../services/replace.pipe';
 import { NillPipe } from '../../services/nill.pipe';
 import { BarcodeService } from '../../services/barcode.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-batch-list',
   standalone: true,
-  imports: [RouterLink, HeaderComponent, NgbPaginationModule, CommonModule, ReplacePipe, NillPipe],
+  imports: [RouterLink, HeaderComponent, NgbPaginationModule, CommonModule, ReplacePipe, NillPipe, AsyncPipe],
   templateUrl: './batch-list.component.html',
   styleUrl: './batch-list.component.scss'
 })
 export class BatchListComponent {
+
+  isHospitalAdmin$!: Observable<boolean>;
   page_number = 1
   page_size = 10
   batches: any = []
@@ -25,7 +28,8 @@ export class BatchListComponent {
   constructor(private backend: BackendService, private toast: ToastService, private barcode: BarcodeService) { }
 
   ngOnInit() {
-    this.listBatches()
+    this.isHospitalAdmin$ = this.backend.isHospitalAdmin();
+    this.listBatches();
   }
 
   createBatch(){

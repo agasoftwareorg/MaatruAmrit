@@ -5,17 +5,19 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ToastService } from '../../services/toast.service';
 import moment from 'moment';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-batch-collections',
   standalone: true,
-  imports: [HeaderComponent, FormsModule, CommonModule, RouterLink],
+  imports: [HeaderComponent, FormsModule, CommonModule, RouterLink, AsyncPipe],
   templateUrl: './batch-collections.component.html',
   styleUrl: './batch-collections.component.scss'
 })
 export class BatchCollectionsComponent {
 
+  isHospitalAdmin$!: Observable<boolean>;
   batchId: string = '';
   c_page_number = 1;
   c_page_size = 5;
@@ -30,9 +32,10 @@ export class BatchCollectionsComponent {
   ) { }
 
   ngOnInit() {
+    this.isHospitalAdmin$ = this.backend.isHospitalAdmin();
     this.batchId = this.route.snapshot.paramMap.get('id') || '';
-    this.listCollections()
-    this.listMothers()
+    this.listCollections();
+    this.listMothers();
   }
 
   listCollections(reset_page: boolean = true) {

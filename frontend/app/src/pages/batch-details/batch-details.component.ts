@@ -3,14 +3,15 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { BackendService } from '../../services/backend.service';
 import { ToastService } from '../../services/toast.service';
-import { finalize } from 'rxjs';
+import { finalize, Observable } from 'rxjs';
 import moment from 'moment';
 import { FilenamePipe } from '../../services/filename.pipe';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-batch-details',
   standalone: true,
-  imports: [ReactiveFormsModule, FilenamePipe, RouterLink],
+  imports: [ReactiveFormsModule, FilenamePipe, RouterLink, AsyncPipe],
   templateUrl: './batch-details.component.html',
   styleUrl: './batch-details.component.scss'
 })
@@ -18,7 +19,7 @@ export class BatchDetailsComponent {
 
   @Input() type: string = 'NEW';
 
-  hasAnalyzer: boolean = false
+  hasAnalyzer$!: Observable<boolean>;
   batchId: string = ''
   @ViewChild('analyzerReportFile') analyzerReportFile!: ElementRef;
   @ViewChild('pasteurizationReportFile') pasteurizationReportFile!: ElementRef;
@@ -59,7 +60,9 @@ export class BatchDetailsComponent {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
 
-  constructor(private backend: BackendService, private toast: ToastService) { }
+  constructor(private backend: BackendService, private toast: ToastService) {
+    this.hasAnalyzer$ = backend.hasAnalyzer()
+  }
 
   pad(num: number, size: number = 6) {
     let num_str = num.toString();
@@ -68,18 +71,18 @@ export class BatchDetailsComponent {
   }
 
   ngOnInit() {
-    if(!this.backend.currentHospitalName){
-      this.backend.setCurrentHospital().subscribe({
-        next: () => {
-          this.hasAnalyzer = this.backend.currentHospitalHasAnalyzer
-        }
-      })
-    } else {
-      this.hasAnalyzer = this.backend.currentHospitalHasAnalyzer
-    }
+    // if(!this.backend.currentHospitalName){
+    //   this.backend.setCurrentHospital().subscribe({
+    //     next: () => {
+    //       this.hasAnalyzer = this.backend.currentHospitalHasAnalyzer
+    //     }
+    //   })
+    // } else {
+    //   this.hasAnalyzer = this.backend.currentHospitalHasAnalyzer
+    // }
 
     let batchId = this.route.snapshot.paramMap.get('id');
-    if (this.type == "EDIT" && batchId) {
+    if (this.type !== "NEW" && batchId) {
       this.batchId = batchId
       this.backend.getBatchById(this.batchId).subscribe({
         next: (data: any) => {
@@ -100,6 +103,9 @@ export class BatchDetailsComponent {
             pasteurizationReportPath: data.pasteurization_report
           })
           // this.batchForm.controls.name.disable();
+          if (this.type === "VIEW") {
+            this.batchForm.disable();
+          }
         },
         error: (error) => {
           this.toast.showError(error.error);

@@ -29,7 +29,7 @@ export class LoginComponent {
     ]),
   })
 
-  constructor(private router: Router, private backend: BackendService, 
+  constructor(private router: Router, private backend: BackendService,
     private toast: ToastService) { }
 
   ngOnInit() {
@@ -41,7 +41,7 @@ export class LoginComponent {
       userName: 'User name',
       password: 'Password'
     }
-    if(!this.toast.validateForm(this.loginForm, display_mapper)){
+    if (!this.toast.validateForm(this.loginForm, display_mapper)) {
       this.loginForm.controls.disableSubmit.setValue(false);
       return
     }
@@ -55,32 +55,24 @@ export class LoginComponent {
         this.loginForm.controls.disableSubmit.setValue(false);
       })
     ).subscribe({
-      next: () => {
-        this.backend.setCurrentUser().subscribe({
-          next: (data) => {
-            if (this.type == 'Admin') {
-              if (data.role === 'ADMIN') {
-                this.router.navigate(['hospital'])
-              } else {
-                this.backend.logout();
-                this.toast.show('Please use the User page to login');
-                this.loginForm.reset();
-              }
-            } else {
-              if (data.role !== 'ADMIN') {
-                this.router.navigate(['mother'])
-                this.backend.setCurrentHospital().subscribe()
-              } else {
-                this.backend.logout();
-                this.toast.show('Please use the Admin page to login')
-                this.loginForm.reset();
-              }
-            }
-          },
-          error: (error) => {
-            this.toast.showError(error.error);
+      next: (data) => {
+        if (this.type == 'Admin') {
+          if (data.role === 'ADMIN') {
+            this.router.navigate(['hospital'])
+          } else {
+            this.backend.logout();
+            this.toast.show('Please use the User page to login');
+            this.loginForm.reset();
           }
-        })
+        } else {
+          if (data.role !== 'ADMIN') {
+            this.router.navigate(['mother'])
+          } else {
+            this.backend.logout();
+            this.toast.show('Please use the Admin page to login')
+            this.loginForm.reset();
+          }
+        }
       },
       error: (error) => {
         this.toast.showError(error.error);

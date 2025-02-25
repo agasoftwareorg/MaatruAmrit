@@ -5,15 +5,19 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterLink } from '@angular/router';
 import { ToastService } from '../../services/toast.service';
 import { BarcodeService } from '../../services/barcode.service';
+import { Observable } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-mother-list',
   standalone: true,
-  imports: [RouterLink, HeaderComponent, NgbPaginationModule],
+  imports: [RouterLink, HeaderComponent, NgbPaginationModule, AsyncPipe],
   templateUrl: './mother-list.component.html',
   styleUrl: './mother-list.component.scss'
 })
 export class MotherListComponent {
+
+  isHospitalAdmin$!: Observable<boolean>;
   page_number = 1
   page_size = 10
   mothers: any = []
@@ -22,7 +26,8 @@ export class MotherListComponent {
   constructor(private backend: BackendService, private toast: ToastService, private barcode: BarcodeService) { }
 
   ngOnInit() {
-    this.listMothers()
+    this.isHospitalAdmin$ = this.backend.isHospitalAdmin();
+    this.listMothers();
   }
 
   listMothers(reset_page: boolean = true) {

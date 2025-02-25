@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
-import {RouterOutlet, RouterLink, RouterLinkActive, Route, Router} from '@angular/router';
+import { RouterOutlet, RouterLink, RouterLinkActive, Route, Router } from '@angular/router';
 import { BackendService } from '../../services/backend.service';
 import { ToastComponent } from '../toast/toast.component';
+import { Subject, takeUntil } from 'rxjs';
 
 
 @Component({
@@ -15,35 +16,36 @@ export class SidebarComponent {
 
   userRole: string = '';
   private readonly router = inject(Router);
+  private destroy$ = new Subject<void>();
 
-  constructor(private backend: BackendService){}
+  constructor(private backend: BackendService) { }
 
-  ngOnInit(){
-    if(this.backend.currentUserRole){
-      this.userRole = this.backend.currentUserRole
-    } else {
-      this.backend.setCurrentUser().subscribe({
-        next: () => {
-          this.userRole = this.backend.currentUserRole
-          if(!this.backend.currentHospitalName && this.userRole !== 'ADMIN'){
-            this.backend.setCurrentHospital().subscribe()
-          }
-        }
-      })
-    }
+  ngOnInit() {
+    this.backend.getUserRole().pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(
+      userRole => {
+        this.userRole = userRole
+      }
+    );
   }
 
-  logout(){
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+  
+  logout() {
     this.backend.logout()
-    if(this.userRole === 'ADMIN'){
+    if (this.userRole === 'ADMIN') {
       this.router.navigate(["/admin/login"])
     } else {
       this.router.navigate(["/login"])
     }
   }
 
-  home(){
-    if(this.userRole === 'ADMIN'){
+  home() {
+    if (this.userRole === 'ADMIN') {
       this.router.navigate(["/hospital"])
     } else {
       this.router.navigate(["/mother"])

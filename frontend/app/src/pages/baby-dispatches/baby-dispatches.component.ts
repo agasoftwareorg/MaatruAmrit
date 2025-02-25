@@ -5,16 +5,19 @@ import { HeaderComponent } from '../../layouts/header/header.component';
 import { FormsModule } from '@angular/forms';
 import { ToastService } from '../../services/toast.service';
 import moment from 'moment';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-baby-dispatches',
   standalone: true,
-  imports: [HeaderComponent, FormsModule, CommonModule, RouterLink],
+  imports: [HeaderComponent, FormsModule, CommonModule, RouterLink, AsyncPipe],
   templateUrl: './baby-dispatches.component.html',
   styleUrl: './baby-dispatches.component.scss'
 })
 export class BabyDispatchesComponent {
+
+  isHospitalAdmin$!: Observable<boolean>;
   babyId: string = '';
   d_page_number = 1;
   d_page_size = 5;
@@ -29,6 +32,7 @@ export class BabyDispatchesComponent {
   ) { }
 
   ngOnInit() {
+    this.isHospitalAdmin$ = this.backend.isHospitalAdmin();
     this.babyId = this.route.snapshot.paramMap.get('id') || '';
     this.listDispatches()
     this.listBatches()

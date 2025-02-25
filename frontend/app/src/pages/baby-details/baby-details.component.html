@@ -92,14 +92,11 @@
             </div>
         </div>
         <div class="d-flex justify-content-left my-4">
-            <button type="submit" class="btn">
-                @if(type === "NEW"){
-                <i class="bi bi-plus"></i> Add
-                } @else {
-                <i class="bi bi-pencil"></i> Update
-                }
-                Recipient
-            </button>
+            @if(type === "NEW"){
+            <button type="submit" class="btn"><i class="bi bi-plus"></i>Add Recipient</button>
+            } @if(type === "EDIT") {
+                <button type="submit" class="btn"><i class="bi bi-pencil"></i> Update Recipient</button>
+            }
             <button type="button" routerLink="/recipient" class="btn mx-2">Back</button>
         </div>
     </form>
