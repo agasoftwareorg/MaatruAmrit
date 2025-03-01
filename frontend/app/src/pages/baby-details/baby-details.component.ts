@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { BackendService } from '../../services/backend.service';
 import { ToastService } from '../../services/toast.service';
 import moment from 'moment';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-baby-details',
@@ -40,6 +41,9 @@ export class BabyDetailsComponent {
     doctorName: new FormControl(null),
     doctorContact: new FormControl(null),
     doctorDesignation: new FormControl(null),
+    disableSubmit: new FormControl(false, [
+      Validators.required,
+    ]),
   })
 
   private readonly route = inject(ActivatedRoute);
@@ -74,6 +78,7 @@ export class BabyDetailsComponent {
             doctorName: data.doctor_name,
             doctorContact: data.doctor_contact,
             doctorDesignation: data.doctor_designation,
+            disableSubmit: false
           });
           if (this.type === "VIEW") {
             this.babyForm.disable();
@@ -97,6 +102,7 @@ export class BabyDetailsComponent {
   }
 
   createBaby() {
+    this.babyForm.controls.disableSubmit.setValue(true);
     this.babyForm.setErrors(null);
 
     let display_mapper: any = {
@@ -115,6 +121,7 @@ export class BabyDetailsComponent {
       doctorDesignation: 'Doctor Designation',
     }
     if (!this.toast.validateForm(this.babyForm, display_mapper)) {
+      this.babyForm.controls.disableSubmit.setValue(false);
       return
     }
 
@@ -140,7 +147,11 @@ export class BabyDetailsComponent {
       api = this.backend.updateBaby(this.babyId, payload)
     }
 
-    api.subscribe({
+    api.pipe(
+      finalize(() => {
+        this.babyForm.controls.disableSubmit.setValue(false);
+      })
+    ).subscribe({
       next: () => {
         this.router.navigate(['recipient'])
       },

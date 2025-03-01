@@ -5,6 +5,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { BackendService } from '../../services/backend.service';
 import { ToastService } from '../../services/toast.service';
 import { FilenamePipe } from '../../services/filename.pipe';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-mother-details',
@@ -47,6 +48,9 @@ export class MotherDetailsComponent {
     medicalIssues: new FormControl(null),
     surgicalIssues: new FormControl(null),
     screeningReportPath: new FormControl(null),
+    disableSubmit: new FormControl(false, [
+      Validators.required,
+    ]),
   })
 
   private readonly route = inject(ActivatedRoute);
@@ -99,7 +103,8 @@ export class MotherDetailsComponent {
             relativeType: data.relative_type,
             surgicalIssues: data.surgical_issues,
             medicalIssues: data.medical_issues,
-            screeningReportPath: data.screening_report
+            screeningReportPath: data.screening_report,
+            disableSubmit: false
           })
           if (this.type === "VIEW") {
             this.motherForm.disable();
@@ -123,6 +128,7 @@ export class MotherDetailsComponent {
   }
 
   createMother() {
+    this.motherForm.controls.disableSubmit.setValue(true);
     this.motherForm.setErrors(null);
 
     let display_mapper: any = {
@@ -145,6 +151,7 @@ export class MotherDetailsComponent {
       medicalIssues: 'Medical Issues',
     }
     if (!this.toast.validateForm(this.motherForm, display_mapper)) {
+      this.motherForm.controls.disableSubmit.setValue(false);
       return
     }
     let api = undefined
@@ -178,7 +185,11 @@ export class MotherDetailsComponent {
       api = this.backend.updateMother(this.motherId, payload)
     }
 
-    api.subscribe({
+    api.pipe(
+      finalize(() => {
+        this.motherForm.controls.disableSubmit.setValue(false);
+      })
+    ).subscribe({
       next: () => {
         this.router.navigate(['mother'])
       },

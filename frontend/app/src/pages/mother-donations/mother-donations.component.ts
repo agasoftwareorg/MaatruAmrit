@@ -6,7 +6,7 @@ import { BackendService } from '../../services/backend.service';
 import { ToastService } from '../../services/toast.service';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import moment from 'moment';
-import { Observable } from 'rxjs';
+import { finalize, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-mother-donations',
@@ -31,6 +31,9 @@ export class MotherDonationsComponent {
       Validators.required,
     ]),
     donationId: new FormControl(null),
+    disableSubmit: new FormControl(false, [
+      Validators.required,
+    ]),
   })
 
   private readonly route = inject(ActivatedRoute);
@@ -43,6 +46,7 @@ export class MotherDonationsComponent {
   }
 
   createDonation() {
+    this.donationForm.controls.disableSubmit.setValue(true);
     this.donationForm.setErrors(null);
 
     let display_mapper: any = {
@@ -50,6 +54,7 @@ export class MotherDonationsComponent {
       donatedAt: 'Donated At'
     }
     if (!this.toast.validateForm(this.donationForm, display_mapper)) {
+      this.donationForm.controls.disableSubmit.setValue(false);
       return
     }
     let api = undefined
@@ -64,7 +69,11 @@ export class MotherDonationsComponent {
       api = this.backend.updateDonation(this.motherId, this.donationForm.value.donationId || '', payload)
     }
 
-    api.subscribe({
+    api.pipe(
+      finalize(() => {
+        this.donationForm.controls.disableSubmit.setValue(false);
+      })
+    ).subscribe({
       next: () => {
         this.donationForm.reset({
           donationId: null,
@@ -138,6 +147,7 @@ export class MotherDonationsComponent {
       quantity: donation.quantity,
       donationId: donation.id,
       donatedAt: donatedAt.format('YYYY-MM-DD HH:mm'),
+      disableSubmit: false
     })
   }
 

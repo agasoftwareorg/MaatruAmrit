@@ -76,16 +76,19 @@
                 }
             </div>
         </div>
-        <div class="d-flex justify-content-left">
-            <button type="submit" class="btn mx-2" [disabled]="hospitalForm.value.disableSubmit">
-                @if(type === "NEW"){
-                <i class="bi bi-plus"></i> Add
+        <div class="row justify-content-left">
+            <button type="submit" class="btn mx-2 col-2" [disabled]="hospitalForm.value.disableSubmit">
+                @if(hospitalForm.value.disableSubmit){
+                    <div class="spinner-border text-light mx-3" role="status"></div>
                 } @else {
-                <i class="bi bi-pencil"></i> Update
+                    @if(type === "NEW"){
+                    <i class="bi bi-plus"></i> Add Hospital
+                    } @else {
+                    <i class="bi bi-pencil"></i> Update Hospital
+                    }
                 }
-                Hospital
             </button>
-            <button type="button" routerLink="/hospital" class="btn mx-2">Back</button>
+            <button type="button" routerLink="/hospital" class="btn mx-2  col-1">Back</button>
         </div>
     </form>
 

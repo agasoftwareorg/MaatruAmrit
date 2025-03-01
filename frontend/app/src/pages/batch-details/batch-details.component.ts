@@ -176,8 +176,7 @@ export class BatchDetailsComponent {
       temp: this.batchForm.value.temp,
       fp: this.batchForm.value.fp,
       calories: this.batchForm.value.calories,
-      pasteurization: this.batchForm.value.pasteurization,
-      disableSubmit: false
+      pasteurization: this.batchForm.value.pasteurization
     }
     if (this.analyzerReportFile && this.analyzerReportFile.nativeElement.files && this.analyzerReportFile.nativeElement.files.length > 0) {
       payload.analyzer_report = this.analyzerReportFile.nativeElement.files[0]

@@ -7,7 +7,7 @@
                 <div class="form-group row py-1">
                     <label for="quantity" class="col-2 col-form-label col-form-label">Milk (ml) :</label>
                     <div class="col-3">
-                        <input formControlName="quantity" class="form-control form-control" id="quantity"
+                        <input type="number" formControlName="quantity" class="form-control form-control" id="quantity"
                             placeholder="Quantity of milk donated">
                     </div>
                 </div>
@@ -18,17 +18,21 @@
                             id="donatedAt">
                     </div>
                 </div>
-                <div class="text-left py-1">
-                    <button type="submit" class="btn" (click)="createDonation()">
-                        <i class="bi bi-plus"></i>
-                        @if(donationForm.value.donationId){
-                        Update Donation
+                <div class="row py-3 justify-content-left">
+                    <button type="submit" class="btn  col-3" (click)="createDonation()" [disabled]="donationForm.value.disableSubmit">
+                        @if(donationForm.value.disableSubmit){
+                            <div class="spinner-border text-light mx-3" role="status"></div>
                         } @else {
-                        Add Donation
+                            <i class="bi bi-plus"></i>
+                            @if(donationForm.value.donationId){
+                                Update Donation
+                            } @else {
+                                Add Donation
+                            }
                         }
                     </button>
                     @if(isHospitalAdmin$ | async){
-                    <button class="btn mx-2" (click)="resetDonation()">
+                    <button class="btn mx-2  col-2" (click)="resetDonation()">
                         <i class="bi bi-arrow-clockwise"></i> Reset
                     </button>
                     }

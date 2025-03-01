@@ -125,3 +125,8 @@ $ma-brown-50: #704b1e;
     --bs-pagination-bg: white;
     --bs-pagination-active-border-color: var(--ma-brown-50)
 }
+
+.spinner-border {
+    --bs-spinner-width: 1rem;
+    --bs-spinner-height: 1rem;
+}

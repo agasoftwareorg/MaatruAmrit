@@ -7,7 +7,7 @@
         <div class="col-4 vh-100 login-panel">
             <div></div>
             <div class="login-card w-100">
-                <h2 class="ma-text-yellow">Welcome.. {{type}}!</h2>
+                <h2 class="ma-text-yellow text-center">Welcomes You.!</h2>
                 <br><br>
                 <form  [formGroup]="loginForm" (ngSubmit)="login()">
                     <div class="mb-3 input-group">
@@ -18,7 +18,13 @@
                         <span class="input-group-text bg-white"><i class="bi bi-lock"></i></span>
                         <input type="password" formControlName="password" class="form-control" placeholder="Password" required>
                     </div>
-                    <button [disabled]="loginForm.value.disableSubmit" type="submit" class="my-4 w-100 btn">Log in</button>
+                    <button [disabled]="loginForm.value.disableSubmit" type="submit" class="my-4 w-100 btn">
+                        @if(loginForm.value.disableSubmit){
+                            <div class="spinner-border text-light mx-3" role="status"></div>
+                        } @else {
+                            <span>Login</span>
+                        }
+                    </button>
                 </form>
             </div>
             <div></div>

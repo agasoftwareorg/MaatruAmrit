@@ -22,22 +22,26 @@
                     <label for="Role" class="col-2 col-form-label col-form-label">Role :</label>
                     <div class="col-6">
                         <select class="form-select" name="Role" id="Role" formControlName="role">
-                            <option  value="HOSPITAL_ADMIN">Admin</option>
+                            <option value="HOSPITAL_ADMIN">Admin</option>
                             <option value="HOSPITAL_USER">User</option>
                         </select>
                         <!-- <input formControlName="address" class="form-control form-control" id="HospitalAddress" placeholder="Address"> -->
                     </div>
                 </div>
-                <div class="text-center py-1">
-                    <button type="submit" class="btn" (click)="createUser()" [disabled]="userForm.value.disableSubmit">
-                        <i class="bi bi-plus"></i> 
-                        @if(userForm.value.userId){
-                            Update Login
+                <div class="row py-3 justify-content-center">
+                    <button type="submit" class="btn col-2" (click)="createUser()" [disabled]="userForm.value.disableSubmit">
+                        @if(userForm.value.disableSubmit){
+                            <div class="spinner-border text-light mx-3" role="status"></div>
                         } @else {
-                            Add Login
+                            <i class="bi bi-plus"></i>
+                            @if(userForm.value.userId){
+                                Update Login
+                            } @else {
+                                Add Login
+                            }
                         }
                     </button>
-                    <button class="btn mx-2" (click)="resetUser()">
+                    <button class="btn mx-2 col-2" (click)="resetUser()">
                         <i class="bi bi-arrow-clockwise"></i> Reset
                     </button>
                 </div>
@@ -65,9 +69,9 @@
                 </thead>
                 <tbody>
                     @if(users.length == 0){
-                        <tr id="noDataRow">
-                            <td colspan="100%" class="text-center text-muted fw-bold p-3">No Data Found</td>
-                        </tr>
+                    <tr id="noDataRow">
+                        <td colspan="100%" class="text-center text-muted fw-bold p-3">No Data Found</td>
+                    </tr>
                     }
                     @for (user of users; track user?.id) {
 
