@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { HeaderComponent } from '../../layouts/header/header.component';
 import { BackendService } from '../../services/backend.service';
 import { RouterLink } from '@angular/router';
-import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastService } from '../../services/toast.service';
 import { NillPipe } from '../../services/nill.pipe';
 import { BarcodeService } from '../../services/barcode.service';
 import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { DeleteModalComponent } from '../../layouts/delete-modal/delete-modal.component';
 
 @Component({
   selector: 'app-baby-list',
@@ -22,6 +23,7 @@ export class BabyListComponent {
   page_size = 10
   babies: any = []
   pages: any = []
+  modalService = inject(NgbModal)
 
   constructor(private backend: BackendService, private toast: ToastService, private barcode: BarcodeService) { }
 
@@ -48,6 +50,12 @@ export class BabyListComponent {
     )
   }
 
+  deleteModal(id: string) {
+    this.modalService.open(DeleteModalComponent, { size: 'lg' }).result.then(
+      () => this.deleteBaby(id)
+    );
+  }
+  
   deleteBaby(id: string) {
     this.backend.deleteBaby(id).subscribe({
       next: () => {

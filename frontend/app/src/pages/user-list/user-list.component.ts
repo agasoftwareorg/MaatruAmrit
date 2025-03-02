@@ -5,6 +5,8 @@ import { BackendService } from '../../services/backend.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ToastService } from '../../services/toast.service';
 import { finalize } from 'rxjs';
+import { DeleteModalComponent } from '../../layouts/delete-modal/delete-modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-user-list',
@@ -37,7 +39,7 @@ export class UserListComponent {
       Validators.required,
     ]),
   })
-
+  modalService = inject(NgbModal);
   private readonly route = inject(ActivatedRoute);
   constructor(private backend: BackendService, private toast: ToastService) { }
 
@@ -110,6 +112,12 @@ export class UserListComponent {
       }
     }
     )
+  }
+
+  deleteModal(id: string) {
+    this.modalService.open(DeleteModalComponent, { size: 'lg' }).result.then(
+      () => this.deleteUser(id)
+    );
   }
 
   deleteUser(userId: string) {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { BackendService } from '../../services/backend.service';
 import { HeaderComponent } from '../../layouts/header/header.component';
@@ -7,6 +7,8 @@ import { ToastService } from '../../services/toast.service';
 import moment from 'moment';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
+import { DeleteModalComponent } from '../../layouts/delete-modal/delete-modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-baby-dispatches',
@@ -27,6 +29,8 @@ export class BabyDispatchesComponent {
   b_page_size = 5;
   b_pages: any = [];
   batches: any = [];
+  modalService = inject(NgbModal);
+  
   constructor(private readonly route: ActivatedRoute, private backend: BackendService,
     private toast: ToastService
   ) { }
@@ -75,6 +79,11 @@ export class BabyDispatchesComponent {
     })
   }
 
+  deleteModal(id: string) {
+    this.modalService.open(DeleteModalComponent, { size: 'lg' }).result.then(
+      () => this.deleteDispatch(id)
+    );
+  }
 
   deleteDispatch(id: string) {
     this.backend.deleteDispatch(this.babyId, id).subscribe({

@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { HeaderComponent } from '../../layouts/header/header.component';
 import { BackendService } from '../../services/backend.service';
-import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterLink } from '@angular/router';
 import { ToastService } from '../../services/toast.service';
 import { BarcodeService } from '../../services/barcode.service';
 import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { DeleteModalComponent } from '../../layouts/delete-modal/delete-modal.component';
 
 @Component({
   selector: 'app-mother-list',
@@ -22,6 +23,7 @@ export class MotherListComponent {
   page_size = 10
   mothers: any = []
   pages: any = []
+  modalService = inject(NgbModal);
 
   constructor(private backend: BackendService, private toast: ToastService, private barcode: BarcodeService) { }
 
@@ -46,6 +48,12 @@ export class MotherListComponent {
       }
     }
     )
+  }
+
+  deleteModal(id: string) {
+    this.modalService.open(DeleteModalComponent, { size: 'lg' }).result.then(
+      () => this.deleteMother(id)
+    );
   }
 
   deleteMother(id: string) {

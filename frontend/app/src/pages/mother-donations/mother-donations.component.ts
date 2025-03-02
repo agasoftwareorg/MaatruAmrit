@@ -7,6 +7,8 @@ import { ToastService } from '../../services/toast.service';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import moment from 'moment';
 import { finalize, Observable } from 'rxjs';
+import { DeleteModalComponent } from '../../layouts/delete-modal/delete-modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-mother-donations',
@@ -35,6 +37,7 @@ export class MotherDonationsComponent {
       Validators.required,
     ]),
   })
+  modalService = inject(NgbModal)
 
   private readonly route = inject(ActivatedRoute);
   constructor(private backend: BackendService, private toast: ToastService) { }
@@ -108,6 +111,12 @@ export class MotherDonationsComponent {
     )
   }
 
+  deleteModal(id: string) {
+    this.modalService.open(DeleteModalComponent, { size: 'lg' }).result.then(
+      () => this.deleteDonation(id)
+    );
+  }
+  
   deleteDonation(id: string) {
     this.backend.deleteDonation(this.motherId, id).subscribe({
       next: () => {

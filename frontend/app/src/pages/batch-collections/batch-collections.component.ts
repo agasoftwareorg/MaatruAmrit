@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { HeaderComponent } from '../../layouts/header/header.component';
 import { BackendService } from '../../services/backend.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -7,6 +7,8 @@ import { ToastService } from '../../services/toast.service';
 import moment from 'moment';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
+import { DeleteModalComponent } from '../../layouts/delete-modal/delete-modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-batch-collections',
@@ -27,6 +29,8 @@ export class BatchCollectionsComponent {
   m_page_size = 5;
   m_pages: any = [];
   mothers: any = [];
+  modalService = inject(NgbModal)
+  
   constructor(private readonly route: ActivatedRoute, private backend: BackendService,
     private toast: ToastService
   ) { }
@@ -75,6 +79,11 @@ export class BatchCollectionsComponent {
     })
   }
 
+  deleteModal(id: string) {
+    this.modalService.open(DeleteModalComponent, { size: 'lg' }).result.then(
+      () => this.deleteCollection(id)
+    );
+  }
 
   deleteCollection(id: string) {
     this.backend.deleteCollection(this.batchId, id).subscribe({

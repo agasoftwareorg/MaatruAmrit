@@ -65,7 +65,7 @@
                                 <a [routerLink]="hospital.id" class="p-2"  title="Edit Hospital">
                                     <i class="bi bi-pencil ma-text-brown-50"></i>
                                 </a>
-                                <a type="button"  title="Delete Hospital" (click)="deleteHospital(hospital.id)" class="p-2">
+                                <a type="button"  title="Delete Hospital" (click)="deleteModal(hospital.id)" class="p-2">
                                     <i class="bi bi-trash ma-text-brown-50"></i>
                                 </a>
                                 <a type="button"  title="Manage Users" [routerLink]="[hospital.id, 'users']" class="p-2">

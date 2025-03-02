@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { HeaderComponent } from '../../layouts/header/header.component';
 import { BackendService } from '../../services/backend.service';
-import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastService } from '../../services/toast.service';
 import { NillPipe } from '../../services/nill.pipe';
+import { DeleteModalComponent } from '../../layouts/delete-modal/delete-modal.component';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class HospitalListComponent {
   page_size = 10
   hospitals: any = []
   pages: any = []
+  modalService = inject(NgbModal);
 
   constructor(private backend: BackendService, private toast: ToastService) { }
 
@@ -44,6 +46,12 @@ export class HospitalListComponent {
     }
     )
   }
+
+  deleteModal(id: string) {
+		this.modalService.open(DeleteModalComponent, { size: 'lg' }).result.then(
+      () => this.deleteHospital(id)
+    );
+	}
 
   deleteHospital(hospitalId: string) {
     this.backend.deleteHospital(hospitalId).subscribe({
