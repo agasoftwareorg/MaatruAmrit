@@ -3,12 +3,14 @@ import { RouterOutlet, RouterLink, RouterLinkActive, Route, Router } from '@angu
 import { BackendService } from '../../services/backend.service';
 import { ToastComponent } from '../toast/toast.component';
 import { Subject, takeUntil } from 'rxjs';
+import { NgxBarcode6Module } from 'ngx-barcode6';
+import { BarcodeService } from '../../services/barcode.service';
 
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, ToastComponent],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, ToastComponent, NgxBarcode6Module],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
@@ -18,7 +20,7 @@ export class SidebarComponent {
   private readonly router = inject(Router);
   private destroy$ = new Subject<void>();
 
-  constructor(private backend: BackendService) { }
+  constructor(private backend: BackendService, public barcodeService: BarcodeService) { }
 
   ngOnInit() {
     this.backend.getUserRole().pipe(

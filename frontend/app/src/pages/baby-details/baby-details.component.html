@@ -22,29 +22,33 @@
                     <div class="col-4">
                         <input formControlName="name" class="form-control form-control" id="name" placeholder="Name">
                     </div>
-                    
+
                 </div>
                 <div class="form-group row py-2">
                     <label for="age" class="col-2 col-form-label col-form-label">Age (in months):</label>
                     <div class="col-2">
-                        <input type="number" formControlName="age" class="form-control form-control" id="age" placeholder="Age">
+                        <input type="number" formControlName="age" class="form-control form-control" id="age"
+                            placeholder="Age">
                     </div>
                     <div class="col-2"></div>
                     <label for="sex" class="col-2 col-form-label col-form-label">Sex :</label>
                     <div class="col-2">
-                        <input formControlName="sex" class="form-control form-control" id="sex" placeholder="Male/Female">
+                        <input formControlName="sex" class="form-control form-control" id="sex"
+                            placeholder="Male/Female">
                     </div>
-                    
+
                 </div>
                 <div class="form-group row py-2">
                     <label for="birthWeight" class="col-2 col-form-label col-form-label">Birth Weight (g) :</label>
                     <div class="col-2">
-                        <input type="number" formControlName="birthWeight" class="form-control form-control" id="birthWeight">
+                        <input type="number" formControlName="birthWeight" class="form-control form-control"
+                            id="birthWeight">
                     </div>
                     <div class="col-2"></div>
                     <label for="currentWeight" class="col-2 col-form-label col-form-label">Present Weight (g) :</label>
                     <div class="col-2">
-                        <input type="number" formControlName="currentWeight" class="form-control form-control" id="currentWeight">
+                        <input type="number" formControlName="currentWeight" class="form-control form-control"
+                            id="currentWeight">
                     </div>
                 </div>
                 <div class="form-group row py-2">
@@ -92,17 +96,19 @@
             </div>
         </div>
         <div class="row justify-content-left my-4">
+            @if(type !== "VIEW"){
             <button type="submit" class="btn mx-2 col-3" [disabled]="babyForm.value.disableSubmit">
                 @if(babyForm.value.disableSubmit){
-                    <div class="spinner-border text-light mx-3" role="status"></div>
+                <div class="spinner-border text-light mx-3" role="status"></div>
                 } @else {
-                    @if(type === "NEW"){
-                    <i class="bi bi-plus"></i> Add Recipient
-                    } @else {
-                    <i class="bi bi-pencil"></i> Update Recipient
-                    }
+                @if(type === "NEW"){
+                <i class="bi bi-plus"></i> Add Recipient
+                } @else {
+                <i class="bi bi-pencil"></i> Update Recipient
+                }
                 }
             </button>
+            }
             <button type="button" routerLink="/recipient" class="btn mx-2  col-1">Back</button>
         </div>
     </form>

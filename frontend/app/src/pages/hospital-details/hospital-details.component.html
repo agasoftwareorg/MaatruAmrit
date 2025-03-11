@@ -36,10 +36,21 @@
                     <div class="col-6">
                         <input formControlName="isAnalyzer" class="form-check-input" type="checkbox" value="false"
                             id="flexCheckDefault">
-                        <!-- <input formControlName="contact" class="form-control form-control" id="Contact" placeholder="Contact"> -->
+                    </div>
+
+                </div>
+                <div class="form-group row py-2 align-items-center">
+                    <label for="logo" class="col-2 col-form-label col-form-label">Logo :</label>
+                    <div class="col-2">
+                        <input accept="image/*" (change)="onLogoSelected($event)" class="form-control form-control-sm" type="file" id="logo" #hospitalLogo>
+                    </div>
+                    <div class="col-6">
+                        @if(hospitalForm.value.hospitalLogoPath){
+                        <img [src]="hospitalForm.value.hospitalLogoPath" alt="Uploaded Logo" class="logo-preview mx-2">
+                        <button type="button" (click)="clearHospitalLogo()" class="btn">Clear</button>
+                        }
                     </div>
                 </div>
-
             </div>
         </div>
         <div class="card my-4">
@@ -77,17 +88,19 @@
             </div>
         </div>
         <div class="row justify-content-left">
+            @if(type !== "VIEW"){
             <button type="submit" class="btn mx-2 col-2" [disabled]="hospitalForm.value.disableSubmit">
                 @if(hospitalForm.value.disableSubmit){
-                    <div class="spinner-border text-light mx-3" role="status"></div>
+                <div class="spinner-border text-light mx-3" role="status"></div>
                 } @else {
-                    @if(type === "NEW"){
-                    <i class="bi bi-plus"></i> Add Hospital
-                    } @else {
-                    <i class="bi bi-pencil"></i> Update Hospital
-                    }
+                @if(type === "NEW"){
+                <i class="bi bi-plus"></i> Add Hospital
+                } @else {
+                <i class="bi bi-pencil"></i> Update Hospital
+                }
                 }
             </button>
+            }
             <button type="button" routerLink="/hospital" class="btn mx-2  col-1">Back</button>
         </div>
     </form>

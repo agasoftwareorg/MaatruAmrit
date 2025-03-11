@@ -132,17 +132,19 @@
             </div>
         </div>
         <div class="row justify-content-left my-4">
+            @if(type !== "VIEW"){
             <button type="submit" class="btn mx-2 col-2" [disabled]="batchForm.value.disableSubmit">
                 @if(batchForm.value.disableSubmit){
-                    <div class="spinner-border text-light mx-3" role="status"></div>
+                <div class="spinner-border text-light mx-3" role="status"></div>
                 } @else {
-                    @if(type === "NEW"){
-                    <i class="bi bi-plus"></i> Add Batch
-                    } @else {
-                    <i class="bi bi-pencil"></i> Update Batch
-                    }
+                @if(type === "NEW"){
+                <i class="bi bi-plus"></i> Add Batch
+                } @else {
+                <i class="bi bi-pencil"></i> Update Batch
+                }
                 }
             </button>
+            }
             <button type="button" routerLink="/batch" class="btn mx-2  col-1">Back</button>
         </div>
     </form>

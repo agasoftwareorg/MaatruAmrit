@@ -18,8 +18,8 @@
           "builder": "@angular-devkit/build-angular:application",
           "options": {
             "allowedCommonJsDependencies": [
-              "jsbarcode",
-              "moment"
+              "moment",
+              "jsbarcode"
             ],
             "outputPath": "dist/app",
             "index": "src/index.html",

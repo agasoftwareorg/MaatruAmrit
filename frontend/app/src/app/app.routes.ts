@@ -59,7 +59,7 @@ export const routes: Routes = [
       { path: 'recipient/new', component: NewBabyComponent },
       { path: 'recipient/:id', component: EditBabyComponent },
       { path: 'recipient/:id/view', component: ViewBabyComponent },
-      { path: 'recipient/:id/dispatches', component: BabyDispatchesComponent },
+      { path: 'recipient/:id/dispenses', component: BabyDispatchesComponent },
     ],
     canActivate: [authGuard]
   },

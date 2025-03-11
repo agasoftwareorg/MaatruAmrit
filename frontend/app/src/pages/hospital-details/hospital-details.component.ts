@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { Component, Input, inject } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild, inject } from '@angular/core';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { BackendService } from '../../services/backend.service';
@@ -19,6 +19,7 @@ export class HospitalDetailsComponent {
   @Input() type: string = 'NEW';
 
   hospitalId: string = ''
+  @ViewChild('hospitalLogo') hospitalLogo!: ElementRef;
   hospitalForm = new FormGroup({
     name: new FormControl('', [
       Validators.required,
@@ -39,6 +40,7 @@ export class HospitalDetailsComponent {
     disableSubmit: new FormControl(false, [
       Validators.required,
     ]),
+    hospitalLogoPath: new FormControl(null),
   })
 
   private destroy$ = new Subject<void>();
@@ -69,6 +71,7 @@ export class HospitalDetailsComponent {
             isAnalyzer: data.is_analyzer,
             subscriptionEnd: subscriptionEnd,
             hasSubscriptionEnded: hasSubscriptionEnded,
+            hospitalLogoPath: data.logo,
             disableSubmit: false
           })
           this.hospitalForm.get("subscription")?.disable();
@@ -119,6 +122,32 @@ export class HospitalDetailsComponent {
     )
   }
 
+  onLogoSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      const reader = new FileReader();
+      
+      reader.onload = () => {
+        let previewLogo: any = reader.result;
+        this.hospitalForm.patchValue({
+          hospitalLogoPath: previewLogo
+        })
+      };
+      
+      reader.readAsDataURL(file); // Read the file as a data URL
+    }
+  }
+
+  clearHospitalLogo(){
+    if(this.hospitalLogo){
+      this.hospitalLogo.nativeElement.value = null
+    }
+    this.hospitalForm.patchValue({
+      hospitalLogoPath: null
+    });
+  }
+
   createHospital() {
     this.hospitalForm.controls.disableSubmit.setValue(true);
     this.hospitalForm.setErrors(null);
@@ -141,7 +170,7 @@ export class HospitalDetailsComponent {
     if(subscriptionEnd !== null){
       subscriptionEnd = moment(this.hospitalForm.value?.subscriptionEnd, 'DD-MM-YYYY').format('YYYY-MM-DD');
     }
-    let payload = {
+    let payload: any = {
       name: this.hospitalForm.value?.name,
       address: this.hospitalForm.value?.address,
       branch: this.hospitalForm.value?.branch,
@@ -150,6 +179,15 @@ export class HospitalDetailsComponent {
       subscription_end: subscriptionEnd,
       is_analyzer: this.hospitalForm.value?.isAnalyzer,
     }
+    console.log(this.hospitalLogo);
+    console.log(this.hospitalLogo.nativeElement.files);
+    console.log(this.hospitalForm.value.hospitalLogoPath);
+    if (this.hospitalLogo && this.hospitalLogo.nativeElement.files && this.hospitalLogo.nativeElement.files.length > 0) {
+      payload.logo = this.hospitalLogo.nativeElement.files[0]
+    } else if (!this.hospitalForm.value.hospitalLogoPath){
+      payload.logo = null
+    }
+
     if (this.type == "NEW") {
       api = this.backend.addHospital(payload)
     } else {

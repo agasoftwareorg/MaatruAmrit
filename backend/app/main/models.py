@@ -4,6 +4,10 @@ from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 
 
+def hospital_logo(instance, filename):
+    return "static/hospital/logos/{0}".format(filename)
+
+
 class Hospital(models.Model):
     class Subscription(models.TextChoices):
         PLAN_1_YEAR = "PLAN_1_YEAR", _("Plan_1_Year")
@@ -19,6 +23,7 @@ class Hospital(models.Model):
     subscription = models.CharField(max_length=50, choices=Subscription)
     subscription_end = models.DateField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    logo = models.ImageField(null=True, upload_to=hospital_logo, max_length=500)
 
     def __str__(self):
         return self.name

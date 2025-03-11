@@ -123,6 +123,7 @@ export class BackendService {
   }
 
   addHospital(hospitalData: object){
+    hospitalData = this.convertToFormData(hospitalData)
     return this.http.post(this.hospitalUrl, hospitalData, {
       headers: {
         "Authorization": `Bearer ${localStorage.getItem('token')}`
@@ -131,6 +132,7 @@ export class BackendService {
   }
 
   updateHospital(hospitalId: string, hospitalData: object){
+    hospitalData = this.convertToFormData(hospitalData)
     return this.http.put(`${this.hospitalUrl}/${hospitalId}`, hospitalData, {
       headers: {
         "Authorization": `Bearer ${localStorage.getItem('token')}`

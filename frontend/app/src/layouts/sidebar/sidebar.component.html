@@ -99,6 +99,7 @@
     </div>
 </div>
 <div id="printBarcodeSection" class="d-none">
-    <svg id="generateBarcodeSection"></svg>
+    <ngx-barcode6 bc-format="CODE128" [bc-value]="barcodeService.value" [bc-display-value]="true">
+    </ngx-barcode6>
 </div>
 <app-toast aria-live="polite" aria-atomic="true"></app-toast>
