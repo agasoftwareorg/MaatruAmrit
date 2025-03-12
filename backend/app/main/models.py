@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 def hospital_logo(instance, filename):
-    return "static/hospital/logos/{0}".format(filename)
+    return "hospital/logos/{0}".format(filename)
 
 
 class Hospital(models.Model):
@@ -71,7 +71,7 @@ class Child(models.Model):
 
 def screening_report_loc(instance, filename):
     hashh = hashlib.sha256(str(instance.hospital.id).encode()).hexdigest()
-    return "static/hospital/{0}/reports/mother_screening/{1}".format(hashh, filename)
+    return "hospital/{0}/reports/mother_screening/{1}".format(hashh, filename)
 
 
 class Mother(models.Model):
@@ -119,11 +119,11 @@ class Donation(models.Model):
 
 def pasteurization_report_loc(instance, filename):
     hashh = hashlib.sha256(str(instance.hospital.id).encode()).hexdigest()
-    return "static/hospital/{0}/reports/pasteurization/{1}".format(hashh, filename)
+    return "hospital/{0}/reports/pasteurization/{1}".format(hashh, filename)
 
 def analyzer_report_loc(instance, filename):
     hashh = hashlib.sha256(str(instance.hospital.id).encode()).hexdigest()
-    return "static/hospital/{0}/reports/analyzer/{1}".format(hashh, filename)
+    return "hospital/{0}/reports/analyzer/{1}".format(hashh, filename)
 
 class Batch(models.Model):
     class PasteurizationResult(models.TextChoices):

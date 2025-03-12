@@ -10,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
 export class BackendService {
 
   private baseUrl: string = 'http://localhost:8000/api/'
+  // private baseUrl: string = '/api/'
   private authUrl: string = `${this.baseUrl}`
   private hospitalUrl: string = `${this.baseUrl}hospital`
   private motherUrl: string = `${this.baseUrl}mother`
