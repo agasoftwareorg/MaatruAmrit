@@ -26,10 +26,11 @@ APPEND_SLASH=False
 SECRET_KEY = 'django-insecure-wa3l-m*)^f-j2fc6wlwpsln(q!3&#6d&2wfc3upop_=ca&+8&='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["82.25.104.211"]
-
+CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOWED_ORIGINS = ["http://82.25.104.211"]
 
 # Application definition
 
@@ -90,14 +91,22 @@ AUTH_USER_MODEL = "main.User"
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        "ENGINE": "django.db.backends.mysql",
+        "OPTIONS": {
+            "read_default_file": "/var/app/mysql.cnf",
+        },
     }
 }
-
+"""
+# mysql.cnf
+[client]
+database = NAME
+user = USER
+password = PASSWORD
+default-character-set = utf8
+"""
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -190,8 +199,6 @@ LOGGING = {
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
@@ -204,5 +211,3 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(hours=8),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
 }
-
-CORS_ALLOW_ALL_ORIGINS=True
