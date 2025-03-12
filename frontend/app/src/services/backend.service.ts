@@ -1,7 +1,8 @@
-import { concatMap, map, switchMap, tap } from 'rxjs/operators';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { concatMap, map, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../environments/environment';
 
 
 @Injectable({
@@ -9,8 +10,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class BackendService {
 
-  private baseUrl: string = 'http://localhost:8000/api/'
-  // private baseUrl: string = '/api/'
+  private baseUrl: string = environment.apiUrl
   private authUrl: string = `${this.baseUrl}`
   private hospitalUrl: string = `${this.baseUrl}hospital`
   private motherUrl: string = `${this.baseUrl}mother`

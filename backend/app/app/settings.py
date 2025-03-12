@@ -28,9 +28,9 @@ SECRET_KEY = 'django-insecure-wa3l-m*)^f-j2fc6wlwpsln(q!3&#6d&2wfc3upop_=ca&+8&=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["82.25.104.211"]
+ALLOWED_HOSTS = ["maatruamrit.com"]
 CORS_ALLOW_ALL_ORIGINS = False
-CORS_ALLOWED_ORIGINS = ["http://82.25.104.211"]
+CORS_ALLOWED_ORIGINS = ["https://maatruamrit.com"]
 
 # Application definition
 
@@ -208,6 +208,6 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(hours=8),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
 }
