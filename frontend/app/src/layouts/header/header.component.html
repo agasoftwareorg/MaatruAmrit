@@ -3,9 +3,18 @@
         <div class="col-4 ma-text-brown-50">
             <h2 class="my-4">{{title}}</h2>
         </div>
-        <div class="col-3 text-center d-flex justify-content-end align-items-center">
-            <i class="bi bi-person-circle ma-text-brown-50"></i>
-            <p class="m-3 ma-text-brown-50">{{userName}}</p>
+        <div class="col-5 d-flex justify-content-end align-items-center">
+            @if(userRole === 'ADMIN'){
+                <i class="bi fs-4 bi-person-circle ma-text-brown-50 pe-2"></i>
+            } @else if(userRole !== 'ADMIN' && hospitalLogo){
+                <img [src]="hospitalLogo" style="width: 95px;" class="pe-1" alt="Hospital Logo">
+            } @else {
+                <i class="fs-2 bi bi-hospital-fill ma-text-brown-50 align-self-center pe-2"></i>
+            }
+            <div class="text-left pe-4 d-flex flex-column">
+                <h4 class="ma-text-brown-50 fw-bold  mt-2">{{hospitalName}}</h4>
+                <p class="ma-text-brown-50">{{userName}}</p>
+            </div>
         </div>
     </div>
 </div>

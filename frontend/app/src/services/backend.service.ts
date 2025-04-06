@@ -22,6 +22,7 @@ export class BackendService {
   private userName = new BehaviorSubject<string>('');
   private userRole = new BehaviorSubject<string>('');
   private hospitalName = new BehaviorSubject<string>('');
+  private hospitalLogo = new BehaviorSubject<string>('');
   private hospitalHasAnalyzer = new BehaviorSubject<boolean>(false);
 
 
@@ -65,6 +66,10 @@ export class BackendService {
     return this.hospitalName.asObservable();
   }
 
+  getHospitalLogo(): Observable<string> {
+    return this.hospitalLogo.asObservable();
+  }
+
   hasAnalyzer(): Observable<boolean> {
     return this.hospitalHasAnalyzer.asObservable();
   }
@@ -95,6 +100,7 @@ export class BackendService {
       tap((data: any) => {
         this.hospitalHasAnalyzer.next(data.is_analyzer)
         this.hospitalName.next(data.name)
+        this.hospitalLogo.next(data.logo)
       })
     );
   }

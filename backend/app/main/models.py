@@ -1,11 +1,21 @@
 import hashlib
+
+from PIL import Image
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
+from django.core.exceptions import ValidationError
 
 
 def hospital_logo(instance, filename):
     return "hospital/logos/{0}".format(filename)
+
+def validate_image_dimensions(image):
+    img = Image.open(image)
+    max_width = 800
+    max_height = 600
+    if img.width > max_width or img.height > max_height:
+        raise ValidationError(f'Image size should not exceed {max_width}x{max_height}px.')
 
 
 class Hospital(models.Model):
@@ -23,7 +33,7 @@ class Hospital(models.Model):
     subscription = models.CharField(max_length=50, choices=Subscription)
     subscription_end = models.DateField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    logo = models.ImageField(null=True, upload_to=hospital_logo, max_length=500)
+    logo = models.ImageField(null=True, upload_to=hospital_logo, max_length=500, validators=[])
 
     def __str__(self):
         return self.name

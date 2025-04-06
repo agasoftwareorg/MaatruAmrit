@@ -41,7 +41,7 @@ class CurrentUserViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     @action(detail=False, methods=['get'], name="Current Hospital")
     def hospital(self, request):
         hospital = request.user.hospital
-        serializer = serializers.HospitalSerializer(hospital)
+        serializer = serializers.HospitalSerializer(hospital, context={'request': request})
         return Response(serializer.data)
 
 

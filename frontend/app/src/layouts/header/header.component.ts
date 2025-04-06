@@ -11,7 +11,10 @@ import { AsyncPipe } from '@angular/common';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  userName: string = ''
+  userName: string = '';
+  userRole: string = '';
+  hospitalName: string = '';
+  hospitalLogo: string = '';
   @Input() title: string = '';
   private destroy$ = new Subject<void>();
 
@@ -26,7 +29,27 @@ export class HeaderComponent {
         this.userName = userName
       }
     );
-
+    this.backend.getUserRole().pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(
+      userRole => {
+        this.userRole = userRole
+      }
+    );
+    this.backend.getHospitalName().pipe(
+      takeUntil(this.destroy$),
+    ).subscribe(
+      hospitalName => {
+        this.hospitalName = hospitalName
+      }
+    );
+    this.backend.getHospitalLogo().pipe(
+      takeUntil(this.destroy$),
+    ).subscribe(
+      hospitalLogo => {
+        this.hospitalLogo = hospitalLogo
+      }
+    );
   }
 
   ngOnDestroy() {
