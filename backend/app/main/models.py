@@ -38,6 +38,20 @@ class Hospital(models.Model):
     def __str__(self):
         return self.name
 
+    def milk_ready_to_use(self):
+        milk_ready_to_use = 0
+        for batch in self.batches.all():
+            if batch.pasteurization == Batch.PasteurizationResult.NEGATIVE:
+                milk_ready_to_use += batch.available_quantity()
+        return milk_ready_to_use
+
+    def milk_awaiting_results(self):
+        milk_awaiting_results = 0
+        for batch in self.batches.all():
+            if batch.pasteurization == Batch.PasteurizationResult.NO_RESULT:
+                milk_awaiting_results += batch.available_quantity()
+        return milk_awaiting_results
+
 
 class User(AbstractUser):
     class Role(models.TextChoices):

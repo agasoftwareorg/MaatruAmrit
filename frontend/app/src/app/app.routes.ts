@@ -25,6 +25,7 @@ import { NewBatchComponent } from '../pages/new-batch/new-batch.component';
 import { ViewBatchComponent } from '../pages/view-batch/view-batch.component';
 import { ViewMotherComponent } from '../pages/view-mother/view-mother.component';
 import { ViewBabyComponent } from '../pages/view-baby/view-baby.component';
+import { InventoryComponent } from '../pages/inventory/inventory.component';
 
 
 export const routes: Routes = [
@@ -56,6 +57,7 @@ export const routes: Routes = [
       { path: 'mother/:id/view', component: ViewMotherComponent },
       { path: 'mother/:id/donations', component: MotherDonationsComponent },
       { path: 'recipient', component: BabyListComponent },
+      { path: 'inventory', component: InventoryComponent },
       { path: 'recipient/new', component: NewBabyComponent },
       { path: 'recipient/:id', component: EditBabyComponent },
       { path: 'recipient/:id/view', component: ViewBabyComponent },

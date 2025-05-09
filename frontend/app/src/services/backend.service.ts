@@ -171,6 +171,14 @@ export class BackendService {
     });
   }
 
+  getCurrentInventory(){
+    return this.http.get(`${this.currentUrl}/inventory`, {
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+  }
+
   getUsers(hospitalId: string | null, page: number=1, size: number=50){
     return this.http.get(`${this.userUrl}?hospital=${hospitalId}&page=${page}&page_size=${size}`, {
       headers: {

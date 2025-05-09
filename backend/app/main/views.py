@@ -44,6 +44,14 @@ class CurrentUserViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
         serializer = serializers.HospitalSerializer(hospital, context={'request': request})
         return Response(serializer.data)
 
+    @action(detail=False, methods=['get'], name="Current Inventory")
+    def inventory(self, request):
+        hospital = request.user.hospital
+        return Response({
+            "milk_ready_to_use": hospital.milk_ready_to_use(),
+            "milk_awaiting_results": hospital.milk_awaiting_results(),
+        })
+
 
 class HospitalViewSet(viewsets.ModelViewSet):
     queryset = models.Hospital.objects.all()
